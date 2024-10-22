@@ -46,7 +46,7 @@
                                             <a href="{{ asset('dist/assets/img/objek-wisata/' . $item->image) }}"
                                                 target="_blank">
                                                 <img src="{{ asset('dist/assets/img/objek-wisata/' . $item->image) }}"
-                                                    alt="" style="max-width: 300px" class="img-fluid img-thumbnail">
+                                                    alt="" style="max-width: 100px" class="img-fluid img-thumbnail">
                                             </a>
                                         </x-admin.td>
                                         <x-admin.td>
@@ -73,21 +73,25 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                     </div>
-                                                    <form action="{{ route('objek-wisata.update', $item->id)}}" method="post" enctype="multipart/form-data">
+                                                    <form action="{{ route('objek-wisata.update', $item->id) }}"
+                                                        method="post" enctype="multipart/form-data">
                                                         @csrf
                                                         <div class="modal-body">
                                                             <x-admin.input type="text" placeholder="Nama Wisata"
                                                                 label="Nama Wisata" name="namawisata"
-                                                                value={{ $item->nama_wisata }} />
+                                                                value="{{ $item->nama_wisata }}" />
 
                                                             <Label>Kategori</Label>
                                                             <select class="form-select mb-3"
                                                                 aria-label="Default select example" name="kategori_id"
                                                                 id="kategori_id">
-                                                                <option selected hidden value="">--- Pilih Barang ---
+                                                                <option selected hidden value="">--- Pilih Kategori
+                                                                    ---
                                                                 </option>
                                                                 @foreach ($kategori as $item2)
-                                                                    <option value="{{ $item2->id }}" @selected($item->rKategori?->id == $item2->id)>{{ $item2->kategori }}</option>
+                                                                    <option value="{{ $item2->id }}"
+                                                                        @selected($item->rKategori?->id == $item2->id)>{{ $item2->kategori }}
+                                                                    </option>
                                                                 @endforeach
                                                             </select>
 
@@ -97,11 +101,13 @@
                                                             </textarea>
 
                                                             <x-admin.input type="text" placeholder="Lokasi"
-                                                                label="Lokasi" name="lokasi" value="{{$item->lokasi}}" />
+                                                                label="Lokasi" name="lokasi"
+                                                                value="{{ $item->lokasi }}" />
                                                             <x-admin.input type="number" placeholder="Harga Tiket"
-                                                                label="Harga Tiket" name="harga" value="{{$item->harga}}"/>
+                                                                label="Harga Tiket" name="harga"
+                                                                value="{{ $item->harga }}" />
                                                             <x-admin.input type="number" placeholder="Kontak"
-                                                                label="Kontak" name="kontak" {{$item->no_hp}}/>
+                                                                label="Kontak" name="kontak" {{ $item->no_hp }} />
                                                             <div class="mb-3">
                                                                 <label for="formFile" class="form-label">Foto
                                                                     Sebelumnya</label>
@@ -183,7 +189,7 @@
                         <Label>Kategori</Label>
                         <select class="form-select mb-3" aria-label="Default select example" name="kategori_id"
                             id="kategori_id">
-                            <option selected hidden value="">--- Pilih Barang ---</option>
+                            <option selected hidden value="">--- Pilih Kategori ---</option>
                             @foreach ($kategori as $item3)
                                 <option value="{{ $item3->id }}">{{ $item3->kategori }}</option>
                             @endforeach

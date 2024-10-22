@@ -41,7 +41,7 @@
                                     <x-admin.td>
                                         <a href="{{ asset('dist/assets/img/apple-icon.png') }}" target="_blank">
                                             <img src="{{ asset('dist/assets/img/apple-icon.png') }}" alt=""
-                                                style="max-width: 300px" class="img-fluid img-thumbnail">
+                                                style="max-width: 100px" class="img-fluid img-thumbnail">
                                         </a>
                                     </x-admin.td>
                                     <x-admin.td>
