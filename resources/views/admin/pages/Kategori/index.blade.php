@@ -23,73 +23,81 @@
                                         <x-admin.th>Action</x-admin.th>
                                     </tr>
                                 @endslot
-                                <tr>
-                                    <x-admin.td>1</x-admin.td>
-                                    <x-admin.td>Bangunan</x-admin.td>
-                                    <x-admin.td>
-                                        <a href="#" class="btn bg-gradient-info" data-bs-toggle="modal"
-                                            data-bs-target="#editKategori"><i class="fa fa-pencil"
-                                                aria-hidden="true"></i><span class="text-capitalize ms-1">Edit</span></a>
-                                        <a href="#" class="btn bg-gradient-danger" data-bs-toggle="modal"
-                                            data-bs-target="#hapusKategori"><i class="fa fa-trash"
-                                                aria-hidden="true"></i><span class="text-capitalize ms-1">Hapus</span></a>
-                                    </x-admin.td>
+                                @foreach ($kategori as $item)
+                                    <tr>
+                                        <x-admin.td>{{ $loop->iteration }}</x-admin.td>
+                                        <x-admin.td>{{ $item->kategori}}</x-admin.td>
+                                        <x-admin.td>
+                                            <a href="#" class="btn bg-gradient-info" data-bs-toggle="modal"
+                                                data-bs-target="#editKategori{{ $item->id }}"><i class="fa fa-pencil"
+                                                    aria-hidden="true"></i><span
+                                                    class="text-capitalize ms-1">Edit</span></a>
+                                            <a href="#" class="btn bg-gradient-danger" data-bs-toggle="modal"
+                                                data-bs-target="#hapusKategori{{$item->id}}"><i class="fa fa-trash"
+                                                    aria-hidden="true"></i><span
+                                                    class="text-capitalize ms-1">Hapus</span></a>
+                                        </x-admin.td>
 
-                                    <!-- Modal Edit Kategori -->
-                                    <div class="modal fade" id="editKategori" data-bs-backdrop="static"
-                                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="editKategoriLabel"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-scrollable">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="editKategoriLabel">Edit Data Kategori
-                                                    </h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
+                                        <!-- Modal Edit Kategori -->
+                                        <div class="modal fade" id="editKategori{{ $item->id }}" data-bs-backdrop="static"
+                                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="editKategoriLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="editKategoriLabel">Edit Data
+                                                            Kategori
+                                                        </h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <form action="{{route('kategori.update', $item->id)}}" method="post">
+                                                        @csrf
+                                                        <div class="modal-body">
+                                                            <x-admin.input type="text" placeholder="Nama Kategori"
+                                                                label="Nama Kategori" name="kategori"
+                                                                value="{{ $item->kategori }}" />
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit"
+                                                                class="btn btn-sm btn-success">Update</button>
+                                                            <button type="button" class="btn btn-sm btn-secondary"
+                                                                data-bs-dismiss="modal">Batal</button>
+                                                        </div>
+                                                    </form>
                                                 </div>
-                                                <form action="#" method="post">
-                                                    @csrf
-                                                    <div class="modal-body">
-                                                        <x-admin.input type="text" placeholder="Nama Kategori"
-                                                            label="Nama Kategori" name="namaKategori" value="Bangunan" />
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal Hapus Kategori -->
+                                        <div class="modal fade" id="hapusKategori{{$item->id}}" data-bs-backdrop="static"
+                                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="hapusKategoriLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="hapusKategoriLabel">Hapus Data
+                                                            Kategori
+                                                        </h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body text-center">
+                                                        <img src="{{ asset('dist/assets/img/bin.gif') }}" alt=""
+                                                            class="img-fluid w-25">
+                                                        <p>Yakin ingin menghapus data?</p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="submit"
-                                                            class="btn btn-sm btn-success">Update</button>
+                                                        <a href="{{route('kategori.destroy', $item->id)}}" type="submit"
+                                                            class="btn btn-sm btn-danger">Hapus</a>
                                                         <button type="button" class="btn btn-sm btn-secondary"
                                                             data-bs-dismiss="modal">Batal</button>
                                                     </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Modal Hapus Kategori -->
-                                    <div class="modal fade" id="hapusKategori" data-bs-backdrop="static"
-                                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="hapusKategoriLabel"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-scrollable">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="hapusKategoriLabel">Hapus Data Kategori
-                                                    </h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body text-center">
-                                                    <img src="{{ asset('dist/assets/img/bin.gif') }}" alt=""
-                                                        class="img-fluid w-25">
-                                                    <p>Yakin ingin menghapus data?</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a href="#" type="submit" class="btn btn-sm btn-danger">Hapus</a>
-                                                    <button type="button" class="btn btn-sm btn-secondary"
-                                                        data-bs-dismiss="modal">Batal</button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </tr>
+                                    </tr>
+                                @endforeach
                             </x-admin.table>
                         </div>
                     </div>
@@ -107,11 +115,11 @@
                     <h1 class="modal-title fs-5" id="addKategoriLabel">Tambah Data Kategori</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="#" method="post">
+                <form action="{{ route('kategori.store')}}" method="post">
                     @csrf
                     <div class="modal-body">
                         <x-admin.input type="text" placeholder="Nama kategori" label="Nama kategori"
-                            name="namakategori" />
+                            name="kategori" />
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-sm btn-success">Simpan</button>

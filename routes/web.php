@@ -43,9 +43,14 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('kategori')->group(function () {
     Route::get('/show', [KategoriController::class, 'index'])->name('kategori.show');
+    Route::post('/store', [KategoriController::class, 'store'])->name('kategori.store');
+    Route::post('/update/{id}', [KategoriController::class, 'update'])->name('kategori.update');
+    Route::get('/destroy/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
 });
 Route::prefix('objek-wisata')->group(function () {
     Route::get('/show', [ObjekWisataController::class, 'index'])->name('objek-wisata.show');
+    Route::post('/store', [ObjekWisataController::class, 'store'])->name('objek-wisata.store');
+    Route::post('/update/{id}', [ObjekWisataController::class, 'update'])->name('objek-wisata.update');
 });
 Route::prefix('penginapan')->group(function () {
     Route::get('/show', [PenginapanController::class, 'index'])->name('penginapan.show');
