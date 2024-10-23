@@ -24,6 +24,9 @@
                                         <x-admin.th>Nama</x-admin.th>
                                         <x-admin.th>Email</x-admin.th>
                                         <x-admin.th>Role</x-admin.th>
+                                        <x-admin.th>Nomor HP</x-admin.th>
+                                        <x-admin.th>Alamat</x-admin.th>
+                                        <x-admin.th>Jenis Kelamin</x-admin.th>
                                         <x-admin.th>Action</x-admin.th>
                                     </tr>
                                 @endslot
@@ -34,6 +37,9 @@
                                         <x-admin.td>{{ $item->name ?? '' }}</x-admin.td>
                                         <x-admin.td>{{ $item->email ?? '' }}</x-admin.td>
                                         <x-admin.td>{{ $item->role ?? '' }}</x-admin.td>
+                                        <x-admin.td>{{ $item->no_hp ?? '' }}</x-admin.td>
+                                        <x-admin.td>{{ $item->alamat ?? '' }}</x-admin.td>
+                                        <x-admin.td>{{ $item->jenis_kelamin ?? '' }}</x-admin.td>
                                         <x-admin.td>
                                             <a href="#" class="btn bg-gradient-info" data-bs-toggle="modal"
                                                 data-bs-target="#editUsers{{ $item->id }}"><i class="fa fa-pencil"
@@ -62,8 +68,23 @@
                                                         <div class="modal-body">
                                                             <x-admin.input type="text" placeholder="Nama" label="Nama"
                                                                 name="nama" value="{{ $item->name ?? '' }}" />
+                                                            <x-admin.input type="number" placeholder="Nomor HP"
+                                                                label="Nomor HP" name="no_hp" />
+                                                            <x-admin.input type="text" placeholder="Alamat"
+                                                                label="Alamat" name="alamat" />
                                                             <x-admin.input type="email" placeholder="Email" label="Email"
                                                                 name="email" value="{{ $item->email ?? '' }}" />
+                                                            <Label>Jenis Kelamin</Label>
+                                                            <select class="form-select mb-3"
+                                                                aria-label="Default select example" name="gender">
+                                                                <option hidden>--- Pilih Jenis Kelamin ---</option>
+                                                                <option value="Pria"
+                                                                    {{ $item->gender == 'Pria' ? 'selected' : '' }}>Pria
+                                                                </option>
+                                                                <option value="Wanita"
+                                                                    {{ $item->gender == 'Wanita' ? 'selected' : '' }}>
+                                                                    Wanita</option>
+                                                            </select>
                                                             <Label>Role</Label>
                                                             <select class="form-select mb-3"
                                                                 aria-label="Default select example" name="role">
@@ -138,7 +159,15 @@
                     @csrf
                     <div class="modal-body">
                         <x-admin.input type="text" placeholder="Nama" label="Nama" name="nama" />
+                        <x-admin.input type="number" placeholder="Nomor HP" label="Nomor HP" name="no_hp" />
+                        <x-admin.input type="text" placeholder="Alamat" label="Alamat" name="alamat" />
                         <x-admin.input type="email" placeholder="Email" label="Email" name="email" />
+                        <Label>Jenis Kelamin</Label>
+                        <select class="form-select mb-3" aria-label="Default select example" name="gender">
+                            <option hidden>--- Pilih Jenis Kelamin ---</option>
+                            <option value="Pria">Pria</option>
+                            <option value="Wanita">Wanita</option>
+                        </select>
                         <Label>Role</Label>
                         <select class="form-select mb-3" aria-label="Default select example" name="role">
                             <option hidden>--- Pilih Role ---</option>
