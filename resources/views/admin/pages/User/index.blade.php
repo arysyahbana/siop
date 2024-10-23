@@ -8,10 +8,12 @@
             <div class="col-12">
                 <h6>Daftar Users</h6>
                 <div class="card mb-4">
-                    <div class="card-header pb-0">
-                        <a href="#" class="btn bg-gradient-success" data-bs-toggle="modal" data-bs-target="#addUsers"><i
+                    <div class="card-header pb-0 d-flex justify-content-between">
+                        <a href="#" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#addUsers"><i
                                 class="fa fa-plus" aria-hidden="true"></i><span
                                 class="text-capitalize ms-1">Tambah</span></a>
+                        <a href="#" class="btn bg-gradient-success"><i class="bi bi-plus-circle"></i><span
+                                class="text-capitalize ms-1">Unduh Rekap Data</span></a>
                     </div>
                     <div class="card-body px-5 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -65,11 +67,11 @@
                                                             <Label>Role</Label>
                                                             <select class="form-select mb-3"
                                                                 aria-label="Default select example" name="role">
-                                                                <option hidden>--- Pilih Petugas ---</option>
+                                                                <option hidden>--- Pilih Role ---</option>
                                                                 <option value="Admin"
                                                                     {{ $item->role == 'Admin' ? 'selected' : '' }}>Admin
                                                                 </option>
-                                                                <option value="Petugas"
+                                                                <option value="Owner"
                                                                     {{ $item->role == 'Owner' ? 'selected' : '' }}>
                                                                     Owner</option>
                                                             </select>
@@ -139,7 +141,7 @@
                         <x-admin.input type="email" placeholder="Email" label="Email" name="email" />
                         <Label>Role</Label>
                         <select class="form-select mb-3" aria-label="Default select example" name="role">
-                            <option hidden>--- Pilih Petugas ---</option>
+                            <option hidden>--- Pilih Role ---</option>
                             <option value="Admin">Admin</option>
                             <option value="Owner">Owner</option>
                         </select>

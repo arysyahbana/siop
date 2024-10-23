@@ -8,10 +8,12 @@
             <div class="col-12">
                 <h6>Data Paket Tour</h6>
                 <div class="card mb-4">
-                    <div class="card-header pb-0">
-                        <a href="#" class="btn bg-gradient-success" data-bs-toggle="modal" data-bs-target="#addPaket"><i
+                    <div class="card-header pb-0 d-flex justify-content-between">
+                        <a href="#" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#addPaket"><i
                                 class="fa fa-plus" aria-hidden="true"></i><span
                                 class="text-capitalize ms-1">Tambah</span></a>
+                        <a href="#" class="btn bg-gradient-success"><i class="bi bi-plus-circle"></i><span
+                                class="text-capitalize ms-1">Unduh Rekap Data</span></a>
                     </div>
                     <div class="card-body px-5 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -97,7 +99,7 @@
     <!-- Modal Add Paket -->
     <div class="modal fade" id="addPaket" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="addPaketLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="addPaketLabel">Tambah Data Paket</h1>

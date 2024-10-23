@@ -31,8 +31,22 @@ use Illuminate\Support\Facades\Route;
 //     return view('admin.pages.dashboard');
 // });
 Route::get('/', function () {
-    return view('auth.login');
-});
+    return view('guest.index');
+})->name('index');
+
+Route::get('/detail-wisata', function () {
+    return view('guest.detail-wisata');
+})->name('detail-wisata');
+
+Route::get('/detail-penginapan', function () {
+    return view('guest.detail-penginapan');
+})->name('detail-penginapan');
+
+Route::get('/detail-paket', function () {
+    return view('guest.detail-paket');
+})->name('detail-paket');
+
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
