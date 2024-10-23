@@ -6,10 +6,16 @@ use App\Helpers\GlobalFunction;
 use App\Models\Kategori;
 use App\Models\ObjekWisata;
 use Illuminate\Http\Request;
+use Symfony\Component\Finder\Glob;
 
 class ObjekWisataController extends Controller
 {
-    private function validateData(Request $request)
+    protected $path;
+    public function __construct()
+    {
+        $this->path = 'objek-wisata/';
+    }
+    private function validateData(Request $request, $imageRule = 'required')
     {
         return $request->validate(
             [
@@ -19,7 +25,7 @@ class ObjekWisataController extends Controller
                 'lokasi' => 'required',
                 'harga' => 'required|numeric',
                 'kontak' => 'required|numeric',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'image' => $imageRule.'|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ],
             [
                 'namawisata.required' => 'nama wisata tidak boleh kosong',
@@ -48,7 +54,7 @@ class ObjekWisataController extends Controller
     public function store(Request $request)
     {
         $this->validateData($request);
-        $image = GlobalFunction::saveImage($request->file('image'), $request->namawisata, 'objek-wisata/');
+        $image = GlobalFunction::saveImage($request->file('image'), $request->namawisata, $this->path);
         $data = [
             'nama_wisata' => $request->namawisata,
             'deskripsi' => $request->deskripsi,
@@ -65,5 +71,34 @@ class ObjekWisataController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->validateData($request,'sometimes');
+
+        $wisata = ObjekWisata::find($id);
+
+        $data = [
+            'nama_wisata' => $request->namawisata,
+            'deskripsi' => $request->deskripsi,
+            'lokasi' => $request->lokasi,
+            'harga' => $request->harga,
+            'no_hp' => $request->kontak,
+            'id_kategori' => $request->kategori_id,
+        ];
+
+        if ($request->file('image')) {
+            GlobalFunction::deleteImage($wisata->image, $this->path);
+            $data['image'] = GlobalFunction::saveImage($request->file('image'), $request->namawisata, $this->path);
+        }
+
+        ObjekWisata::where('id', $id)->update($data);
+
+        return back()->with('success', 'Objek Pariwisata Berhasil Diubah');
+    }
+
+    public function destroy($id)
+    {
+        $wisata = ObjekWisata::find($id);
+        GlobalFunction::deleteImage($wisata->image, $this->path);
+        $wisata->delete();
+        return back()->with('success', 'Objek Pariwisata Berhasil Dihapus');
     }
 }

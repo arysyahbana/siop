@@ -29,120 +29,137 @@
                                         <x-admin.th>Action</x-admin.th>
                                     </tr>
                                 @endslot
-                                <tr>
-                                    <x-admin.td>1</x-admin.td>
-                                    <x-admin.td>1203</x-admin.td>
-                                    <x-admin.td> Lorem ipsum dolor sit amet. </x-admin.td>
-                                    <x-admin.td>Rp. 0808989</x-admin.td>
-                                    <x-admin.td>
-                                        <a href="{{ asset('dist/assets/img/apple-icon.png') }}" target="_blank">
-                                            <img src="{{ asset('dist/assets/img/apple-icon.png') }}" alt=""
-                                                style="max-width: 100px" class="img-fluid img-thumbnail">
-                                        </a>
-                                    </x-admin.td>
-                                    <x-admin.td>Kosong</x-admin.td>
-                                    <x-admin.td>
-                                        <a href="#" class="btn bg-gradient-info" data-bs-toggle="modal"
-                                            data-bs-target="#editKamar"><i class="fa fa-pencil" aria-hidden="true"></i><span
-                                                class="text-capitalize ms-1">Edit</span></a>
-                                        <a href="#" class="btn bg-gradient-danger" data-bs-toggle="modal"
-                                            data-bs-target="#hapusKamar"><i class="fa fa-trash" aria-hidden="true"></i><span
-                                                class="text-capitalize ms-1">Hapus</span></a>
-                                    </x-admin.td>
+                                @foreach ($kamar as $item)
+                                    <tr>
+                                        <x-admin.td>{{ $loop->iteration }}</x-admin.td>
+                                        <x-admin.td>{{ $item->nomor_kamar ?? '' }}</x-admin.td>
+                                        <x-admin.td> {{ $item->rPenginapan?->nama_penginapan ?? '' }} </x-admin.td>
+                                        <x-admin.td>Rp.
+                                            {{ App\Helpers\GlobalFunction::formatMoney($item->harga ?? '') }}</x-admin.td>
+                                        <x-admin.td>
+                                            <a href="{{ asset('dist/assets/img/kamar/' . $item->image) }}" target="_blank">
+                                                <img src="{{ asset('dist/assets/img/kamar/' . $item->image) }}"
+                                                    alt="" style="max-width: 100px" class="img-fluid img-thumbnail">
+                                            </a>
+                                        </x-admin.td>
+                                        <x-admin.td>{{ $item->status ?? '' }}</x-admin.td>
+                                        <x-admin.td>
+                                            <a href="#" class="btn bg-gradient-info" data-bs-toggle="modal"
+                                                data-bs-target="#editKamar{{ $item->id }}"><i class="fa fa-pencil"
+                                                    aria-hidden="true"></i><span
+                                                    class="text-capitalize ms-1">Edit</span></a>
+                                            <a href="#" class="btn bg-gradient-danger" data-bs-toggle="modal"
+                                                data-bs-target="#hapusKamar{{ $item->id }}"><i class="fa fa-trash"
+                                                    aria-hidden="true"></i><span
+                                                    class="text-capitalize ms-1">Hapus</span></a>
+                                        </x-admin.td>
 
-                                    <!-- Modal Edit Kamar -->
-                                    <div class="modal fade" id="editKamar" data-bs-backdrop="static"
-                                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="editKamarLabel"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-scrollable">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="editKamarLabel">Edit Data
-                                                        Kamar
-                                                    </h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <form action="#" method="post">
-                                                    @csrf
-                                                    <div class="modal-body">
-                                                        <x-admin.input type="text" placeholder="Nomor Kamar"
-                                                            label="Nomor Kamar" name="nomorKamar" />
+                                        <!-- Modal Edit Kamar -->
+                                        <div class="modal fade" id="editKamar{{ $item->id }}" data-bs-backdrop="static"
+                                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="editKamarLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="editKamarLabel">Edit Data
+                                                            Kamar
+                                                        </h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <form action="{{ route('kamar.update', $item->id) }}" method="post"
+                                                        enctype="multipart/form-data">
+                                                        @csrf
+                                                        <div class="modal-body">
+                                                            <x-admin.input type="text" placeholder="Nomor Kamar"
+                                                                label="Nomor Kamar" name="nomorKamar"
+                                                                value="{{ $item->nomor_kamar ?? '' }}" />
 
-                                                        <Label>Penginapan</Label>
-                                                        <select class="form-select mb-3" aria-label="Default select example"
-                                                            name="penginapan_id" id="penginapan_id">
-                                                            <option selected hidden>--- Pilih Penginapan ---</option>
-                                                            <option>asdasd</option>
-                                                            <option>qweqwe</option>
-                                                        </select>
+                                                            <Label>Penginapan</Label>
+                                                            <select
+                                                                class="form-select
+                                                                mb-3"
+                                                                aria-label="Default select example" name="penginapan_id"
+                                                                id="penginapan_id">
+                                                                <option selected hidden value="">--- Pilih Penginapan
+                                                                    ---</option>
+                                                                @foreach ($penginapan as $item2)
+                                                                    <option value="{{ $item2->id }}"
+                                                                        @selected($item->rPenginapan?->id == $item2->id)>
+                                                                        {{ $item2->nama_penginapan }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
 
-                                                        <x-admin.input type="number" placeholder="Harga Kamar"
-                                                            label="Harga Kamar" name="hargaKamar" />
+                                                            <x-admin.input type="number" placeholder="Harga Kamar"
+                                                                label="Harga Kamar" name="hargaKamar"
+                                                                value="{{ $item->harga }}" />
 
-                                                        <div class="mb-3">
-                                                            <label for="formFile" class="form-label">Foto Sebelumnya</label>
-                                                            <br>
-                                                            <div class="text-center">
-                                                                <img src="{{ asset('dist/assets/img/apple-icon.png') }}"
-                                                                    alt="" style="max-width: 300px"
-                                                                    class="img-fluid img-thumbnail">
+                                                            <div class="mb-3">
+                                                                <label for="formFile" class="form-label">Foto
+                                                                    Sebelumnya</label>
+                                                                <br>
+                                                                <div class="text-center">
+                                                                    <img src="{{ asset('dist/assets/img/kamar/'.$item->image) }}"
+                                                                        alt="" style="max-width: 300px"
+                                                                        class="img-fluid img-thumbnail">
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="formFile" class="form-label">Foto</label>
-                                                            <input class="form-control" type="file" id="formFile"
-                                                                name="image">
-                                                        </div>
+                                                            <div class="mb-3">
+                                                                <label for="formFile" class="form-label">Foto</label>
+                                                                <input class="form-control" type="file" id="formFile"
+                                                                    name="image">
+                                                            </div>
 
-                                                        <Label>Status</Label>
-                                                        <select class="form-select mb-3" aria-label="Default select example"
-                                                            name=status" id=status">
-                                                            <option selected hidden>--- Pilih Status ---</option>
-                                                            <option>Terisi</option>
-                                                            <option>Kosong</option>
-                                                        </select>
+                                                            <Label>Status</Label>
+                                                                <select class="form-select mb-3"
+                                                                    aria-label="Default select example" name="status" id="status">
+                                                                    <option selected hidden value="">--- Pilih Status ---</option>
+                                                                    <option value="Terisi" @selected($item->status === 'Terisi')>Terisi</option>
+                                                                    <option value="Kosong" @selected($item->status === 'Kosong')>Kosong</option>
+                                                                </select>
 
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit"
+                                                                class="btn btn-sm btn-success">Update</button>
+                                                            <button type="button" class="btn btn-sm btn-secondary"
+                                                                data-bs-dismiss="modal">Batal</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal Hapus Kamar -->
+                                        <div class="modal fade" id="hapusKamar{{ $item->id }}"
+                                            data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                            aria-labelledby="hapusKamarLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="hapusKamarLabel">Hapus Data
+                                                            Kamar
+                                                        </h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body text-center">
+                                                        <img src="{{ asset('dist/assets/img/bin.gif') }}" alt=""
+                                                            class="img-fluid w-25">
+                                                        <p>Yakin ingin menghapus data?</p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="submit"
-                                                            class="btn btn-sm btn-success">Update</button>
+                                                        <a href="{{ route('kamar.destroy', $item->id) }}" type="submit"
+                                                            class="btn btn-sm btn-danger">Hapus</a>
                                                         <button type="button" class="btn btn-sm btn-secondary"
                                                             data-bs-dismiss="modal">Batal</button>
                                                     </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Modal Hapus Kamar -->
-                                    <div class="modal fade" id="hapusKamar" data-bs-backdrop="static"
-                                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="hapusKamarLabel"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-scrollable">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="hapusKamarLabel">Hapus Data
-                                                        Kamar
-                                                    </h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body text-center">
-                                                    <img src="{{ asset('dist/assets/img/bin.gif') }}" alt=""
-                                                        class="img-fluid w-25">
-                                                    <p>Yakin ingin menghapus data?</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a href="#" type="submit"
-                                                        class="btn btn-sm btn-danger">Hapus</a>
-                                                    <button type="button" class="btn btn-sm btn-secondary"
-                                                        data-bs-dismiss="modal">Batal</button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </tr>
+                                    </tr>
+                                @endforeach
                             </x-admin.table>
                         </div>
                     </div>
@@ -160,7 +177,7 @@
                     <h1 class="modal-title fs-5" id="addKamarLabel">Tambah Data Kamar</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="#" method="post">
+                <form action="{{ route('kamar.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <x-admin.input type="text" placeholder="Nomor Kamar" label="Nomor Kamar" name="nomorKamar" />
@@ -168,9 +185,10 @@
                         <Label>Penginapan</Label>
                         <select class="form-select mb-3" aria-label="Default select example" name="penginapan_id"
                             id="penginapan_id">
-                            <option selected hidden>--- Pilih Penginapan ---</option>
-                            <option>asdasd</option>
-                            <option>qweqwe</option>
+                            <option selected hidden value="">--- Pilih Penginapan ---</option>
+                            @foreach ($penginapan as $item3)
+                                <option value="{{ $item3->id }}">{{ $item3->nama_penginapan }}</option>
+                            @endforeach
                         </select>
 
                         <x-admin.input type="number" placeholder="Harga Kamar" label="Harga Kamar" name="hargaKamar" />
@@ -181,10 +199,11 @@
                         </div>
 
                         <Label>Status</Label>
-                        <select class="form-select mb-3" aria-label="Default select example" name=status" id=status">
-                            <option selected hidden>--- Pilih Status ---</option>
-                            <option>Terisi</option>
-                            <option>Kosong</option>
+                        <select class="form-select mb-3" aria-label="Default select example" name="status"
+                            id="status">
+                            <option selected hidden value="">--- Pilih Status ---</option>
+                            <option value="Terisi">Terisi</option>
+                            <option value="Kosong">Kosong</option>
                         </select>
                     </div>
                     <div class="modal-footer">

@@ -7,7 +7,9 @@
     'id' => null,
     'readonly' => false,
 ])
-<label>{{ $label }}</label>
+@if ($label != null)
+    <label>{{ $label }}</label>
+@endif
 <div class="mb-3">
     <input type="{{ $type }}" class="form-control" placeholder="{{ $placeholder }}" value="{{ $value }}"
         name="{{ $name }}" id="{{ $id }}" {{ $readonly ? 'readonly' : '' }} />

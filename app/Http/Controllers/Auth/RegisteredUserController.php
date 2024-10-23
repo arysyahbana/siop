@@ -34,13 +34,19 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'gender' => ['required'],
+            'noHp' => ['required','numeric','digits_between:9,13'],
+            'alamat' => ['required'],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'Petugas',
+            'role' => 'Pemilik',
+            'gender' => $request->gender,
+            'noHp' => $request->noHp,
+            'alamat' => $request->alamat,
         ]);
 
         event(new Registered($user));
@@ -48,6 +54,8 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         // return redirect(RouteServiceProvider::HOME);
-        return redirect()->intended('/dashboard')->with('success', 'Selamat datang ' . Auth::user()->name);
+        return redirect()
+            ->intended('/dashboard')
+            ->with('success', 'Selamat datang ' . Auth::user()->name);
     }
 }

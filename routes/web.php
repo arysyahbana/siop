@@ -65,19 +65,30 @@ Route::prefix('objek-wisata')->group(function () {
     Route::get('/show', [ObjekWisataController::class, 'index'])->name('objek-wisata.show');
     Route::post('/store', [ObjekWisataController::class, 'store'])->name('objek-wisata.store');
     Route::post('/update/{id}', [ObjekWisataController::class, 'update'])->name('objek-wisata.update');
+    Route::get('/destroy/{id}', [ObjekWisataController::class, 'destroy'])->name('objek-wisata.destroy');
 });
 Route::prefix('penginapan')->group(function () {
     Route::get('/show', [PenginapanController::class, 'index'])->name('penginapan.show');
+    Route::post('/store', [PenginapanController::class, 'store'])->name('penginapan.store');
+    Route::post('/update/{id}', [PenginapanController::class, 'update'])->name('penginapan.update');
+    Route::get('/destroy/{id}', [PenginapanController::class, 'destroy'])->name('penginapan.destroy');
 });
 Route::prefix('kamar')->group(function () {
     Route::get('/show', [KamarController::class, 'index'])->name('kamar.show');
+    Route::post('/store', [KamarController::class, 'store'])->name('kamar.store');
+    Route::post('/update/{id}', [KamarController::class, 'update'])->name('kamar.update');
+    Route::get('/destroy/{id}', [KamarController::class, 'destroy'])->name('kamar.destroy');
 });
 Route::prefix('owner')->group(function () {
     Route::get('/show', [OwnerController::class, 'index'])->name('owner.show');
+    Route::get('/store', [OwnerController::class, 'store'])->name('owner.store');
 });
 Route::prefix('paket')->group(function () {
     Route::get('/show', [PaketController::class, 'index'])->name('paket.show');
-    Route::get('/edit', [PaketController::class, 'edit'])->name('paket.edit');
+    Route::post('/store', [PaketController::class, 'store'])->name('paket.store');
+    Route::get('/edit/{id}', [PaketController::class, 'edit'])->name('paket.edit');
+    Route::post('/update/{id}', [PaketController::class, 'update'])->name('paket.update');
+    Route::get('/destroy/{id}', [PaketController::class, 'destroy'])->name('paket.destroy');
 });
 
 

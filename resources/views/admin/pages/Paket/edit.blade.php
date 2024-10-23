@@ -10,41 +10,50 @@
                 <div class="card mb-4">
                     <div class="card-body px-5 pt-0 pb-2">
                         <div class="table-responsive p-5">
-                            <form action="#" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('paket.update', $paketTour->id) }}" method="post"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <p class="text-center">
                                     <img src="{{ asset('dist/assets/img/bin.gif') }}" alt=""
                                         style="max-width: 800px">
                                 </p>
-                                <x-admin.input type="text" placeholder="Nama Paket" label="Nama Paket"
-                                    name="namaPaket" />
+                                <x-admin.input type="text" placeholder="Nama Paket" label="Nama Paket" name="namaPaket"
+                                    value="{{ $paketTour->nama_paket }}" />
 
                                 <Label>Objek Wisata</Label>
                                 <select class="form-select mb-3" aria-label="Default select example" name="wisata_id"
                                     id="wisata_id">
-                                    <option selected hidden>--- Pilih Objek Wisata ---</option>
-                                    <option>asdasd</option>
-                                    <option>qweqwe</option>
+                                    <option selected hidden value="">--- Pilih Objek Wisata ---</option>
+                                    @foreach ($objekWisata as $wisata)
+                                        <option value="{{ $wisata->id }}" @selected($wisata->id == $paketTour->id_objek_wisata)>
+                                            {{ $wisata->nama_wisata }}
+                                        </option>
+                                    @endforeach
                                 </select>
-
                                 <Label>Penginapan</Label>
                                 <select class="form-select mb-3" aria-label="Default select example" name="penginapan_id"
                                     id="penginapan_id">
-                                    <option selected hidden>--- Pilih Penginapan ---</option>
-                                    <option>asdasd</option>
-                                    <option>qweqwe</option>
+                                    <option selected hidden value="">--- Pilih Penginapan ---</option>
+                                    @foreach ($penginapan as $inap)
+                                        <option value="{{ $inap->id }}" @selected($inap->id == $paketTour->id_penginapan)>
+                                            {{ $inap->nama_penginapan }}
+                                        </option>
+                                    @endforeach
                                 </select>
 
                                 <Label>Owner</Label>
                                 <select class="form-select mb-3" aria-label="Default select example" name="owner_id"
                                     id="owner_id">
-                                    <option selected hidden>--- Pilih Owner ---</option>
-                                    <option>asdasd</option>
-                                    <option>qweqwe</option>
+                                    <option selected hidden value="">--- Pilih Owner ---</option>
+                                    @foreach ($pemilik as $owner)
+                                        <option value="{{ $owner->id }}" @selected($owner->id == $paketTour->id_pemilik)>
+                                            {{ $owner->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
 
                                 <x-admin.input type="number" placeholder="Harga Paket" label="Harga Paket"
-                                    name="hargaPaket" />
+                                    name="hargaPaket" value="{{ $paketTour->harga }}" />
 
                                 <div class="mb-3">
                                     <label for="formFile" class="form-label">Perbarui Foto</label>
@@ -52,16 +61,26 @@
                                 </div>
 
                                 <div class="addOn">
-                                    <div class="row me-1">
-                                        <div class="col-11">
-                                            <x-admin.input type="text" placeholder="Item Tambahan" label="Item Tambahan"
-                                                name="item[]" />
+                                    @foreach ($paketTour->rItemTambahan as $key => $value)
+                                        <div class="row me-1">
+                                            <div class="col-11">
+                                                <x-admin.input type="text" placeholder="Item Tambahan"
+                                                    label="{{ $key == 0 ? 'Item Tambahan' : '' }}" name="item[]"
+                                                    value="{{ $value->nama_item }}" />
+                                            </div>
+                                            @if ($key == 0)
+                                                <div class="col-1 mt-3 pt-3">
+                                                    <button type="button" class="btn btn-sm btn-primary"
+                                                        onclick="addItem(this)">+</button>
+                                                </div>
+                                            @else
+                                                <div class="col-1">
+                                                    <button type="button" class="btn btn-sm btn-warning"
+                                                        onclick="deleteForm(this)">-</button>
+                                                </div>
+                                            @endif
                                         </div>
-                                        <div class="col-1 mt-3 pt-3">
-                                            <button type="button" class="btn btn-sm btn-primary"
-                                                onclick="addItem(this)">+</button>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
 
                                 <div class="d-flex justify-content-end mt-3">

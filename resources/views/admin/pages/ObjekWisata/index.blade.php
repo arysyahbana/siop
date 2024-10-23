@@ -109,7 +109,7 @@
                                                                 label="Harga Tiket" name="harga"
                                                                 value="{{ $item->harga }}" />
                                                             <x-admin.input type="number" placeholder="Kontak"
-                                                                label="Kontak" name="kontak" {{ $item->no_hp }} />
+                                                                label="Kontak" name="kontak" value="{{ $item->no_hp }}" />
                                                             <div class="mb-3">
                                                                 <label for="formFile" class="form-label">Foto
                                                                     Sebelumnya</label>
@@ -156,7 +156,7 @@
                                                         <p>Yakin ingin menghapus data?</p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <a href="#" type="submit"
+                                                        <a href="{{route('objek-wisata.destroy', $item->id)}}" type="submit"
                                                             class="btn btn-sm btn-danger">Hapus</a>
                                                         <button type="button" class="btn btn-sm btn-secondary"
                                                             data-bs-dismiss="modal">Batal</button>

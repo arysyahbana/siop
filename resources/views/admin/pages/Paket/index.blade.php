@@ -31,63 +31,68 @@
                                         <x-admin.th>Action</x-admin.th>
                                     </tr>
                                 @endslot
-                                <tr>
-                                    <x-admin.td>1</x-admin.td>
-                                    <x-admin.td>awkoawok</x-admin.td>
-                                    <x-admin.td> Lorem ipsum dolor sit amet. </x-admin.td>
-                                    <x-admin.td> Lorem ipsum dolor sit amet. </x-admin.td>
-                                    <x-admin.td>Lorem</x-admin.td>
-                                    <x-admin.td>Rp. 0808989</x-admin.td>
-                                    <x-admin.td>
-                                        <a href="{{ asset('dist/assets/img/apple-icon.png') }}" target="_blank">
-                                            <img src="{{ asset('dist/assets/img/apple-icon.png') }}" alt=""
-                                                style="max-width: 100px" class="img-fluid img-thumbnail">
-                                        </a>
-                                    </x-admin.td>
-                                    <x-admin.td>
-                                        <ul>
-                                            <li>awkowoakkoaw</li>
-                                            <li>awkowoakkoaw</li>
-                                            <li>awkowoakkoaw</li>
-                                            <li>awkowoakkoaw</li>
-                                        </ul>
-                                    </x-admin.td>
-                                    <x-admin.td>
-                                        <a href="{{ route('paket.edit') }}" class="btn bg-gradient-info"><i
-                                                class="fa fa-pencil" aria-hidden="true"></i><span
-                                                class="text-capitalize ms-1">Edit</span></a>
-                                        <a href="#" class="btn bg-gradient-danger" data-bs-toggle="modal"
-                                            data-bs-target="#hapusPaket"><i class="fa fa-trash" aria-hidden="true"></i><span
-                                                class="text-capitalize ms-1">Hapus</span></a>
-                                    </x-admin.td>
+                                @foreach ($paketTour as $item)
+                                    <tr>
+                                        <x-admin.td>{{ $loop->iteration }}</x-admin.td>
+                                        <x-admin.td>{{ $item->nama_paket ?? '' }}</x-admin.td>
+                                        <x-admin.td> {{ $item->rObjekWisata?->nama_wisata ?? '' }} </x-admin.td>
+                                        <x-admin.td> {{ $item->rPenginapan?->nama_penginapan ?? '' }} </x-admin.td>
+                                        <x-admin.td>{{ $item->rPemilik?->name ?? '' }}</x-admin.td>
+                                        <x-admin.td>Rp.
+                                            {{ App\Helpers\GlobalFunction::formatMoney($item->harga ?? '') }}</x-admin.td>
+                                        <x-admin.td>
+                                            <a href="{{ asset('dist/assets/img/paket-tour/' . $item->image) }}"
+                                                target="_blank">
+                                                <img src="{{ asset('dist/assets/img/paket-tour/' . $item->image) }}"
+                                                    alt="" style="max-width: 100px" class="img-fluid img-thumbnail">
+                                            </a>
+                                        </x-admin.td>
+                                        <x-admin.td>
+                                            <ul>
+                                                @foreach ($item->rItemTambahan as $item2)
+                                                    <li>{{ $item2->nama_item ?? '' }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </x-admin.td>
+                                        <x-admin.td>
+                                            <a href="{{ route('paket.edit', $item->id) }}" class="btn bg-gradient-info"><i
+                                                    class="fa fa-pencil" aria-hidden="true"></i><span
+                                                    class="text-capitalize ms-1">Edit</span></a>
+                                            <a href="#" class="btn bg-gradient-danger" data-bs-toggle="modal"
+                                                data-bs-target="#hapusPaket{{ $item->id }}"><i class="fa fa-trash"
+                                                    aria-hidden="true"></i><span
+                                                    class="text-capitalize ms-1">Hapus</span></a>
+                                        </x-admin.td>
 
-                                    <!-- Modal Hapus Paket -->
-                                    <div class="modal fade" id="hapusPaket" data-bs-backdrop="static"
-                                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="hapusPaketLabel"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-scrollable">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="hapusPaketLabel">Hapus Data
-                                                        Paket
-                                                    </h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body text-center">
-                                                    <img src="{{ asset('dist/assets/img/bin.gif') }}" alt=""
-                                                        class="img-fluid w-25">
-                                                    <p>Yakin ingin menghapus data?</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a href="#" type="submit" class="btn btn-sm btn-danger">Hapus</a>
-                                                    <button type="button" class="btn btn-sm btn-secondary"
-                                                        data-bs-dismiss="modal">Batal</button>
+                                        <!-- Modal Hapus Paket -->
+                                        <div class="modal fade" id="hapusPaket{{ $item->id }}"
+                                            data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                            aria-labelledby="hapusPaketLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="hapusPaketLabel">Hapus Data
+                                                            Paket
+                                                        </h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body text-center">
+                                                        <img src="{{ asset('dist/assets/img/bin.gif') }}" alt=""
+                                                            class="img-fluid w-25">
+                                                        <p>Yakin ingin menghapus data?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="{{route('paket.destroy', $item->id)}}" type="submit"
+                                                            class="btn btn-sm btn-danger">Hapus</a>
+                                                        <button type="button" class="btn btn-sm btn-secondary"
+                                                            data-bs-dismiss="modal">Batal</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </tr>
+                                    </tr>
+                                @endforeach
                             </x-admin.table>
                         </div>
                     </div>
@@ -105,7 +110,7 @@
                     <h1 class="modal-title fs-5" id="addPaketLabel">Tambah Data Paket</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="#" method="post">
+                <form action="{{ route('paket.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <x-admin.input type="text" placeholder="Nama Paket" label="Nama Paket" name="namaPaket" />
@@ -113,24 +118,27 @@
                         <Label>Objek Wisata</Label>
                         <select class="form-select mb-3" aria-label="Default select example" name="wisata_id"
                             id="wisata_id">
-                            <option selected hidden>--- Pilih Objek Wisata ---</option>
-                            <option>asdasd</option>
-                            <option>qweqwe</option>
+                            <option selected hidden value="">--- Pilih Objek Wisata ---</option>
+                            @foreach ($objekWisata as $wisata)
+                                <option value="{{ $wisata->id }}">{{ $wisata->nama_wisata }}</option>
+                            @endforeach
                         </select>
 
                         <Label>Penginapan</Label>
                         <select class="form-select mb-3" aria-label="Default select example" name="penginapan_id"
                             id="penginapan_id">
-                            <option selected hidden>--- Pilih Penginapan ---</option>
-                            <option>asdasd</option>
-                            <option>qweqwe</option>
+                            <option selected hidden value="">--- Pilih Penginapan ---</option>
+                            @foreach ($penginapan as $inap)
+                                <option value="{{ $inap->id }}">{{ $inap->nama_penginapan }}</option>
+                            @endforeach
                         </select>
 
                         <Label>Owner</Label>
                         <select class="form-select mb-3" aria-label="Default select example" name="owner_id" id="owner_id">
                             <option selected hidden>--- Pilih Owner ---</option>
-                            <option>asdasd</option>
-                            <option>qweqwe</option>
+                            @foreach ($pemilik as $owner)
+                                <option value="{{ $owner->id }}">{{ $owner->name }}</option>
+                            @endforeach
                         </select>
 
                         <x-admin.input type="number" placeholder="Harga Paket" label="Harga Paket" name="hargaPaket" />

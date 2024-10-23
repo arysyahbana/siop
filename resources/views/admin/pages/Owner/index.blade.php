@@ -30,80 +30,88 @@
                                     </tr>
                                 @endslot
 
-                                <tr>
-                                    <x-admin.td>1</x-admin.td>
-                                    <x-admin.td>Budiono Siregar</x-admin.td>
-                                    <x-admin.td>kapalawd@gmail.com</x-admin.td>
-                                    <x-admin.td>22342342423</x-admin.td>
-                                    <x-admin.td>sdfsdfsfdsdf</x-admin.td>
-                                    <x-admin.td>
-                                        <a href="#" class="btn bg-gradient-info" data-bs-toggle="modal"
-                                            data-bs-target="#editOwner"><i class="fa fa-pencil" aria-hidden="true"></i><span
-                                                class="text-capitalize ms-1">Edit</span></a>
-                                        <a href="#" class="btn bg-gradient-danger" data-bs-toggle="modal"
-                                            data-bs-target="#hapusOwner"><i class="fa fa-trash" aria-hidden="true"></i><span
-                                                class="text-capitalize ms-1">Hapus</span></a>
-                                    </x-admin.td>
-                                </tr>
+                                @foreach ($pemilik as $item)
+                                    <tr>
+                                        <x-admin.td>{{ $loop->iteration }}</x-admin.td>
+                                        <x-admin.td>{{ $item->name ?? '' }}</x-admin.td>
+                                        <x-admin.td>{{ $item->email ?? '' }}</x-admin.td>
+                                        <x-admin.td>{{ $item->no_hp ?? '' }}</x-admin.td>
+                                        <x-admin.td>{{ $item->alamat ?? '' }}</x-admin.td>
+                                        <x-admin.td>
+                                            <a href="#" class="btn bg-gradient-info" data-bs-toggle="modal"
+                                                data-bs-target="#editOwner{{ $item->id }}"><i class="fa fa-pencil"
+                                                    aria-hidden="true"></i><span
+                                                    class="text-capitalize ms-1">Edit</span></a>
+                                            <a href="#" class="btn bg-gradient-danger" data-bs-toggle="modal"
+                                                data-bs-target="#hapusOwner{{ $item->id }}"><i class="fa fa-trash"
+                                                    aria-hidden="true"></i><span
+                                                    class="text-capitalize ms-1">Hapus</span></a>
+                                        </x-admin.td>
 
-                                <!-- Modal Edit Petugas -->
-                                <div class="modal fade" id="editOwner" data-bs-backdrop="static" data-bs-keyboard="false"
-                                    tabindex="-1" aria-labelledby="editOwnerLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-scrollable">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="editOwnerLabel">Edit Data Owner
-                                                </h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <form action="#" method="post">
-                                                @csrf
-                                                <div class="modal-body">
-                                                    <x-admin.input type="text" placeholder="Nama Owner"
-                                                        label="Nama Owner" name="namaOwner" />
-                                                    <x-admin.input type="email" placeholder="Email" label="Email"
-                                                        name="email" />
-                                                    <x-admin.input type="text" placeholder="No HP" label="No HP"
-                                                        name="noHp" />
-                                                    <x-admin.input type="text" placeholder="Alamat" label="No HP"
-                                                        name="alamat" />
+                                        <!-- Modal Edit Petugas -->
+                                        <div class="modal fade" id="editOwner{{ $item->id }}" data-bs-backdrop="static"
+                                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="editOwnerLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="editOwnerLabel">Edit Data Owner
+                                                        </h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <form action="#" method="post">
+                                                        @csrf
+                                                        <div class="modal-body">
+                                                            <x-admin.input type="text" placeholder="Nama Owner"
+                                                                label="Nama Owner" name="namaOwner" />
+                                                            <x-admin.input type="email" placeholder="Email" label="Email"
+                                                                name="email" />
+                                                            <x-admin.input type="text" placeholder="No HP" label="No HP"
+                                                                name="noHp" />
+                                                            <x-admin.input type="text" placeholder="Alamat"
+                                                                label="No HP" name="alamat" />
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit"
+                                                                class="btn btn-sm btn-success">Update</button>
+                                                            <button type="button" class="btn btn-sm btn-secondary"
+                                                                data-bs-dismiss="modal">Batal</button>
+                                                        </div>
+                                                    </form>
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-sm btn-success">Update</button>
-                                                    <button type="button" class="btn btn-sm btn-secondary"
-                                                        data-bs-dismiss="modal">Batal</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Modal Hapus Owner -->
-                                <div class="modal fade" id="hapusOwner" data-bs-backdrop="static" data-bs-keyboard="false"
-                                    tabindex="-1" aria-labelledby="hapusOwnerLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-scrollable">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="hapusOwnerLabel">Hapus Data
-                                                    Owner
-                                                </h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body text-center">
-                                                <img src="{{ asset('dist/assets/img/bin.gif') }}" alt=""
-                                                    class="img-fluid w-25">
-                                                <p>Yakin ingin menghapus data?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="#" type="submit" class="btn btn-sm btn-danger">Hapus</a>
-                                                <button type="button" class="btn btn-sm btn-secondary"
-                                                    data-bs-dismiss="modal">Batal</button>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+
+                                        <!-- Modal Hapus Owner -->
+                                        <div class="modal fade" id="hapusOwner{{ $item->id }}" data-bs-backdrop="static"
+                                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="hapusOwnerLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="hapusOwnerLabel">Hapus Data
+                                                            Owner
+                                                        </h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body text-center">
+                                                        <img src="{{ asset('dist/assets/img/bin.gif') }}" alt=""
+                                                            class="img-fluid w-25">
+                                                        <p>Yakin ingin menghapus data?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="#" type="submit"
+                                                            class="btn btn-sm btn-danger">Hapus</a>
+                                                        <button type="button" class="btn btn-sm btn-secondary"
+                                                            data-bs-dismiss="modal">Batal</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </tr>
+                                @endforeach
                             </x-admin.table>
                         </div>
                     </div>
