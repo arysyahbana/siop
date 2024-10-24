@@ -20,4 +20,8 @@ class Penginapan extends Model
     public function rPemilik(){
         return $this->belongsTo(User::class, 'id_pemilik', 'id');
     }
+
+    public function rKamar(){
+        return $this->hasMany(Kamar::class, 'id_penginapan', 'id');
+    }
 }

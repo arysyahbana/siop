@@ -12,7 +12,7 @@
                         <a href="#" class="btn bg-gradient-warning" data-bs-toggle="modal"
                             data-bs-target="#addKategori"><i class="fa fa-plus" aria-hidden="true"></i><span
                                 class="text-capitalize ms-1">Tambah</span></a>
-                        <a href="#" class="btn bg-gradient-success"><i class="bi bi-plus-circle"></i><span
+                        <a href="{{route('kategori.download')}}" class="btn bg-gradient-success"><i class="bi bi-plus-circle"></i><span
                                 class="text-capitalize ms-1">Unduh Rekap Data</span></a>
                     </div>
                     <div class="card-body px-5 pt-0 pb-2">

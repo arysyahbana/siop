@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nomor_kamar');
             $table->string('id_penginapan');
+            $table->text('deskripsi');
             $table->integer('harga');
             $table->enum('status', ['Terisi', 'Kosong']);
             $table->string('image');

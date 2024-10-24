@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
                 'role' => 'Admin',
                 'no_hp' => '',
                 'alamat' => '',
+                'jenis_kelamin' => 'Pria',
                 'remember_token' => null,
             ],
             [
@@ -31,6 +32,7 @@ class UserSeeder extends Seeder
                 'role' => 'Pemilik',
                 'no_hp' => '08123456789',
                 'alamat' => 'Jl. Jalan',
+                'jenis_kelamin' => 'Pria',
                 'remember_token' => null,
             ],
         ]);

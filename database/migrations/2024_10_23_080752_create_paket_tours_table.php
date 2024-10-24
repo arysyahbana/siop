@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('paket_tours', function (Blueprint $table) {
             $table->id();
             $table->string('nama_paket');
+            $table->text('deskripsi');
             $table->string('id_objek_wisata');
             $table->string('id_penginapan');
             $table->string('id_pemilik');

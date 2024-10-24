@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\GenericExport;
 use App\Helpers\GlobalFunction;
 use App\Models\Kamar;
 use App\Models\Penginapan;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KamarController extends Controller
 {
@@ -20,6 +22,7 @@ class KamarController extends Controller
             [
                 'nomorKamar' => 'required',
                 'penginapan_id' => 'required',
+                'deskripsi' => 'required',
                 'status' => 'required',
                 'hargaKamar' => 'required|numeric',
                 'image' => $imageRule . '|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -28,6 +31,7 @@ class KamarController extends Controller
                 'nomorKamar.required' => 'Nomor Kamar tidak boleh kosong',
                 'penginapan_id.required' => 'data penginapan tidak boleh kosong',
                 'status.required' => 'status tidak boleh kosong',
+                'deskripsi.required' => 'deskripsi tidak boleh kosong',
                 'hargaKamar.required' => 'harga tidak boleh kosong',
                 'hargaKamar.numeric' => 'harga harus berupa angka',
                 'image.required' => 'image tidak boleh kosong',
@@ -49,10 +53,11 @@ class KamarController extends Controller
     {
         $this->validateData($request);
         $penginapan = Penginapan::find($request->penginapan_id);
-        $image = GlobalFunction::saveImage($request->file('image'), ($request->nomorKamar.'_'.$penginapan->nama_penginapan), $this->path);
+        $image = GlobalFunction::saveImage($request->file('image'), $request->nomorKamar . '_' . $penginapan->nama_penginapan, $this->path);
         $data = [
             'nomor_kamar' => $request->nomorKamar,
             'id_penginapan' => $request->penginapan_id,
+            'deskripsi' => $request->deskripsi,
             'harga' => $request->hargaKamar,
             'status' => $request->status,
             'image' => $image,
@@ -72,13 +77,14 @@ class KamarController extends Controller
         $data = [
             'nomor_kamar' => $request->nomorKamar,
             'id_penginapan' => $request->penginapan_id,
+            'deskripsi' => $request->deskripsi,
             'harga' => $request->hargaKamar,
             'status' => $request->status,
         ];
 
         if ($request->file('image')) {
             GlobalFunction::deleteImage($kamar->image, $this->path);
-            $data['image'] = GlobalFunction::saveImage($request->file('image'), ($request->nomorKamar.'_'.$penginapan->nama_penginapan), $this->path);
+            $data['image'] = GlobalFunction::saveImage($request->file('image'), $request->nomorKamar . '_' . $penginapan->nama_penginapan, $this->path);
         }
 
         Kamar::where('id', $id)->update($data);
@@ -92,5 +98,16 @@ class KamarController extends Controller
         GlobalFunction::deleteImage($kamar->image, $this->path);
         $kamar->delete();
         return back()->with('success', 'Data Kamar Berhasil Dihapus');
+    }
+
+    public function download()
+    {
+        $columns = ['nomor_kamar', 'harga', 'status', 'image'];
+
+        $relations = [
+            'rPenginapan' => ['nama_penginapan'],
+        ];
+
+        return Excel::download(new GenericExport(Kamar::class, $columns, 'F', 'kamar',$relations), 'kamar.xlsx');
     }
 }

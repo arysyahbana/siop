@@ -14,7 +14,8 @@ class Kamar extends Model
         'id_penginapan',
         'harga',
         'status',
-        'image'
+        'image',
+        'deskripsi'
     ];
 
     public function rPenginapan(){

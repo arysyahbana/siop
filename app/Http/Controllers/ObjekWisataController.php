@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\GenericExport;
 use App\Helpers\GlobalFunction;
 use App\Models\Kategori;
 use App\Models\ObjekWisata;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\Finder\Glob;
 
 class ObjekWisataController extends Controller
@@ -60,7 +62,7 @@ class ObjekWisataController extends Controller
             'deskripsi' => $request->deskripsi,
             'lokasi' => $request->lokasi,
             'harga' => $request->harga,
-            'no_hp' => $request->kontak,
+            'no_hp' => GlobalFunction::formatPhoneNumber($request->kontak),
             'id_kategori' => $request->kategori_id,
             'image' => $image,
         ];
@@ -80,7 +82,7 @@ class ObjekWisataController extends Controller
             'deskripsi' => $request->deskripsi,
             'lokasi' => $request->lokasi,
             'harga' => $request->harga,
-            'no_hp' => $request->kontak,
+            'no_hp' => GlobalFunction::formatPhoneNumber($request->kontak),
             'id_kategori' => $request->kategori_id,
         ];
 
@@ -100,5 +102,16 @@ class ObjekWisataController extends Controller
         GlobalFunction::deleteImage($wisata->image, $this->path);
         $wisata->delete();
         return back()->with('success', 'Objek Pariwisata Berhasil Dihapus');
+    }
+
+    public function download()
+    {
+        $columns = ['nama_wisata', 'deskripsi', 'lokasi', 'image', 'harga','no_hp'];
+
+        $relations = [
+            'rKategori' => ['kategori'],
+        ];
+
+        return Excel::download(new GenericExport(ObjekWisata::class, $columns, 'H', 'objek-wisata', $relations), 'Objek Wisata.xlsx');
     }
 }

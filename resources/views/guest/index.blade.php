@@ -90,92 +90,32 @@
         <section id="pariwisata" class="mt-20">
             <p class="text-center text-2xl font-bold text-slate-700">DAFTAR OBJEK PARIWISATA</p>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-5 justify-items-center gap-5">
-                <a href="{{ route('detail-wisata') }}" class="w-full max-w-lg">
-                    <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
-                        data-aos="fade-up" data-aos-duration="1000">
-                        <div class="p-5 overflow-hidden rounded-xl flex-grow">
-                            <img src="{{ asset('dist/assets/img/team-1.jpg') }}" alt=""
-                                class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
-                            <div class="flex justify-between">
-                                <p class="text-xl font-bold text-slate-700 my-2">
-                                    Combai Hill
+            @foreach ($objekWisata as $wisata)
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-5 justify-items-center gap-5">
+                    <a href="{{ route('detail-wisata', $wisata->id) }}" class="w-full max-w-lg">
+                        <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
+                            data-aos="fade-up" data-aos-duration="1000">
+                            <div class="p-5 overflow-hidden rounded-xl flex-grow">
+                                <img src="{{ asset('dist/assets/img/objek-wisata/' . $wisata->image ?? '') }}"
+                                    alt="" class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
+                                <div class="flex justify-between">
+                                    <p class="text-xl font-bold text-slate-700 my-2">
+                                        {{ $wisata->nama_wisata ?? '' }}
+                                    </p>
+                                    <p class="text-sm desc my-3 text-violet-800">
+                                        {{ $wisata->rKategori?->kategori ?? '' }}
+                                    </p>
+                                </div>
+                                <p class="text-sm desc my-2">
+                                    {{ $wisata->deskripsi ?? '' }}
                                 </p>
-                                <p class="text-sm desc my-3 text-violet-800">
-                                    Bangunan
-                                </p>
+                                <p class="text-end mt-3 text-orange-500 text-lg">Rp.
+                                    {{ App\Helpers\GlobalFunction::formatMoney($wisata->harga ?? 0) }} / orang</p>
                             </div>
-                            <p class="text-sm desc my-2">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore, necessitatibus....
-                            </p>
-                            <p class="text-end mt-3 text-orange-500 text-lg">Rp. 50.000 / orang</p>
                         </div>
-                    </div>
-                </a>
-                <a href="{{ route('detail-wisata') }}" class="w-full max-w-lg">
-                    <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
-                        data-aos="fade-up" data-aos-duration="1200">
-                        <div class="p-5 overflow-hidden rounded-xl flex-grow">
-                            <img src="{{ asset('dist/assets/img/team-1.jpg') }}" alt=""
-                                class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
-                            <div class="flex justify-between">
-                                <p class="text-xl font-bold text-slate-700 my-2">
-                                    Combai Hill
-                                </p>
-                                <p class="text-sm desc my-3 text-violet-800">
-                                    Bangunan
-                                </p>
-                            </div>
-                            <p class="text-sm desc my-2">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore, necessitatibus....
-                            </p>
-                            <p class="text-end mt-3 text-orange-500 text-lg">Rp. 50.000 / orang</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="{{ route('detail-wisata') }}" class="w-full max-w-lg">
-                    <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
-                        data-aos="fade-up" data-aos-duration="1400">
-                        <div class="p-5 overflow-hidden rounded-xl flex-grow">
-                            <img src="{{ asset('dist/assets/img/team-1.jpg') }}" alt=""
-                                class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
-                            <div class="flex justify-between">
-                                <p class="text-xl font-bold text-slate-700 my-2">
-                                    Combai Hill
-                                </p>
-                                <p class="text-sm desc my-3 text-violet-800">
-                                    Bangunan
-                                </p>
-                            </div>
-                            <p class="text-sm desc my-2">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore, necessitatibus....
-                            </p>
-                            <p class="text-end mt-3 text-orange-500 text-lg">Rp. 50.000 / orang</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="{{ route('detail-wisata') }}" class="w-full max-w-lg">
-                    <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
-                        data-aos="fade-up" data-aos-duration="1600">
-                        <div class="p-5 overflow-hidden rounded-xl flex-grow">
-                            <img src="{{ asset('dist/assets/img/team-1.jpg') }}" alt=""
-                                class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
-                            <div class="flex justify-between">
-                                <p class="text-xl font-bold text-slate-700 my-2">
-                                    Combai Hill
-                                </p>
-                                <p class="text-sm desc my-3 text-violet-800">
-                                    Bangunan
-                                </p>
-                            </div>
-                            <p class="text-sm desc my-2">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore, necessitatibus....
-                            </p>
-                            <p class="text-end mt-3 text-orange-500 text-lg">Rp. 50.000 / orang</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
+                    </a>
+                </div>
+            @endforeach
 
         </section>
 
@@ -184,66 +124,23 @@
             <p class="text-center text-2xl font-bold text-slate-700">DAFTAR PENGINAPAN</p>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-5 justify-items-center gap-5">
-                <a href="{{ route('detail-penginapan') }}" class="w-full max-w-lg">
-                    <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
-                        data-aos="fade-up" data-aos-duration="1000">
-                        <div class="p-5 overflow-hidden rounded-xl flex-grow">
-                            <img src="{{ asset('dist/assets/img/team-3.jpg') }}" alt=""
-                                class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
-                            <p class="text-xl font-bold text-slate-700 my-2">
-                                Kayu Joo Resort
-                            </p>
-                            <p class="text-sm desc my-2">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore, necessitatibus....
-                            </p>
+                @foreach ($penginapan as $inap)
+                    <a href="{{ route('detail-penginapan', $inap->id) }}" class="w-full max-w-lg">
+                        <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
+                            data-aos="fade-up" data-aos-duration="1000">
+                            <div class="p-5 overflow-hidden rounded-xl flex-grow">
+                                <img src="{{ asset('dist/assets/img/penginapan/' . $inap->image ?? '') }}"
+                                    alt="" class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
+                                <p class="text-xl font-bold text-slate-700 my-2">
+                                    {{ $inap->nama_penginapan ?? '' }}
+                                </p>
+                                <p class="text-sm desc my-2">
+                                    {{ $inap->deskripsi ?? '' }}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                </a>
-                <a href="{{ route('detail-penginapan') }}" class="w-full max-w-lg">
-                    <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
-                        data-aos="fade-up" data-aos-duration="1200">
-                        <div class="p-5 overflow-hidden rounded-xl flex-grow">
-                            <img src="{{ asset('dist/assets/img/team-3.jpg') }}" alt=""
-                                class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
-                            <p class="text-xl font-bold text-slate-700 my-2">
-                                Kayu Joo Resort
-                            </p>
-                            <p class="text-sm desc my-2">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore, necessitatibus....
-                            </p>
-                        </div>
-                    </div>
-                </a>
-                <a href="{{ route('detail-penginapan') }}" class="w-full max-w-lg">
-                    <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
-                        data-aos="fade-up" data-aos-duration="1400">
-                        <div class="p-5 overflow-hidden rounded-xl flex-grow">
-                            <img src="{{ asset('dist/assets/img/team-3.jpg') }}" alt=""
-                                class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
-                            <p class="text-xl font-bold text-slate-700 my-2">
-                                Kayu Joo Resort
-                            </p>
-                            <p class="text-sm desc my-2">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore, necessitatibus....
-                            </p>
-                        </div>
-                    </div>
-                </a>
-                <a href="{{ route('detail-penginapan') }}" class="w-full max-w-lg">
-                    <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
-                        data-aos="fade-up" data-aos-duration="1600">
-                        <div class="p-5 overflow-hidden rounded-xl flex-grow">
-                            <img src="{{ asset('dist/assets/img/team-3.jpg') }}" alt=""
-                                class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
-                            <p class="text-xl font-bold text-slate-700 my-2">
-                                Kayu Joo Resort
-                            </p>
-                            <p class="text-sm desc my-2">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore, necessitatibus....
-                            </p>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                @endforeach
             </div>
 
         </section>
@@ -253,66 +150,23 @@
             <p class="text-center text-2xl font-bold text-slate-700">DAFTAR PAKET TOUR WISATA</p>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-5 justify-items-center gap-5">
-                <a href="{{ route('detail-paket') }}" class="w-full max-w-lg">
-                    <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
-                        data-aos="fade-up" data-aos-duration="1000">
-                        <div class="p-5 overflow-hidden rounded-xl flex-grow">
-                            <img src="{{ asset('dist/assets/img/team-4.jpg') }}" alt=""
-                                class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
-                            <p class="text-xl font-bold text-slate-700 my-2 text-center">
-                                Paket A
-                            </p>
-                            <p class="text-orange-500 text-md my-2 text-center">
-                                Rp. 1.350.000
-                            </p>
+                @foreach ($paketTour as $tour)
+                    <a href="{{ route('detail-paket', $tour->id) }}" class="w-full max-w-lg">
+                        <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
+                            data-aos="fade-up" data-aos-duration="1000">
+                            <div class="p-5 overflow-hidden rounded-xl flex-grow">
+                                <img src="{{ asset('dist/assets/img/paket-tour/' . $tour->image ?? '') }}" alt=""
+                                    class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
+                                <p class="text-xl font-bold text-slate-700 my-2 text-center">
+                                    {{ $tour->nama_paket ?? '' }}
+                                </p>
+                                <p class="text-orange-500 text-md my-2 text-center">
+                                    Rp. {{ App\Helpers\GlobalFunction::formatMoney($tour->harga ?? 0) }}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                </a>
-                <a href="{{ route('detail-paket') }}" class="w-full max-w-lg">
-                    <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
-                        data-aos="fade-up" data-aos-duration="1200">
-                        <div class="p-5 overflow-hidden rounded-xl flex-grow">
-                            <img src="{{ asset('dist/assets/img/team-4.jpg') }}" alt=""
-                                class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
-                            <p class="text-xl font-bold text-slate-700 my-2 text-center">
-                                Paket A
-                            </p>
-                            <p class="text-orange-500 text-md my-2 text-center">
-                                Rp. 1.350.000
-                            </p>
-                        </div>
-                    </div>
-                </a>
-                <a href="{{ route('detail-paket') }}" class="w-full max-w-lg">
-                    <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
-                        data-aos="fade-up" data-aos-duration="1400">
-                        <div class="p-5 overflow-hidden rounded-xl flex-grow">
-                            <img src="{{ asset('dist/assets/img/team-4.jpg') }}" alt=""
-                                class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
-                            <p class="text-xl font-bold text-slate-700 my-2 text-center">
-                                Paket A
-                            </p>
-                            <p class="text-orange-500 text-md my-2 text-center">
-                                Rp. 1.350.000
-                            </p>
-                        </div>
-                    </div>
-                </a>
-                <a href="{{ route('detail-paket') }}" class="w-full max-w-lg">
-                    <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
-                        data-aos="fade-up" data-aos-duration="1600">
-                        <div class="p-5 overflow-hidden rounded-xl flex-grow">
-                            <img src="{{ asset('dist/assets/img/team-4.jpg') }}" alt=""
-                                class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
-                            <p class="text-xl font-bold text-slate-700 my-2 text-center">
-                                Paket A
-                            </p>
-                            <p class="text-orange-500 text-md my-2 text-center">
-                                Rp. 1.350.000
-                            </p>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                @endforeach
             </div>
 
         </section>

@@ -11,6 +11,7 @@ class PaketTour extends Model
 
     protected $fillable = [
         'nama_paket',
+        'deskripsi',
         'id_objek_wisata',
         'id_penginapan',
         'id_pemilik',

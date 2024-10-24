@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\GenericExport;
 use App\Helpers\GlobalFunction;
 use App\Models\Penginapan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PenginapanController extends Controller
 {
@@ -22,7 +24,7 @@ class PenginapanController extends Controller
                 'deskripsi' => 'required',
                 'lokasi' => 'required',
                 'owner_id' => 'required',
-                'image' => $imageRule.'|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'image' => $imageRule . '|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ],
             [
                 'namaPenginapan.required' => 'nama penginapan tidak boleh kosong',
@@ -40,7 +42,7 @@ class PenginapanController extends Controller
     {
         $page = 'Penginapan';
         $penginapan = Penginapan::with('rPemilik')->get();
-        $pemilik = User::where('role','Pemilik')->get();
+        $pemilik = User::where('role', 'Pemilik')->get();
         return view('admin.pages.Penginapan.index', compact('page', 'penginapan', 'pemilik'));
     }
 
@@ -62,7 +64,7 @@ class PenginapanController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->validateData($request,'sometimes');
+        $this->validateData($request, 'sometimes');
 
         $penginapan = Penginapan::find($id);
 
@@ -89,5 +91,16 @@ class PenginapanController extends Controller
         GlobalFunction::deleteImage($penginapan->image, $this->path);
         $penginapan->delete();
         return back()->with('success', 'Data Penginapan Berhasil Dihapus');
+    }
+
+    public function download()
+    {
+        $columns = ['nama_penginapan', 'deskripsi', 'lokasi', 'image'];
+
+        $relations = [
+            'rPemilik' => ['name', 'no_hp'],
+        ];
+
+        return Excel::download(new GenericExport(Penginapan::class, $columns, 'G', 'penginapan', $relations), 'Penginapan.xlsx');
     }
 }

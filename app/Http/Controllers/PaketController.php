@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\GenericExport;
 use App\Helpers\GlobalFunction;
 use App\Models\ItemTambahan;
 use App\Models\ObjekWisata;
@@ -9,6 +10,7 @@ use App\Models\PaketTour;
 use App\Models\Penginapan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PaketController extends Controller
 {
@@ -22,6 +24,7 @@ class PaketController extends Controller
         return $request->validate(
             [
                 'namaPaket' => 'required',
+                'deskripsi' => 'required',
                 'wisata_id' => 'required',
                 'penginapan_id' => 'required',
                 'owner_id' => 'required',
@@ -30,6 +33,7 @@ class PaketController extends Controller
             ],
             [
                 'namaPaket.required' => 'Nama Paket tidak boleh kosong',
+                'deskripsi.required' => 'Deskripsi tidak boleh kosong',
                 'wisata_id.required' => 'data objek wisata tidak boleh kosong',
                 'penginapan_id.required' => 'data penginapan tidak boleh kosong',
                 'owner_id.required' => 'data pemilik tidak boleh kosong',
@@ -58,6 +62,7 @@ class PaketController extends Controller
         $image = GlobalFunction::saveImage($request->file('image'), $request->namaPaket, $this->path);
         $data = [
             'nama_paket' => $request->namaPaket,
+            'deskripsi' => $request->deskripsi,
             'id_objek_wisata' => $request->wisata_id,
             'id_penginapan' => $request->penginapan_id,
             'id_pemilik' => $request->owner_id,
@@ -93,6 +98,7 @@ class PaketController extends Controller
         $this->validateData($request, 'sometimes');
         $data = [
             'nama_paket' => $request->namaPaket,
+            'deskripsi' => $request->deskripsi,
             'id_objek_wisata' => $request->wisata_id,
             'id_penginapan' => $request->penginapan_id,
             'id_pemilik' => $request->owner_id,
@@ -125,5 +131,18 @@ class PaketController extends Controller
         $paketTour->rItemTambahan()->delete();
         $paketTour->delete();
         return back()->with('success', 'Data Paket Tour Berhasil Dihapus');
+    }
+
+    public function download()
+    {
+        $columns = ['nama_paket', 'harga', 'image'];
+
+        $relations = [
+            'rObjekWisata' => ['nama_wisata'],
+            'rPenginapan' => ['nama_penginapan'],
+            'rItemTambahan' => ['nama_item'],
+        ];
+
+        return Excel::download(new GenericExport(PaketTour::class, $columns, 'G', 'paket-tour', $relations), 'Paket Tour.xlsx');
     }
 }

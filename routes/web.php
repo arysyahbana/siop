@@ -13,6 +13,9 @@ use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
+use App\Models\ObjekWisata;
+use App\Models\PaketTour;
+use App\Models\Penginapan;
 use App\Models\Petugas;
 use Illuminate\Support\Facades\Route;
 
@@ -31,19 +34,27 @@ use Illuminate\Support\Facades\Route;
 //     return view('admin.pages.dashboard');
 // });
 Route::get('/', function () {
-    return view('guest.index');
+    $objekWisata = ObjekWisata::paginate(8)->shuffle();
+    $penginapan = Penginapan::paginate(8)->shuffle();
+    $paketTour = PaketTour::paginate(8)->shuffle();
+    return view('guest.index', compact('objekWisata', 'penginapan','paketTour'));
 })->name('index');
 
-Route::get('/detail-wisata', function () {
-    return view('guest.detail-wisata');
+Route::get('/detail-wisata/{id}', function ($id) {
+    $objekWisata = ObjekWisata::find($id);
+    $objekWisataRandom = ObjekWisata::paginate(4)->shuffle();
+    return view('guest.detail-wisata',compact('objekWisata', 'objekWisataRandom'));
 })->name('detail-wisata');
 
-Route::get('/detail-penginapan', function () {
-    return view('guest.detail-penginapan');
+Route::get('/detail-penginapan/{id}', function ($id) {
+    $penginapan = Penginapan::find($id);
+    return view('guest.detail-penginapan',compact('penginapan'));
 })->name('detail-penginapan');
 
-Route::get('/detail-paket', function () {
-    return view('guest.detail-paket');
+Route::get('/detail-paket/{id}', function ($id) {
+    $paketTour = PaketTour::find($id);
+    $paketTourRandom = PaketTour::paginate(8)->shuffle();
+    return view('guest.detail-paket',compact('paketTour', 'paketTourRandom'));
 })->name('detail-paket');
 
 
@@ -60,24 +71,28 @@ Route::prefix('kategori')->group(function () {
     Route::post('/store', [KategoriController::class, 'store'])->name('kategori.store');
     Route::post('/update/{id}', [KategoriController::class, 'update'])->name('kategori.update');
     Route::get('/destroy/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
+    Route::get('/download', [KategoriController::class, 'download'])->name('kategori.download');
 });
 Route::prefix('objek-wisata')->group(function () {
     Route::get('/show', [ObjekWisataController::class, 'index'])->name('objek-wisata.show');
     Route::post('/store', [ObjekWisataController::class, 'store'])->name('objek-wisata.store');
     Route::post('/update/{id}', [ObjekWisataController::class, 'update'])->name('objek-wisata.update');
     Route::get('/destroy/{id}', [ObjekWisataController::class, 'destroy'])->name('objek-wisata.destroy');
+    Route::get('/download/{', [ObjekWisataController::class, 'download'])->name('objek-wisata.download');
 });
 Route::prefix('penginapan')->group(function () {
     Route::get('/show', [PenginapanController::class, 'index'])->name('penginapan.show');
     Route::post('/store', [PenginapanController::class, 'store'])->name('penginapan.store');
     Route::post('/update/{id}', [PenginapanController::class, 'update'])->name('penginapan.update');
     Route::get('/destroy/{id}', [PenginapanController::class, 'destroy'])->name('penginapan.destroy');
+    Route::get('/download', [PenginapanController::class, 'download'])->name('penginapan.download');
 });
 Route::prefix('kamar')->group(function () {
     Route::get('/show', [KamarController::class, 'index'])->name('kamar.show');
     Route::post('/store', [KamarController::class, 'store'])->name('kamar.store');
     Route::post('/update/{id}', [KamarController::class, 'update'])->name('kamar.update');
     Route::get('/destroy/{id}', [KamarController::class, 'destroy'])->name('kamar.destroy');
+    Route::get('/download', [KamarController::class, 'download'])->name('kamar.download');
 });
 Route::prefix('owner')->group(function () {
     Route::get('/show', [OwnerController::class, 'index'])->name('owner.show');
@@ -89,6 +104,7 @@ Route::prefix('paket')->group(function () {
     Route::get('/edit/{id}', [PaketController::class, 'edit'])->name('paket.edit');
     Route::post('/update/{id}', [PaketController::class, 'update'])->name('paket.update');
     Route::get('/destroy/{id}', [PaketController::class, 'destroy'])->name('paket.destroy');
+    Route::get('/download', [PaketController::class, 'download'])->name('paket.download');
 });
 
 
@@ -98,6 +114,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
         Route::post('/store', [UserController::class, 'store'])->name('users.store');
         Route::post('/update/{id}', [UserController::class, 'update'])->name('users.update');
         Route::get('/destroy/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+        Route::get('/download', [UserController::class, 'download'])->name('users.download');
     });
 });
 

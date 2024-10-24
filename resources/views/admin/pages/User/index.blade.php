@@ -12,7 +12,7 @@
                         <a href="#" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#addUsers"><i
                                 class="fa fa-plus" aria-hidden="true"></i><span
                                 class="text-capitalize ms-1">Tambah</span></a>
-                        <a href="#" class="btn bg-gradient-success"><i class="bi bi-plus-circle"></i><span
+                        <a href="{{route('users.download')}}" class="btn bg-gradient-success"><i class="bi bi-plus-circle"></i><span
                                 class="text-capitalize ms-1">Unduh Rekap Data</span></a>
                     </div>
                     <div class="card-body px-5 pt-0 pb-2">
@@ -69,20 +69,20 @@
                                                             <x-admin.input type="text" placeholder="Nama" label="Nama"
                                                                 name="nama" value="{{ $item->name ?? '' }}" />
                                                             <x-admin.input type="number" placeholder="Nomor HP"
-                                                                label="Nomor HP" name="no_hp" />
+                                                                label="Nomor HP" name="no_hp" value="{{ $item->no_hp ?? '' }}"/>
                                                             <x-admin.input type="text" placeholder="Alamat"
-                                                                label="Alamat" name="alamat" />
+                                                                label="Alamat" name="alamat" value="{{ $item->alamat ?? '' }}"/>
                                                             <x-admin.input type="email" placeholder="Email" label="Email"
                                                                 name="email" value="{{ $item->email ?? '' }}" />
                                                             <Label>Jenis Kelamin</Label>
                                                             <select class="form-select mb-3"
                                                                 aria-label="Default select example" name="gender">
-                                                                <option hidden>--- Pilih Jenis Kelamin ---</option>
+                                                                <option hidden value="">--- Pilih Jenis Kelamin ---</option>
                                                                 <option value="Pria"
-                                                                    {{ $item->gender == 'Pria' ? 'selected' : '' }}>Pria
+                                                                    {{ $item->jenis_kelamin == 'Pria' ? 'selected' : '' }}>Pria
                                                                 </option>
                                                                 <option value="Wanita"
-                                                                    {{ $item->gender == 'Wanita' ? 'selected' : '' }}>
+                                                                    {{ $item->jenis_kelamin == 'Wanita' ? 'selected' : '' }}>
                                                                     Wanita</option>
                                                             </select>
                                                             <Label>Role</Label>
@@ -92,8 +92,8 @@
                                                                 <option value="Admin"
                                                                     {{ $item->role == 'Admin' ? 'selected' : '' }}>Admin
                                                                 </option>
-                                                                <option value="Owner"
-                                                                    {{ $item->role == 'Owner' ? 'selected' : '' }}>
+                                                                <option value="Pemilik"
+                                                                    {{ $item->role == 'Pemilik' ? 'selected' : '' }}>
                                                                     Owner</option>
                                                             </select>
                                                             <x-admin.input type="password" placeholder="********"
@@ -172,7 +172,7 @@
                         <select class="form-select mb-3" aria-label="Default select example" name="role">
                             <option hidden>--- Pilih Role ---</option>
                             <option value="Admin">Admin</option>
-                            <option value="Owner">Owner</option>
+                            <option value="Pemilik">Owner</option>
                         </select>
                         <x-admin.input type="password" placeholder="********" label="Password" name="password" />
                     </div>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\GenericExport;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KategoriController extends Controller
 {
@@ -33,14 +35,27 @@ class KategoriController extends Controller
         return back()->with('success', 'Data kategori berhasil ditambahkan.');
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $data = $this->validateData($request);
         Kategori::find($id)->update($data);
         return back()->with('success', 'Data kategori berhasil diubah.');
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         Kategori::find($id)->delete();
         return back()->with('success', 'Data kategori berhasil dihapus.');
+    }
+
+    public function download()
+    {
+        $columns = ['kategori'];
+
+        // $relations = [
+        //     'rPenginapan' => ['nama_penginapan'],
+        // ];
+
+        return Excel::download(new GenericExport(Kategori::class,$columns, 'B'), 'Kategori.xlsx');
     }
 }
