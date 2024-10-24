@@ -22,6 +22,7 @@
                                     <tr>
                                         <x-admin.th>No</x-admin.th>
                                         <x-admin.th>Nama Paket</x-admin.th>
+                                        <x-admin.th>Deskripsi</x-admin.th>
                                         <x-admin.th>Nama Objek Wisata</x-admin.th>
                                         <x-admin.th>Nama Penginapan</x-admin.th>
                                         <x-admin.th>Owner</x-admin.th>
@@ -136,14 +137,18 @@
                             @endforeach
                         </select>
 
-                        <Label>Owner</Label>
-                        <select class="form-select mb-3" aria-label="Default select example" name="owner_id"
-                            id="owner_id">
-                            <option selected hidden>--- Pilih Owner ---</option>
-                            @foreach ($pemilik as $owner)
-                                <option value="{{ $owner->id }}">{{ $owner->name }}</option>
-                            @endforeach
-                        </select>
+                        @if (Auth::user()->role == 'Admin')
+                            <Label>Owner</Label>
+                            <select class="form-select mb-3" aria-label="Default select example" name="owner_id"
+                                id="owner_id">
+                                <option selected hidden>--- Pilih Owner ---</option>
+                                @foreach ($pemilik as $owner)
+                                    <option value="{{ $owner->id }}">{{ $owner->name }}</option>
+                                @endforeach
+                            </select>
+                        @else
+                            <input type="hidden" name="owner_id" value="{{ Auth::user()->id }}">
+                        @endif
 
                         <x-admin.input type="number" placeholder="Harga Paket" label="Harga Paket" name="hargaPaket" />
 

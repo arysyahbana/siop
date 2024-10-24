@@ -12,8 +12,8 @@
                         <a href="#" class="btn bg-gradient-warning" data-bs-toggle="modal"
                             data-bs-target="#addPenginapan"><i class="fa fa-plus" aria-hidden="true"></i><span
                                 class="text-capitalize ms-1">Tambah</span></a>
-                        <a href="{{route('penginapan.download')}}" class="btn bg-gradient-success"><i class="bi bi-plus-circle"></i><span
-                                class="text-capitalize ms-1">Unduh Rekap Data</span></a>
+                        <a href="{{ route('penginapan.download') }}" class="btn bg-gradient-success"><i
+                                class="bi bi-plus-circle"></i><span class="text-capitalize ms-1">Unduh Rekap Data</span></a>
                     </div>
                     <div class="card-body px-5 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -89,18 +89,23 @@
                                                                 label="Lokasi" name="lokasi"
                                                                 value="{{ $item->lokasi }}" />
 
-                                                            <Label>Owner</Label>
-                                                            <select class="form-select mb-3"
-                                                                aria-label="Default select example" name="owner_id"
-                                                                id="owner_id">
-                                                                <option selected hidden>--- Pilih Owner --- </option>
-                                                                @foreach ($pemilik as $item2)
-                                                                    <option value="{{ $item2->id }}"
-                                                                        @selected($item->rPemilik?->id == $item2->id)>{{ $item2->name }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-
+                                                            @if (Auth::user()->role == 'Admin')
+                                                                <Label>Owner</Label>
+                                                                <select class="form-select mb-3"
+                                                                    aria-label="Default select example" name="owner_id"
+                                                                    id="owner_id">
+                                                                    <option selected hidden>--- Pilih Owner --- </option>
+                                                                    @foreach ($pemilik as $item2)
+                                                                        <option value="{{ $item2->id }}"
+                                                                            @selected($item->rPemilik?->id == $item2->id)>
+                                                                            {{ $item2->name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            @else
+                                                                <input type="hidden" name="owner_id"
+                                                                    value="{{ Auth::user()->id }}">
+                                                            @endif
                                                             {{-- <x-admin.input type="number" placeholder="Kontak"
                                                                 label="Kontak" name="kontak" /> --}}
 
@@ -189,14 +194,18 @@
 
                         <x-admin.input type="text" placeholder="Lokasi" label="Lokasi" name="lokasi" />
 
-                        <Label>Owner</Label>
-                        <select class="form-select mb-3" aria-label="Default select example" name="owner_id"
-                            id="owner_id">
-                            <option selected hidden value="">--- Pilih Owner ---</option>
-                            @foreach ($pemilik as $item3)
-                                <option value="{{ $item3->id }}">{{ $item3->name }}</option>
-                            @endforeach
-                        </select>
+                        @if (Auth::user()->role == 'Admin')
+                            <Label>Owner</Label>
+                            <select class="form-select mb-3" aria-label="Default select example" name="owner_id"
+                                id="owner_id">
+                                <option selected hidden value="">--- Pilih Owner ---</option>
+                                @foreach ($pemilik as $item3)
+                                    <option value="{{ $item3->id }}">{{ $item3->name }}</option>
+                                @endforeach
+                            </select>
+                        @else
+                            <input type="hidden" name="owner_id" value="{{ Auth::user()->id }}">
+                        @endif
 
                         {{-- <x-admin.input type="number" placeholder="Kontak" label="Kontak" name="kontak" /> --}}
 

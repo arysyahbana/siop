@@ -12,7 +12,7 @@
                             <div class="numbers">
                                 <p class="text-sm mb-0 text-capitalize font-weight-bold">Objek Pariwisata</p>
                                 <h5 class="font-weight-bolder mb-0">
-                                    {{-- Rp. {{ number_format($grandTotal, 2, ',', '.') ?? '0' }} --}}
+                                   {{ $objekWisata ?? 0 }}
                                 </h5>
                             </div>
                         </div>
@@ -33,7 +33,7 @@
                             <div class="numbers">
                                 <p class="text-sm mb-0 text-capitalize font-weight-bold">Penginapan</p>
                                 <h5 class="font-weight-bolder mb-0">
-                                    {{-- {{ $userTotal ?? '0' }} --}}
+                                    {{ $penginapan ?? 0 }}
                                 </h5>
                             </div>
                         </div>
@@ -54,7 +54,7 @@
                             <div class="numbers">
                                 <p class="text-sm mb-0 text-capitalize font-weight-bold">Paket Tour</p>
                                 <h5 class="font-weight-bolder mb-0">
-                                    {{-- {{ $customerTotal ?? '0' }} --}}
+                                    {{ $paketTour ?? 0 }}
                                 </h5>
                             </div>
                         </div>
@@ -75,7 +75,7 @@
                             <div class="numbers">
                                 <p class="text-sm mb-0 text-capitalize font-weight-bold">Owner</p>
                                 <h5 class="font-weight-bolder mb-0">
-                                    {{-- {{ $barangTotal ?? '0' }} --}}
+                                    {{ $user ?? 0 }}
                                 </h5>
                             </div>
                         </div>

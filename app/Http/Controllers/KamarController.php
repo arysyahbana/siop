@@ -7,6 +7,7 @@ use App\Helpers\GlobalFunction;
 use App\Models\Kamar;
 use App\Models\Penginapan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class KamarController extends Controller
@@ -44,8 +45,23 @@ class KamarController extends Controller
     public function index()
     {
         $page = 'Kamar';
-        $kamar = Kamar::with('rPenginapan')->get();
+        $user = Auth::user();
         $penginapan = Penginapan::all();
+        $kamar = Kamar::with('rPenginapan')->get();
+
+        if ($user && $user->role == 'Pemilik') {
+            $penginapan = Penginapan::where('id_pemilik', $user->id)->get();
+
+            if ($penginapan->isNotEmpty()) {
+                $penginapanIds = $penginapan->pluck('id');
+                $kamar = Kamar::with('rPenginapan')
+                    ->whereIn('id_penginapan', $penginapanIds)
+                    ->get();
+            } else {
+                $kamar = collect();
+            }
+        }
+
         return view('admin.pages.Kamar.index', compact('page', 'kamar', 'penginapan'));
     }
 
@@ -108,6 +124,6 @@ class KamarController extends Controller
             'rPenginapan' => ['nama_penginapan'],
         ];
 
-        return Excel::download(new GenericExport(Kamar::class, $columns, 'F', 'kamar',$relations), 'kamar.xlsx');
+        return Excel::download(new GenericExport(Kamar::class, $columns, 'F', 'kamar', $relations), 'kamar.xlsx');
     }
 }

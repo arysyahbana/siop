@@ -10,6 +10,7 @@ use App\Models\PaketTour;
 use App\Models\Penginapan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PaketController extends Controller
@@ -51,6 +52,9 @@ class PaketController extends Controller
         $page = 'Paket';
         $objekWisata = ObjekWisata::all();
         $penginapan = Penginapan::all();
+        if (Auth::user()->role == 'Pemilik') {
+            $penginapan = $penginapan->where('id_pemilik', Auth::user()->id);
+        }
         $pemilik = User::where('role', 'Pemilik')->get();
         $paketTour = PaketTour::with('rObjekWisata', 'rPenginapan', 'rPemilik', 'rItemTambahan')->get();
         return view('admin.pages.Paket.index', compact('page', 'objekWisata', 'penginapan', 'pemilik', 'paketTour'));
@@ -88,6 +92,9 @@ class PaketController extends Controller
         $page = 'Paket';
         $objekWisata = ObjekWisata::all();
         $penginapan = Penginapan::all();
+        if (Auth::user()->role == 'Pemilik') {
+            $penginapan = $penginapan->where('id_pemilik', Auth::user()->id);
+        }
         $pemilik = User::where('role', 'Pemilik')->get();
         $paketTour = PaketTour::with('rObjekWisata', 'rPenginapan', 'rPemilik', 'rItemTambahan')->find($id);
         return view('admin.pages.Paket.edit', compact('page', 'paketTour', 'objekWisata', 'penginapan', 'pemilik'));

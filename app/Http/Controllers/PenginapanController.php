@@ -7,6 +7,7 @@ use App\Helpers\GlobalFunction;
 use App\Models\Penginapan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PenginapanController extends Controller
@@ -42,6 +43,9 @@ class PenginapanController extends Controller
     {
         $page = 'Penginapan';
         $penginapan = Penginapan::with('rPemilik')->get();
+        if(Auth::user()->role == 'Pemilik'){
+            $penginapan = $penginapan->where('id_pemilik', Auth::user()->id);
+        }
         $pemilik = User::where('role', 'Pemilik')->get();
         return view('admin.pages.Penginapan.index', compact('page', 'penginapan', 'pemilik'));
     }

@@ -18,10 +18,10 @@
                                         style="max-width: 800px">
                                 </p>
                                 <x-admin.input type="text" placeholder="Nama Paket" label="Nama Paket" name="namaPaket"
-                                    value="{{ $paketTour->nama_paket }}" />
+                                    value="{{ $paketTour->nama_paket ?? '' }}" />
 
                                 <x-admin.input type="text" placeholder="Deskripsi" label="Deskripsi" name="deskripsi"
-                                    value="{{ $item->deskripsi }}" />
+                                    value="{{ $paketTour->deskripsi ?? '' }}" />
 
                                 <Label>Objek Wisata</Label>
                                 <select class="form-select mb-3" aria-label="Default select example" name="wisata_id"
@@ -44,16 +44,20 @@
                                     @endforeach
                                 </select>
 
-                                <Label>Owner</Label>
-                                <select class="form-select mb-3" aria-label="Default select example" name="owner_id"
-                                    id="owner_id">
-                                    <option selected hidden value="">--- Pilih Owner ---</option>
-                                    @foreach ($pemilik as $owner)
-                                        <option value="{{ $owner->id }}" @selected($owner->id == $paketTour->id_pemilik)>
-                                            {{ $owner->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                @if (Auth::user()->role == 'Admin')
+                                    <Label>Owner</Label>
+                                    <select class="form-select mb-3" aria-label="Default select example" name="owner_id"
+                                        id="owner_id">
+                                        <option selected hidden value="">--- Pilih Owner ---</option>
+                                        @foreach ($pemilik as $owner)
+                                            <option value="{{ $owner->id }}" @selected($owner->id == $paketTour->id_pemilik)>
+                                                {{ $owner->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                @else
+                                    <input type="hidden" name="owner_id" value="{{ Auth::user()->id }}">
+                                @endif
 
                                 <x-admin.input type="number" placeholder="Harga Paket" label="Harga Paket"
                                     name="hargaPaket" value="{{ $paketTour->harga }}" />
