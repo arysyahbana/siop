@@ -12,8 +12,8 @@
                         <a href="#" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#addPaket"><i
                                 class="fa fa-plus" aria-hidden="true"></i><span
                                 class="text-capitalize ms-1">Tambah</span></a>
-                        <a href="{{route('paket.download')}}" class="btn bg-gradient-success"><i class="bi bi-plus-circle"></i><span
-                                class="text-capitalize ms-1">Unduh Rekap Data</span></a>
+                        <a href="{{ route('paket.download') }}" class="btn bg-gradient-success"><i
+                                class="bi bi-plus-circle"></i><span class="text-capitalize ms-1">Unduh Rekap Data</span></a>
                     </div>
                     <div class="card-body px-5 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -35,6 +35,7 @@
                                     <tr>
                                         <x-admin.td>{{ $loop->iteration }}</x-admin.td>
                                         <x-admin.td>{{ $item->nama_paket ?? '' }}</x-admin.td>
+                                        <x-admin.td>{{ $item->deskripsi ?? '' }}</x-admin.td>
                                         <x-admin.td> {{ $item->rObjekWisata?->nama_wisata ?? '' }} </x-admin.td>
                                         <x-admin.td> {{ $item->rPenginapan?->nama_penginapan ?? '' }} </x-admin.td>
                                         <x-admin.td>{{ $item->rPemilik?->name ?? '' }}</x-admin.td>
@@ -83,7 +84,7 @@
                                                         <p>Yakin ingin menghapus data?</p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <a href="{{route('paket.destroy', $item->id)}}" type="submit"
+                                                        <a href="{{ route('paket.destroy', $item->id) }}" type="submit"
                                                             class="btn btn-sm btn-danger">Hapus</a>
                                                         <button type="button" class="btn btn-sm btn-secondary"
                                                             data-bs-dismiss="modal">Batal</button>
@@ -115,6 +116,8 @@
                     <div class="modal-body">
                         <x-admin.input type="text" placeholder="Nama Paket" label="Nama Paket" name="namaPaket" />
 
+                        <x-admin.input type="text" placeholder="Deskripsi" label="Deskripsi" name="deskripsi" />
+
                         <Label>Objek Wisata</Label>
                         <select class="form-select mb-3" aria-label="Default select example" name="wisata_id"
                             id="wisata_id">
@@ -134,7 +137,8 @@
                         </select>
 
                         <Label>Owner</Label>
-                        <select class="form-select mb-3" aria-label="Default select example" name="owner_id" id="owner_id">
+                        <select class="form-select mb-3" aria-label="Default select example" name="owner_id"
+                            id="owner_id">
                             <option selected hidden>--- Pilih Owner ---</option>
                             @foreach ($pemilik as $owner)
                                 <option value="{{ $owner->id }}">{{ $owner->name }}</option>

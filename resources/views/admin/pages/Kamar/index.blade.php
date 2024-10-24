@@ -12,8 +12,8 @@
                         <a href="#" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#addKamar"><i
                                 class="fa fa-plus" aria-hidden="true"></i><span
                                 class="text-capitalize ms-1">Tambah</span></a>
-                        <a href="{{route('kamar.download')}}" class="btn bg-gradient-success"><i class="bi bi-plus-circle"></i><span
-                                class="text-capitalize ms-1">Unduh Rekap Data</span></a>
+                        <a href="{{ route('kamar.download') }}" class="btn bg-gradient-success"><i
+                                class="bi bi-plus-circle"></i><span class="text-capitalize ms-1">Unduh Rekap Data</span></a>
                     </div>
                     <div class="card-body px-5 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -23,6 +23,7 @@
                                         <x-admin.th>No</x-admin.th>
                                         <x-admin.th>Nomor Kamar</x-admin.th>
                                         <x-admin.th>Nama Penginapan</x-admin.th>
+                                        <x-admin.th>Deskripsi</x-admin.th>
                                         <x-admin.th>Harga Kamar</x-admin.th>
                                         <x-admin.th>Foto</x-admin.th>
                                         <x-admin.th>Status</x-admin.th>
@@ -34,6 +35,7 @@
                                         <x-admin.td>{{ $loop->iteration }}</x-admin.td>
                                         <x-admin.td>{{ $item->nomor_kamar ?? '' }}</x-admin.td>
                                         <x-admin.td> {{ $item->rPenginapan?->nama_penginapan ?? '' }} </x-admin.td>
+                                        <x-admin.td> {{ $item->deskripsi ?? '' }} </x-admin.td>
                                         <x-admin.td>Rp.
                                             {{ App\Helpers\GlobalFunction::formatMoney($item->harga ?? '') }}</x-admin.td>
                                         <x-admin.td>
@@ -91,6 +93,10 @@
                                                                 @endforeach
                                                             </select>
 
+                                                            <x-admin.input type="text" placeholder="Deskripsi"
+                                                                label="Deskripsi" name="deskripsi"
+                                                                value="{{ $item->deskripsi }}" />
+
                                                             <x-admin.input type="number" placeholder="Harga Kamar"
                                                                 label="Harga Kamar" name="hargaKamar"
                                                                 value="{{ $item->harga }}" />
@@ -100,7 +106,7 @@
                                                                     Sebelumnya</label>
                                                                 <br>
                                                                 <div class="text-center">
-                                                                    <img src="{{ asset('dist/assets/img/kamar/'.$item->image) }}"
+                                                                    <img src="{{ asset('dist/assets/img/kamar/' . $item->image) }}"
                                                                         alt="" style="max-width: 300px"
                                                                         class="img-fluid img-thumbnail">
                                                                 </div>
@@ -112,12 +118,16 @@
                                                             </div>
 
                                                             <Label>Status</Label>
-                                                                <select class="form-select mb-3"
-                                                                    aria-label="Default select example" name="status" id="status">
-                                                                    <option selected hidden value="">--- Pilih Status ---</option>
-                                                                    <option value="Terisi" @selected($item->status === 'Terisi')>Terisi</option>
-                                                                    <option value="Kosong" @selected($item->status === 'Kosong')>Kosong</option>
-                                                                </select>
+                                                            <select class="form-select mb-3"
+                                                                aria-label="Default select example" name="status"
+                                                                id="status">
+                                                                <option selected hidden value="">--- Pilih Status ---
+                                                                </option>
+                                                                <option value="Terisi" @selected($item->status === 'Terisi')>Terisi
+                                                                </option>
+                                                                <option value="Kosong" @selected($item->status === 'Kosong')>Kosong
+                                                                </option>
+                                                            </select>
 
                                                         </div>
                                                         <div class="modal-footer">
@@ -190,6 +200,8 @@
                                 <option value="{{ $item3->id }}">{{ $item3->nama_penginapan }}</option>
                             @endforeach
                         </select>
+
+                        <x-admin.input type="text" placeholder="Deskripsi" label="Deskripsi" name="deskripsi" />
 
                         <x-admin.input type="number" placeholder="Harga Kamar" label="Harga Kamar" name="hargaKamar" />
 

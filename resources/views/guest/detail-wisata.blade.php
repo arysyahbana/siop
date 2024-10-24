@@ -29,7 +29,8 @@
                                     {{ $objekWisata->nama_wisata ?? '' }}
                                 </p>
                                 <p class="text-end my-2 text-orange-500 text-lg">Rp.
-                                    {{ \App\Helpers\GlobalFunction::formatMoney($objekWisata->harga) ?? '' }} / orang</p>
+                                    {{ \App\Helpers\GlobalFunction::formatMoney($objekWisata->harga) ?? '' }} / orang
+                                </p>
                             </div>
                             <p class="text-sm desc my-2">
                                 {{ $objekWisata->deskripsi }}
@@ -46,8 +47,8 @@
         <section id="pariwisata" class="my-20">
             <p class="text-center text-2xl font-bold text-slate-700">DAFTAR OBJEK PARIWISATA LAINNYA</p>
 
-            @foreach ($objekWisataRandom as $wisataRandom)
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-5 justify-items-center gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-5 justify-items-center gap-5">
+                @foreach ($objekWisataRandom as $wisataRandom)
                     <a href="{{ route('detail-wisata', $wisataRandom->id) }}" class="w-full max-w-lg">
                         <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
                             data-aos="fade-up" data-aos-duration="1000">
@@ -71,8 +72,8 @@
                             </div>
                         </div>
                     </a>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </section>
     </main>
 

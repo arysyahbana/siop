@@ -20,6 +20,9 @@
                                 <x-admin.input type="text" placeholder="Nama Paket" label="Nama Paket" name="namaPaket"
                                     value="{{ $paketTour->nama_paket }}" />
 
+                                <x-admin.input type="text" placeholder="Deskripsi" label="Deskripsi" name="deskripsi"
+                                    value="{{ $item->deskripsi }}" />
+
                                 <Label>Objek Wisata</Label>
                                 <select class="form-select mb-3" aria-label="Default select example" name="wisata_id"
                                     id="wisata_id">

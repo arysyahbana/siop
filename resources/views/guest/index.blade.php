@@ -90,8 +90,8 @@
         <section id="pariwisata" class="mt-20">
             <p class="text-center text-2xl font-bold text-slate-700">DAFTAR OBJEK PARIWISATA</p>
 
-            @foreach ($objekWisata as $wisata)
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-5 justify-items-center gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-5 justify-items-center gap-5">
+                @foreach ($objekWisata as $wisata)
                     <a href="{{ route('detail-wisata', $wisata->id) }}" class="w-full max-w-lg">
                         <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
                             data-aos="fade-up" data-aos-duration="1000">
@@ -114,8 +114,8 @@
                             </div>
                         </div>
                     </a>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
 
         </section>
 
@@ -155,8 +155,8 @@
                         <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
                             data-aos="fade-up" data-aos-duration="1000">
                             <div class="p-5 overflow-hidden rounded-xl flex-grow">
-                                <img src="{{ asset('dist/assets/img/paket-tour/' . $tour->image ?? '') }}" alt=""
-                                    class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
+                                <img src="{{ asset('dist/assets/img/paket-tour/' . $tour->image ?? '') }}"
+                                    alt="" class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
                                 <p class="text-xl font-bold text-slate-700 my-2 text-center">
                                     {{ $tour->nama_paket ?? '' }}
                                 </p>
