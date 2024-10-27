@@ -7,6 +7,7 @@
     <title>SIOP</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('dist/assets/img/logo-yana.png') }}">
 </head>
 
 <body>
@@ -15,7 +16,7 @@
         <nav class="bg-gradient-to-r from-violet-500 to-violet-300 fixed w-full z-20 top-0 start-0">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo">
+                    <img src="{{ asset('dist/assets/img/logo-yana.png') }}" class="h-8" alt="Flowbite Logo">
                     <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">SIOP</span>
                 </a>
                 <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
@@ -78,7 +79,7 @@
                 </div>
                 <div class="overflow-hidden border rounded-3xl shadow-xl mx-12 md:mx-0 max-h-[350px]"
                     data-aos="fade-left" data-aos-duration="1000">
-                    <img src="{{ asset('dist/assets/img/team-2.jpg') }}" alt=""
+                    <img src="{{ asset('dist/assets/img/bg-yana.webp') }}" alt=""
                         class="object-cover h-full w-full" />
                 </div>
             </div>

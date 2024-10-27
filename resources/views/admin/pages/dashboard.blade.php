@@ -1,6 +1,6 @@
 @extends('admin.app')
 
-@section('title', 'Tes Coding')
+@section('title', 'SIOP')
 
 @section('content')
     <div class="row">
@@ -12,7 +12,7 @@
                             <div class="numbers">
                                 <p class="text-sm mb-0 text-capitalize font-weight-bold">Objek Pariwisata</p>
                                 <h5 class="font-weight-bolder mb-0">
-                                   {{ $objekWisata ?? 0 }}
+                                    {{ $objekWisata ?? 0 }}
                                 </h5>
                             </div>
                         </div>
