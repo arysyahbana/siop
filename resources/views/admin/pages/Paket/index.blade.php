@@ -29,6 +29,7 @@
                                         <x-admin.th>Harga</x-admin.th>
                                         <x-admin.th>Foto</x-admin.th>
                                         <x-admin.th>Item Tambahan</x-admin.th>
+                                        <x-admin.th>Medsos</x-admin.th>
                                         <x-admin.th>Action</x-admin.th>
                                     </tr>
                                 @endslot
@@ -55,6 +56,9 @@
                                                     <li>{{ $item2->nama_item ?? '' }}</li>
                                                 @endforeach
                                             </ul>
+                                        </x-admin.td>
+                                        <x-admin.td>
+                                            <a href="intagram.com">instagram.com</a>
                                         </x-admin.td>
                                         <x-admin.td>
                                             <a href="{{ route('paket.edit', $item->id) }}" class="btn bg-gradient-info"><i
@@ -131,7 +135,7 @@
                         <Label>Penginapan</Label>
                         <select class="form-select mb-3" aria-label="Default select example" name="penginapan_id"
                             id="penginapan_id">
-                            <option selected hidden value="">--- Pilih Penginapan ---</option>
+                            <option selected hidden value="0">--- Pilih Penginapan ---</option>
                             @foreach ($penginapan as $inap)
                                 <option value="{{ $inap->id }}">{{ $inap->nama_penginapan }}</option>
                             @endforeach
@@ -169,6 +173,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <x-admin.input type="text" placeholder="Medsos" label="Medsos" name="medsos" />
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-sm btn-success">Simpan</button>

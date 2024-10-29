@@ -7,6 +7,7 @@
     <title>SIOP-Paket Tour</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('dist/assets/img/logo-yana.png') }}">
 </head>
 
 <body>
@@ -54,6 +55,20 @@
                                         <td>Rp. {{ App\Helpers\GlobalFunction::formatMoney($paketTour->harga ?? '') }}
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>Item</td>
+                                        <td class="px-3">:</td>
+                                        <td>
+                                            awkowako, awkowako, awkowako, awkowako
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Medsos</td>
+                                        <td class="px-3">:</td>
+                                        <td>
+                                            <a href="intagram.com">instagram.com</a>
+                                        </td>
+                                    </tr>
                                 </table>
                                 <p class="text-sm desc my-2">
                                     {{-- untuk item lu jabarin dalam bentuk paragraf aja cok --}}
@@ -61,7 +76,8 @@
                                 </p>
 
                                 <div class="my-6">
-                                    <a href="{{App\Helpers\GlobalFunction::urlPemesanan($paketTour->rPemilik?->no_hp, $paketTour->nama_paket, $paketTour->id)}}" target="_blank" type="button"
+                                    <a href="{{ App\Helpers\GlobalFunction::urlPemesanan($paketTour->rPemilik?->no_hp, $paketTour->nama_paket, $paketTour->id) }}"
+                                        target="_blank" type="button"
                                         class="focus:outline-none text-white bg-green-500 hover:bg-green-600  font-medium rounded-xl text-sm px-5 py-2.5">
                                         Pesan Sekarang
                                     </a>
@@ -83,8 +99,8 @@
                         <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
                             data-aos="fade-up" data-aos-duration="1000">
                             <div class="p-5 overflow-hidden rounded-xl flex-grow">
-                                <img src="{{ asset('dist/assets/img/paket-tour/' . $tourRandom->image ?? '') }}" alt=""
-                                    class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
+                                <img src="{{ asset('dist/assets/img/paket-tour/' . $tourRandom->image ?? '') }}"
+                                    alt="" class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
                                 <p class="text-xl font-bold text-slate-700 my-2 text-center">
                                     {{ $tourRandom->nama_paket ?? '' }}
                                 </p>

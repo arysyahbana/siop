@@ -12,8 +12,8 @@
                         <a href="#" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#addWisata"><i
                                 class="fa fa-plus" aria-hidden="true"></i><span
                                 class="text-capitalize ms-1">Tambah</span></a>
-                        <a href="{{route('objek-wisata.download')}}" class="btn bg-gradient-success"><i class="bi bi-plus-circle"></i><span
-                                class="text-capitalize ms-1">Unduh Rekap Data</span></a>
+                        <a href="{{ route('objek-wisata.download') }}" class="btn bg-gradient-success"><i
+                                class="bi bi-plus-circle"></i><span class="text-capitalize ms-1">Unduh Rekap Data</span></a>
                     </div>
                     <div class="card-body px-5 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -28,6 +28,7 @@
                                         <x-admin.th>Harga Tiket</x-admin.th>
                                         <x-admin.th>Kontak</x-admin.th>
                                         <x-admin.th>Foto</x-admin.th>
+                                        <x-admin.th>Medsos</x-admin.th>
                                         <x-admin.th>Action</x-admin.th>
                                     </tr>
                                 @endslot
@@ -50,6 +51,9 @@
                                                 <img src="{{ asset('dist/assets/img/objek-wisata/' . $item->image) }}"
                                                     alt="" style="max-width: 100px" class="img-fluid img-thumbnail">
                                             </a>
+                                        </x-admin.td>
+                                        <x-admin.td>
+                                            <a href="intagram.com">instagram.com</a>
                                         </x-admin.td>
                                         <x-admin.td>
                                             <a href="#" class="btn bg-gradient-info" data-bs-toggle="modal"
@@ -109,7 +113,8 @@
                                                                 label="Harga Tiket" name="harga"
                                                                 value="{{ $item->harga }}" />
                                                             <x-admin.input type="number" placeholder="Kontak"
-                                                                label="Kontak" name="kontak" value="{{ $item->no_hp }}" />
+                                                                label="Kontak" name="kontak"
+                                                                value="{{ $item->no_hp }}" />
                                                             <div class="mb-3">
                                                                 <label for="formFile" class="form-label">Foto
                                                                     Sebelumnya</label>
@@ -125,6 +130,8 @@
                                                                 <input class="form-control" type="file" id="formFile"
                                                                     name="image">
                                                             </div>
+                                                            <x-admin.input type="text" placeholder="Medsos"
+                                                                label="Medsos" name="medsos" value="instagram.com" />
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="submit"
@@ -156,8 +163,8 @@
                                                         <p>Yakin ingin menghapus data?</p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <a href="{{route('objek-wisata.destroy', $item->id)}}" type="submit"
-                                                            class="btn btn-sm btn-danger">Hapus</a>
+                                                        <a href="{{ route('objek-wisata.destroy', $item->id) }}"
+                                                            type="submit" class="btn btn-sm btn-danger">Hapus</a>
                                                         <button type="button" class="btn btn-sm btn-secondary"
                                                             data-bs-dismiss="modal">Batal</button>
                                                     </div>
@@ -177,7 +184,7 @@
     <!-- Modal Add Wisata -->
     <div class="modal fade" id="addWisata" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="addWisataLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="addWisataLabel">Tambah Data Objek Wisata</h1>
@@ -208,6 +215,8 @@
                             <label for="formFile" class="form-label">Foto</label>
                             <input class="form-control" type="file" id="formFile" name="image">
                         </div>
+
+                        <x-admin.input type="text" placeholder="Medsos" label="Medsos" name="medsos" />
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-sm btn-success">Simpan</button>

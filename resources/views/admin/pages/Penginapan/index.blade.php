@@ -27,6 +27,7 @@
                                         <x-admin.th>Pemilik</x-admin.th>
                                         <x-admin.th>Kontak</x-admin.th>
                                         <x-admin.th>Foto</x-admin.th>
+                                        <x-admin.th>Medsos</x-admin.th>
                                         <x-admin.th>Action</x-admin.th>
                                     </tr>
                                 @endslot
@@ -47,6 +48,9 @@
                                                 <img src="{{ asset('dist/assets/img/penginapan/' . $item->image) }}"
                                                     alt="" style="max-width: 100px" class="img-fluid img-thumbnail">
                                             </a>
+                                        </x-admin.td>
+                                        <x-admin.td>
+                                            <a href="intagram.com">instagram.com</a>
                                         </x-admin.td>
                                         <x-admin.td>
                                             <a href="#" class="btn bg-gradient-info" data-bs-toggle="modal"
@@ -124,6 +128,8 @@
                                                                 <input class="form-control" type="file" id="formFile"
                                                                     name="image">
                                                             </div>
+                                                            <x-admin.input type="text" placeholder="Medsos"
+                                                                label="Medsos" name="medsos" value="instagram.com" />
 
                                                         </div>
                                                         <div class="modal-footer">
@@ -213,6 +219,7 @@
                             <label for="formFile" class="form-label">Foto</label>
                             <input class="form-control" type="file" id="formFile" name="image">
                         </div>
+                        <x-admin.input type="text" placeholder="Medsos" label="Medsos" name="medsos" />
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-sm btn-success">Simpan</button>

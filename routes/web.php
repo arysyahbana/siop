@@ -37,25 +37,29 @@ Route::get('/', function () {
     $objekWisata = ObjekWisata::paginate(8)->shuffle();
     $penginapan = Penginapan::paginate(8)->shuffle();
     $paketTour = PaketTour::paginate(8)->shuffle();
-    return view('guest.index', compact('objekWisata', 'penginapan','paketTour'));
+    return view('guest.index', compact('objekWisata', 'penginapan', 'paketTour'));
 })->name('index');
 
 Route::get('/detail-wisata/{id}', function ($id) {
     $objekWisata = ObjekWisata::find($id);
     $objekWisataRandom = ObjekWisata::paginate(4)->shuffle();
-    return view('guest.detail-wisata',compact('objekWisata', 'objekWisataRandom'));
+    return view('guest.detail-wisata', compact('objekWisata', 'objekWisataRandom'));
 })->name('detail-wisata');
 
 Route::get('/detail-penginapan/{id}', function ($id) {
     $penginapan = Penginapan::find($id);
-    return view('guest.detail-penginapan',compact('penginapan'));
+    return view('guest.detail-penginapan', compact('penginapan'));
 })->name('detail-penginapan');
 
 Route::get('/detail-paket/{id}', function ($id) {
     $paketTour = PaketTour::find($id);
     $paketTourRandom = PaketTour::paginate(8)->shuffle();
-    return view('guest.detail-paket',compact('paketTour', 'paketTourRandom'));
+    return view('guest.detail-paket', compact('paketTour', 'paketTourRandom'));
 })->name('detail-paket');
+
+Route::get('/detail-kamar', function () {
+    return view('guest.detail-kamar');
+})->name('detail-kamar');
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');

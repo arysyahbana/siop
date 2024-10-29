@@ -39,10 +39,12 @@
                                         <x-admin.td>Rp.
                                             {{ App\Helpers\GlobalFunction::formatMoney($item->harga ?? '') }}</x-admin.td>
                                         <x-admin.td>
-                                            <a href="{{ asset('dist/assets/img/kamar/' . $item->image) }}" target="_blank">
-                                                <img src="{{ asset('dist/assets/img/kamar/' . $item->image) }}"
-                                                    alt="" style="max-width: 100px" class="img-fluid img-thumbnail">
-                                            </a>
+                                            <p class="text-xs desc">
+                                                <a href="{{ asset('dist/assets/img/kamar/' . $item->image) }}"
+                                                    target="_blank">
+                                                    {{ $item->image }}
+                                                </a>
+                                            </p>
                                         </x-admin.td>
                                         <x-admin.td>{{ $item->status ?? '' }}</x-admin.td>
                                         <x-admin.td>
@@ -105,16 +107,19 @@
                                                                 <label for="formFile" class="form-label">Foto
                                                                     Sebelumnya</label>
                                                                 <br>
-                                                                <div class="text-center">
-                                                                    <img src="{{ asset('dist/assets/img/kamar/' . $item->image) }}"
-                                                                        alt="" style="max-width: 300px"
-                                                                        class="img-fluid img-thumbnail">
+                                                                <div class="">
+                                                                    <ul>
+                                                                        <li>
+                                                                            <a href="{{ asset('dist/assets/img/kamar/' . $item->image) }}"
+                                                                                target="_blank">{{ $item->image }}</a>
+                                                                        </li>
+                                                                    </ul>
                                                                 </div>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="formFile" class="form-label">Foto</label>
                                                                 <input class="form-control" type="file" id="formFile"
-                                                                    name="image">
+                                                                    name="image" multiple>
                                                             </div>
 
                                                             <Label>Status</Label>
@@ -207,7 +212,7 @@
 
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Foto</label>
-                            <input class="form-control" type="file" id="formFile" name="image">
+                            <input class="form-control" type="file" id="formFile" name="image" multiple>
                         </div>
 
                         <Label>Status</Label>

@@ -7,6 +7,7 @@
     <title>SIOP-Penginapan</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('dist/assets/img/logo-yana.png') }}">
 </head>
 
 <body>
@@ -33,9 +34,25 @@
                             <p class="text-sm desc my-2">
                                 {{ $penginapan->deskripsi ?? '' }}
                             </p>
-                            <p class="text-sm desc text-violet-800">Owner : {{ $penginapan->rPemilik?->name ?? '' }}
-                            </p>
-                            <p class="text-sm desc text-violet-800">Lokasi : {{ $penginapan->lokasi ?? '' }}
+
+                            <p class="mt-2">
+                            <table>
+                                <tr class="text-sm desc text-violet-800">
+                                    <td>Owner</td>
+                                    <td class="px-3">:</td>
+                                    <td>{{ $penginapan->rPemilik?->name ?? '' }}</td>
+                                </tr>
+                                <tr class="text-sm desc text-violet-800">
+                                    <td>Lokasi</td>
+                                    <td class="px-3">:</td>
+                                    <td>{{ $penginapan->lokasi ?? '' }}</td>
+                                </tr>
+                                <tr class="text-sm desc text-violet-800">
+                                    <td>Media Sosial</td>
+                                    <td class="px-3">:</td>
+                                    <td><a href="intagram.com">instagram.com</a></td>
+                                </tr>
+                            </table>
                             </p>
                         </div>
                     </div>
@@ -50,9 +67,44 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-5 justify-items-center gap-5">
                 @foreach ($penginapan->rKamar as $item)
                     @if ($item->status == 'Kosong')
-                        <div class="w-full max-w-lg">
-                            <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
-                                data-aos="fade-up" data-aos-duration="1000">
+                        {{-- <a href="{{ route('detail-kamar') }}" class="border">
+                            <div class="w-full max-w-lg">
+                                <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
+                                    data-aos="fade-up" data-aos-duration="1000">
+                                    <div class="p-5 overflow-hidden rounded-xl flex-grow">
+                                        <img src="{{ asset('dist/assets/img/kamar/' . $item->image ?? '') }}"
+                                            alt="" class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
+                                        <div class="flex justify-between">
+                                            <p class="text-xl font-bold text-slate-700 my-2">
+                                                {{ $item->nomor_kamar ?? '' }}
+                                            </p>
+                                            <p class="text-sm desc my-3 text-violet-800">
+                                                Kamar
+                                            </p>
+                                        </div>
+                                        <p class="text-sm desc my-2">
+                                            {{ $item->deskripsi ?? '' }}
+                                        </p>
+                                        <div class="flex justify-between items-center">
+                                            <p class="text-orange-500 text-lg">Rp.
+                                                {{ App\Helpers\GlobalFunction::formatMoney($item->harga) }} / Malam</p>
+                                            <a href="{{ App\Helpers\GlobalFunction::urlPemesanan($penginapan->rPemilik?->no_hp, $item->nomor_kamar, $penginapan->id) }}"
+                                                target="_blank" type="button"
+                                                class="focus:outline-none text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-500 font-medium rounded-xl text-sm px-5 py-2.5">
+                                                <div class="flex gap-2 items-center">
+                                                    <img src="{{ asset('dist/assets/img/wa.svg') }}" alt=""
+                                                        class="w-4 h-4">
+                                                    <span>Pesan</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a> --}}
+                        <a href="{{ route('detail-kamar') }}" class="w-full max-w-lg block no-underline text-inherit">
+                            <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" data-aos="fade-up"
+                                data-aos-duration="1000">
                                 <div class="p-5 overflow-hidden rounded-xl flex-grow">
                                     <img src="{{ asset('dist/assets/img/kamar/' . $item->image ?? '') }}" alt=""
                                         class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
@@ -67,21 +119,13 @@
                                     <p class="text-sm desc my-2">
                                         {{ $item->deskripsi ?? '' }}
                                     </p>
-                                    <div class="flex justify-between items-center">
+                                    <div class="flex justify-end items-center">
                                         <p class="text-orange-500 text-lg">Rp.
                                             {{ App\Helpers\GlobalFunction::formatMoney($item->harga) }} / Malam</p>
-                                        <a href="{{App\Helpers\GlobalFunction::urlPemesanan($penginapan->rPemilik?->no_hp, $item->nomor_kamar, $penginapan->id)}}" target="_blank" type="button"
-                                            class="focus:outline-none text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-500 font-medium rounded-xl text-sm px-5 py-2.5">
-                                            <div class="flex gap-2 items-center">
-                                                <img src="{{ asset('dist/assets/img/wa.svg') }}" alt=""
-                                                    class="w-4 h-4">
-                                                <span>Pesan</span>
-                                            </div>
-                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     @endif
                 @endforeach
             </div>

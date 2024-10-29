@@ -7,6 +7,7 @@
     <title>SIOP-Pariwisata</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('dist/assets/img/logo-yana.png') }}">
 </head>
 
 <body>
@@ -35,7 +36,19 @@
                             <p class="text-sm desc my-2">
                                 {{ $objekWisata->deskripsi }}
                             </p>
-                            <p class="text-sm desc text-violet-800">Lokasi : {{ $objekWisata->lokasi ?? '' }}</p>
+                            <p class="mt-2">
+                            <table>
+                                <tr class="text-sm desc text-violet-800">
+                                    <td>Lokasi</td>
+                                    <td class="px-3">:</td>
+                                    <td>{{ $objekWisata->lokasi ?? '' }}</td>
+                                </tr>
+                                <tr class="text-sm desc text-violet-800">
+                                    <td>Media Sosial</td>
+                                    <td class="px-3">:</td>
+                                    <td><a href="intagram.com">instagram.com</a></td>
+                                </tr>
+                            </table>
                             </p>
                         </div>
                     </div>
