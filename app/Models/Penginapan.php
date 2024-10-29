@@ -14,7 +14,8 @@ class Penginapan extends Model
         'deskripsi',
         'lokasi',
         'id_pemilik',
-        'image'
+        'image',
+        'medsos'
     ];
 
     public function rPemilik(){

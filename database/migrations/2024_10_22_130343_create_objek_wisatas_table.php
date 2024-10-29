@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('nama_wisata');
             $table->string('id_kategori');
-            $table->string('deskripsi');
+            $table->text('deskripsi');
             $table->string('lokasi');
             $table->integer('harga');
             $table->string('no_hp');
             $table->string('image');
+            $table->string('medsos')->nullable();
             $table->timestamps();
         });
     }

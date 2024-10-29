@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('lokasi');
             $table->string('id_pemilik');
             $table->string('image');
+            $table->text('medsos')->nullable();
             $table->timestamps();
         });
     }

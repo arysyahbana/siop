@@ -58,7 +58,7 @@
                                             </ul>
                                         </x-admin.td>
                                         <x-admin.td>
-                                            <a href="intagram.com">instagram.com</a>
+                                            <a href="{{ $item->medsos ?? '#'}}">{{explode('/', parse_url($item->medsos, PHP_URL_PATH))[1]??'Belum Memasukan Link'}}</a>
                                         </x-admin.td>
                                         <x-admin.td>
                                             <a href="{{ route('paket.edit', $item->id) }}" class="btn bg-gradient-info"><i
@@ -135,7 +135,7 @@
                         <Label>Penginapan</Label>
                         <select class="form-select mb-3" aria-label="Default select example" name="penginapan_id"
                             id="penginapan_id">
-                            <option selected hidden value="0">--- Pilih Penginapan ---</option>
+                            <option selected hidden value="">--- Pilih Penginapan ---</option>
                             @foreach ($penginapan as $inap)
                                 <option value="{{ $inap->id }}">{{ $inap->nama_penginapan }}</option>
                             @endforeach

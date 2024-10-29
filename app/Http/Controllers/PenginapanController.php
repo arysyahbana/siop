@@ -60,6 +60,7 @@ class PenginapanController extends Controller
             'lokasi' => $request->lokasi,
             'id_pemilik' => $request->owner_id,
             'image' => $image,
+            'medsos' => $request->medsos
         ];
         Penginapan::create($data);
 
@@ -77,6 +78,7 @@ class PenginapanController extends Controller
             'deskripsi' => $request->deskripsi,
             'lokasi' => $request->lokasi,
             'id_pemilik' => $request->owner_id,
+            'medsos' => $request->medsos
         ];
 
         if ($request->file('image')) {

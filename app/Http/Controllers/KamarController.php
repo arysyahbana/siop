@@ -26,19 +26,21 @@ class KamarController extends Controller
                 'deskripsi' => 'required',
                 'status' => 'required',
                 'hargaKamar' => 'required|numeric',
-                'image' => $imageRule . '|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'image' => $imageRule . '|array',
+                'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validasi untuk setiap item di dalam array image
             ],
             [
                 'nomorKamar.required' => 'Nomor Kamar tidak boleh kosong',
-                'penginapan_id.required' => 'data penginapan tidak boleh kosong',
-                'status.required' => 'status tidak boleh kosong',
-                'deskripsi.required' => 'deskripsi tidak boleh kosong',
-                'hargaKamar.required' => 'harga tidak boleh kosong',
-                'hargaKamar.numeric' => 'harga harus berupa angka',
-                'image.required' => 'image tidak boleh kosong',
-                'image.image' => 'image harus berupa gambar',
-                'image.max' => 'image maksimal 2mb',
-                'image.mimes' => 'image harus berupa jpeg,png,jpg,gif,svg',
+                'penginapan_id.required' => 'Data penginapan tidak boleh kosong',
+                'status.required' => 'Status tidak boleh kosong',
+                'deskripsi.required' => 'Deskripsi tidak boleh kosong',
+                'hargaKamar.required' => 'Harga tidak boleh kosong',
+                'hargaKamar.numeric' => 'Harga harus berupa angka',
+                'image.required' => 'Gambar tidak boleh kosong',
+                'image.array' => 'Gambar harus dalam format array',
+                'image.*.image' => 'Setiap file harus berupa gambar',
+                'image.*.max' => 'Setiap gambar maksimal 2MB',
+                'image.*.mimes' => 'Setiap gambar harus berupa jpeg, png, jpg, gif, atau svg',
             ],
         );
     }
@@ -54,9 +56,7 @@ class KamarController extends Controller
 
             if ($penginapan->isNotEmpty()) {
                 $penginapanIds = $penginapan->pluck('id');
-                $kamar = Kamar::with('rPenginapan')
-                    ->whereIn('id_penginapan', $penginapanIds)
-                    ->get();
+                $kamar = Kamar::with('rPenginapan')->whereIn('id_penginapan', $penginapanIds)->get();
             } else {
                 $kamar = collect();
             }
@@ -69,7 +69,17 @@ class KamarController extends Controller
     {
         $this->validateData($request);
         $penginapan = Penginapan::find($request->penginapan_id);
-        $image = GlobalFunction::saveImage($request->file('image'), $request->nomorKamar . '_' . $penginapan->nama_penginapan, $this->path);
+        $images = $request->file('image');
+        if (!is_array($images)) {
+            $images = explode(',', $images);
+        }
+
+        $savedImages = [];
+        foreach ($images as $index => $image) {
+            $savedImages[] = GlobalFunction::saveImage($image, $request->nomorKamar . '_' . $penginapan->nama_penginapan . '_Gambar' . ($index + 1), $this->path);
+        }
+
+        $image = implode(',', $savedImages);
         $data = [
             'nomor_kamar' => $request->nomorKamar,
             'id_penginapan' => $request->penginapan_id,
@@ -97,10 +107,19 @@ class KamarController extends Controller
             'harga' => $request->hargaKamar,
             'status' => $request->status,
         ];
-
-        if ($request->file('image')) {
-            GlobalFunction::deleteImage($kamar->image, $this->path);
-            $data['image'] = GlobalFunction::saveImage($request->file('image'), $request->nomorKamar . '_' . $penginapan->nama_penginapan, $this->path);
+        $images = $request->file('image');
+        if ($images) {
+            if (!is_array($images)) {
+                $images = explode(',', $images);
+            }
+            foreach (explode(',', $kamar->image) as $listImage) {
+                GlobalFunction::deleteImage(trim($listImage), $this->path);
+            }
+            $savedImages = [];
+            foreach ($images as $index => $image) {
+                $savedImages[] = GlobalFunction::saveImage($image, $request->nomorKamar . '_' . $penginapan->nama_penginapan . '_Gambar' . ($index + 1), $this->path);
+            }
+            $data['image'] = implode(',', $savedImages);
         }
 
         Kamar::where('id', $id)->update($data);
@@ -111,7 +130,9 @@ class KamarController extends Controller
     public function destroy($id)
     {
         $kamar = Kamar::find($id);
-        GlobalFunction::deleteImage($kamar->image, $this->path);
+        foreach (explode(',', $kamar->image) as $listImage  ) {
+            GlobalFunction::deleteImage(trim($listImage), $this->path);
+        }
         $kamar->delete();
         return back()->with('success', 'Data Kamar Berhasil Dihapus');
     }

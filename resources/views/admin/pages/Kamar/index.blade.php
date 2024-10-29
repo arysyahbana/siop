@@ -39,12 +39,14 @@
                                         <x-admin.td>Rp.
                                             {{ App\Helpers\GlobalFunction::formatMoney($item->harga ?? '') }}</x-admin.td>
                                         <x-admin.td>
-                                            <p class="text-xs desc">
-                                                <a href="{{ asset('dist/assets/img/kamar/' . $item->image) }}"
-                                                    target="_blank">
-                                                    {{ $item->image }}
-                                                </a>
-                                            </p>
+                                            @foreach (explode(',', $item->image) as $listImage)
+                                                <p class="text-xs desc">
+                                                    <a href="{{ asset('dist/assets/img/kamar/' . trim($listImage)) }}"
+                                                        target="_blank">
+                                                        {{ trim($listImage) }}
+                                                    </a>
+                                                </p>
+                                            @endforeach
                                         </x-admin.td>
                                         <x-admin.td>{{ $item->status ?? '' }}</x-admin.td>
                                         <x-admin.td>
@@ -109,17 +111,19 @@
                                                                 <br>
                                                                 <div class="">
                                                                     <ul>
-                                                                        <li>
-                                                                            <a href="{{ asset('dist/assets/img/kamar/' . $item->image) }}"
-                                                                                target="_blank">{{ $item->image }}</a>
-                                                                        </li>
+                                                                        @foreach (explode(',', $item->image) as $listImage2)
+                                                                            <li>
+                                                                                <a href="{{ asset('dist/assets/img/kamar/' . trim($listImage2)) }}"
+                                                                                    target="_blank">{{ trim($listImage2) }}</a>
+                                                                            </li>
+                                                                        @endforeach
                                                                     </ul>
                                                                 </div>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="formFile" class="form-label">Foto</label>
                                                                 <input class="form-control" type="file" id="formFile"
-                                                                    name="image" multiple>
+                                                                    name="image[]" multiple>
                                                             </div>
 
                                                             <Label>Status</Label>
@@ -212,7 +216,7 @@
 
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Foto</label>
-                            <input class="form-control" type="file" id="formFile" name="image" multiple>
+                            <input class="form-control" type="file" id="formFile" name="image[]" multiple>
                         </div>
 
                         <Label>Status</Label>

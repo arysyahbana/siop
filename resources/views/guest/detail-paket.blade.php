@@ -59,16 +59,21 @@
                                         <td>Item</td>
                                         <td class="px-3">:</td>
                                         <td>
-                                            awkowako, awkowako, awkowako, awkowako
+                                            @foreach ($paketTour->rItemTambahan as $itemTambahan)
+                                                {{ $itemTambahan->nama_item ?? '' }}
+                                            @endforeach
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>Medsos</td>
-                                        <td class="px-3">:</td>
-                                        <td>
-                                            <a href="intagram.com">instagram.com</a>
-                                        </td>
-                                    </tr>
+                                    @if ($paketTour->medsos)
+                                        <tr>
+                                            <td>Medsos</td>
+                                            <td class="px-3">:</td>
+                                            <td>
+                                                <a
+                                                    href="{{ $paketTour->medsos ?? '#' }}">{{ explode('/', parse_url($paketTour->medsos, PHP_URL_PATH))[1] ?? '' }}</a>
+                                            </td>
+                                        </tr>
+                                    @endif
                                 </table>
                                 <p class="text-sm desc my-2">
                                     {{-- untuk item lu jabarin dalam bentuk paragraf aja cok --}}

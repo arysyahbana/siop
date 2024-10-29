@@ -43,11 +43,15 @@
                                     <td class="px-3">:</td>
                                     <td>{{ $objekWisata->lokasi ?? '' }}</td>
                                 </tr>
-                                <tr class="text-sm desc text-violet-800">
-                                    <td>Media Sosial</td>
-                                    <td class="px-3">:</td>
-                                    <td><a href="intagram.com">instagram.com</a></td>
-                                </tr>
+                                @if ($objekWisata->medsos)
+                                    <tr class="text-sm desc text-violet-800">
+                                        <td>Media Sosial</td>
+                                        <td class="px-3">:</td>
+                                        <td><a
+                                                href="{{ $objekWisata->medsos ?? '#' }}">{{ explode('/', parse_url($objekWisata->medsos, PHP_URL_PATH))[1] ?? '' }}</a>
+                                        </td>
+                                    </tr>
+                                @endif
                             </table>
                             </p>
                         </div>

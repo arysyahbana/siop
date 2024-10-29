@@ -16,10 +16,11 @@ return new class extends Migration
             $table->string('nama_paket');
             $table->text('deskripsi');
             $table->string('id_objek_wisata');
-            $table->string('id_penginapan');
+            $table->string('id_penginapan')->nullable();
             $table->string('id_pemilik');
             $table->integer('harga');
             $table->string('image');
+            $table->text('medsos')->nullable();
             $table->timestamps();
         });
     }

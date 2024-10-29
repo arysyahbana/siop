@@ -27,16 +27,16 @@ class PaketController extends Controller
                 'namaPaket' => 'required',
                 'deskripsi' => 'required',
                 'wisata_id' => 'required',
-                'penginapan_id' => 'required',
+                'penginapan_id' => 'sometimes|nullable',
                 'owner_id' => 'required',
                 'hargaPaket' => 'required|numeric',
                 'image' => $imageRule . '|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'medsos' => 'sometimes|nullable',
             ],
             [
                 'namaPaket.required' => 'Nama Paket tidak boleh kosong',
                 'deskripsi.required' => 'Deskripsi tidak boleh kosong',
                 'wisata_id.required' => 'data objek wisata tidak boleh kosong',
-                'penginapan_id.required' => 'data penginapan tidak boleh kosong',
                 'owner_id.required' => 'data pemilik tidak boleh kosong',
                 'hargaPaket.required' => 'harga tidak boleh kosong',
                 'hargaPaket.numeric' => 'harga harus berupa angka',
@@ -72,6 +72,7 @@ class PaketController extends Controller
             'id_pemilik' => $request->owner_id,
             'harga' => $request->hargaPaket,
             'image' => $image,
+            'medsos' => $request->medsos
         ];
         $paketTour = PaketTour::create($data);
         $itemTambahan = $request->item;
@@ -110,6 +111,7 @@ class PaketController extends Controller
             'id_penginapan' => $request->penginapan_id,
             'id_pemilik' => $request->owner_id,
             'harga' => $request->hargaPaket,
+            'medsos' => $request->medsos
         ];
         $paketTour = PaketTour::find($id);
 

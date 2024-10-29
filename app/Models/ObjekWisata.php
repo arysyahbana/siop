@@ -9,9 +9,10 @@ class ObjekWisata extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama_wisata', 'id_kategori', 'deskripsi', 'lokasi', 'harga', 'no_hp', 'image'];
+    protected $fillable = ['nama_wisata', 'id_kategori', 'deskripsi', 'lokasi', 'harga', 'no_hp', 'image', 'medsos'];
 
-    public function rKategori(){
+    public function rKategori()
+    {
         return $this->belongsTo(Kategori::class, 'id_kategori', 'id');
     }
 }

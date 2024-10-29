@@ -17,6 +17,7 @@ class PaketTour extends Model
         'id_pemilik',
         'harga',
         'image',
+        'medsos',
     ];
 
     public function rObjekWisata()

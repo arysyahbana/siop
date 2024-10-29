@@ -28,6 +28,7 @@ class ObjekWisataController extends Controller
                 'harga' => 'required|numeric',
                 'kontak' => 'required|numeric',
                 'image' => $imageRule.'|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'medsos' => 'sometimes|nullable',
             ],
             [
                 'namawisata.required' => 'nama wisata tidak boleh kosong',
@@ -65,6 +66,7 @@ class ObjekWisataController extends Controller
             'no_hp' => GlobalFunction::formatPhoneNumber($request->kontak),
             'id_kategori' => $request->kategori_id,
             'image' => $image,
+            'medsos' => $request->medsos
         ];
         ObjekWisata::create($data);
 
@@ -84,6 +86,7 @@ class ObjekWisataController extends Controller
             'harga' => $request->harga,
             'no_hp' => GlobalFunction::formatPhoneNumber($request->kontak),
             'id_kategori' => $request->kategori_id,
+            'medsos' => $request->medsos
         ];
 
         if ($request->file('image')) {

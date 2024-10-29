@@ -47,11 +47,13 @@
                                     <td class="px-3">:</td>
                                     <td>{{ $penginapan->lokasi ?? '' }}</td>
                                 </tr>
-                                <tr class="text-sm desc text-violet-800">
-                                    <td>Media Sosial</td>
-                                    <td class="px-3">:</td>
-                                    <td><a href="intagram.com">instagram.com</a></td>
-                                </tr>
+                                @if ($penginapan->medsos)
+                                    <tr class="text-sm desc text-violet-800">
+                                        <td>Media Sosial</td>
+                                        <td class="px-3">:</td>
+                                        <td><a href="{{ $penginapan->medsos ?? '#' }}">{{ explode('/', parse_url($penginapan->medsos, PHP_URL_PATH))[1] ?? '' }}</a></td>
+                                    </tr>
+                                @endif
                             </table>
                             </p>
                         </div>
@@ -102,11 +104,11 @@
                                 </div>
                             </div>
                         </a> --}}
-                        <a href="{{ route('detail-kamar') }}" class="w-full max-w-lg block no-underline text-inherit">
+                        <a href="{{ route('detail-kamar', $item->id) }}" class="w-full max-w-lg block no-underline text-inherit">
                             <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" data-aos="fade-up"
                                 data-aos-duration="1000">
                                 <div class="p-5 overflow-hidden rounded-xl flex-grow">
-                                    <img src="{{ asset('dist/assets/img/kamar/' . $item->image ?? '') }}" alt=""
+                                    <img src="{{ asset('dist/assets/img/kamar/' . App\Helpers\GlobalFunction::pemisahKoma($item->image) ?? '') }}" alt=""
                                         class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
                                     <div class="flex justify-between">
                                         <p class="text-xl font-bold text-slate-700 my-2">

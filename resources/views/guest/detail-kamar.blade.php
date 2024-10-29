@@ -27,50 +27,47 @@
                             <div class="grid grid-cols-4 gap-2">
                                 <!-- Gambar utama -->
                                 <div class="col-span-4">
-                                    <a href="{{ asset('dist/assets/img/marie.jpg') }}" target="blank">
-                                        <img id="mainImage" src="{{ asset('dist/assets/img/marie.jpg') }}"
+                                    <a href="{{ asset('dist/assets/img/kamar/' . App\Helpers\GlobalFunction::pemisahKoma($kamar->image)) }}"
+                                        target="blank">
+                                        <img id="mainImage"
+                                            src="{{ asset('dist/assets/img/kamar/' . App\Helpers\GlobalFunction::pemisahKoma($kamar->image)) }}"
                                             alt="" class="object-cover shadow-lg rounded-xl h-[400px] w-full" />
                                     </a>
                                 </div>
 
                                 <!-- Gambar kecil -->
-                                <img src="{{ asset('dist/assets/img/marie.jpg') }}" alt=""
-                                    class="thumbnail object-cover shadow-lg rounded-xl h-[100px] w-full" />
-                                <img src="{{ asset('dist/assets/img/team-2.jpg') }}" alt=""
-                                    class="thumbnail object-cover shadow-lg rounded-xl h-[100px] w-full" />
-                                <img src="{{ asset('dist/assets/img/team-3.jpg') }}" alt=""
-                                    class="thumbnail object-cover shadow-lg rounded-xl h-[100px] w-full" />
-                                <img src="{{ asset('dist/assets/img/team-4.jpg') }}" alt=""
-                                    class="thumbnail object-cover shadow-lg rounded-xl h-[100px] w-full" />
+                                @foreach (explode(',', $kamar->image) as $listImage)
+                                    <img src="{{ asset('dist/assets/img/kamar/' . trim($listImage)) }}" alt=""
+                                        class="thumbnail object-cover shadow-lg rounded-xl h-[100px] w-full" />
+                                @endforeach
                             </div>
                             <div class="place-self-center">
                                 <p class="text-2xl font-bold text-slate-700 my-2">
-                                    Kamar Nomor 1220
+                                    Kamar Nomor {{ $kamar->nomor_kamar ?? '' }}
                                 </p>
                                 <table class="text-sm desc my-5">
                                     <tr>
                                         <td>Nama Penginapan</td>
                                         <td class="px-3">:</td>
-                                        <td>asdas</td>
+                                        <td>{{ $kamar->rPenginapan?->nama_penginapan ?? '' }}</td>
                                     </tr>
                                     <tr>
                                         <td>Owner</td>
                                         <td class="px-3">:</td>
-                                        <td>asdasd</td>
+                                        <td>{{ $kamar->rPenginapan->rPemilik?->name ?? '' }}</td>
                                     </tr>
                                     <tr>
                                         <td>Harga Kamar</td>
                                         <td class="px-3">:</td>
-                                        <td>asdasd
-                                        </td>
+                                        <td>Rp. {{ App\Helpers\GlobalFunction::formatMoney($kamar->harga) }}</td>
                                     </tr>
                                 </table>
                                 <p class="text-sm desc my-2">
-                                    asdasdasd
+                                    {{ $kamar->deskripsi ?? '' }}
                                 </p>
-
                                 <div class="my-6">
-                                    <a href="#" target="_blank" type="button"
+                                    <a href="{{ App\Helpers\GlobalFunction::urlPemesanan($kamar->rPenginapan->rPemilik->no_hp, $kamar->nomor_kamar, $kamar->id) }}"
+                                        target="_blank" type="button"
                                         class="focus:outline-none text-white bg-green-500 hover:bg-green-600  font-medium rounded-xl text-sm px-5 py-2.5">
                                         Pesan Sekarang
                                     </a>
@@ -86,26 +83,29 @@
         <section id="paket" class="my-20">
             <p class="text-center text-2xl font-bold text-slate-700">KAMAR LAINNYA</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-5 justify-items-center gap-5">
-                <a href="{{ route('detail-kamar') }}" class="w-full max-w-lg block no-underline text-inherit">
+                @foreach ($kamarRandom as $random)
+                @endforeach
+                <a href="{{ route('detail-kamar', $random->id) }}"
+                    class="w-full max-w-lg block no-underline text-inherit">
                     <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" data-aos="fade-up"
                         data-aos-duration="1000">
                         <div class="p-5 overflow-hidden rounded-xl flex-grow">
-                            <img src="{{ asset('dist/assets/img/team-1.jpg') }}" alt=""
-                                class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
+                            <img src="{{ asset('dist/assets/img/kamar/' . App\Helpers\GlobalFunction::pemisahKoma($random->image) ?? '') }}"
+                                alt="" class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
                             <div class="flex justify-between">
                                 <p class="text-xl font-bold text-slate-700 my-2">
-                                    121212
+                                    {{ $random->nomor_kamar ?? '' }}
                                 </p>
                                 <p class="text-sm desc my-3 text-violet-800">
                                     Kamar
                                 </p>
                             </div>
                             <p class="text-sm desc my-2">
-                                asdasdasdadsads
+                                {{ $random->deskripsi ?? '' }}
                             </p>
                             <div class="flex justify-end items-center">
                                 <p class="text-orange-500 text-lg">Rp.
-                                    100000 / Malam</p>
+                                    {{ App\Helpers\GlobalFunction::formatMoney($random->harga) }} / Malam</p>
                             </div>
                         </div>
                     </div>

@@ -13,6 +13,7 @@ use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
+use App\Models\Kamar;
 use App\Models\ObjekWisata;
 use App\Models\PaketTour;
 use App\Models\Penginapan;
@@ -57,12 +58,17 @@ Route::get('/detail-paket/{id}', function ($id) {
     return view('guest.detail-paket', compact('paketTour', 'paketTourRandom'));
 })->name('detail-paket');
 
-Route::get('/detail-kamar', function () {
-    return view('guest.detail-kamar');
+Route::get('/detail-kamar/{id}', function ($id) {
+    $kamar = Kamar::with('rPenginapan')->find($id);
+    $kamarRandom = Kamar::where('id_penginapan', $kamar->id_penginapan)
+        ->where('id', '!=', $kamar->id)
+        ->get();
+    return view('guest.detail-kamar', compact('kamar', 'kamarRandom'));
 })->name('detail-kamar');
 
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -110,7 +116,6 @@ Route::prefix('paket')->group(function () {
     Route::get('/destroy/{id}', [PaketController::class, 'destroy'])->name('paket.destroy');
     Route::get('/download', [PaketController::class, 'download'])->name('paket.download');
 });
-
 
 Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::prefix('users')->group(function () {

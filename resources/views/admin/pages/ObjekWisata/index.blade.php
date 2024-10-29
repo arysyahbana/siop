@@ -53,7 +53,8 @@
                                             </a>
                                         </x-admin.td>
                                         <x-admin.td>
-                                            <a href="intagram.com">instagram.com</a>
+                                            <a
+                                                href="{{ $item->medsos ?? '#' }}">{{ explode('/', parse_url($item->medsos, PHP_URL_PATH))[1] ?? 'Belum Memasukan Link' }}</a>
                                         </x-admin.td>
                                         <x-admin.td>
                                             <a href="#" class="btn bg-gradient-info" data-bs-toggle="modal"
@@ -131,7 +132,7 @@
                                                                     name="image">
                                                             </div>
                                                             <x-admin.input type="text" placeholder="Medsos"
-                                                                label="Medsos" name="medsos" value="instagram.com" />
+                                                                label="Medsos" name="medsos" value="{{$item->medsos}}" />
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="submit"

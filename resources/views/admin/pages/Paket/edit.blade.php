@@ -91,7 +91,7 @@
                                 </div>
 
                                 <x-admin.input type="text" placeholder="Medsos" label="Medsos" name="medsos"
-                                    value="instagram.com" />
+                                    value="{{ $paketTour->medsos }}" />
 
                                 <div class="d-flex justify-content-end mt-3">
                                     <button type="submit" class="btn btn-sm btn-success">Update</button>
