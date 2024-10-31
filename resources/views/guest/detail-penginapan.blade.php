@@ -40,7 +40,7 @@
                                 <tr class="text-sm desc text-violet-800">
                                     <td>Kontak</td>
                                     <td class="px-3">:</td>
-                                    <td>890890890809</td>
+                                    <td>{{ $penginapan->rPemilik?->no_hp ?? '' }}</td>
                                 </tr>
                                 <tr class="text-sm desc text-violet-800">
                                     <td>Lokasi</td>

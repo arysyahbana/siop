@@ -47,7 +47,7 @@
                                     <tr>
                                         <td>Kontak</td>
                                         <td class="px-3">:</td>
-                                        <td>809809809890</td>
+                                        <td>{{ $paketTour->rPemilik?->no_hp ?? '' }}</td>
                                     </tr>
                                     <tr>
                                         <td>Harga Paket</td>

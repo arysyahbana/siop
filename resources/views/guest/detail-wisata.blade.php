@@ -46,7 +46,7 @@
                                 <tr class="text-sm desc text-violet-800">
                                     <td>Kontak</td>
                                     <td class="px-3">:</td>
-                                    <td>98890809809</td>
+                                    <td>{{ $objekWisata->no_hp ?? '' }}</td>
                                 </tr>
                                 @if ($objekWisata->medsos)
                                     <tr class="text-sm desc text-violet-800">
