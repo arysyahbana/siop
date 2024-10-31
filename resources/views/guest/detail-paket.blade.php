@@ -45,9 +45,9 @@
                                         <td>{{ $paketTour->rPenginapan?->nama_penginapan ?? '' }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Owner</td>
+                                        <td>Kontak</td>
                                         <td class="px-3">:</td>
-                                        <td>{{ $paketTour->rPemilik?->name ?? '' }}</td>
+                                        <td>809809809890</td>
                                     </tr>
                                     <tr>
                                         <td>Harga Paket</td>

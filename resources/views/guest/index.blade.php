@@ -107,8 +107,8 @@
                                         {{ $wisata->rKategori?->kategori ?? '' }}
                                     </p>
                                 </div>
-                                <p class="text-sm desc my-2">
-                                    {{ $wisata->deskripsi ?? '' }}
+                                <p class="text-default-500 text-small">
+                                    {{ Str::limit($wisata->deskripsi ?? '', 50, '...') }}
                                 </p>
                                 <p class="text-end mt-3 text-orange-500 text-lg">Rp.
                                     {{ App\Helpers\GlobalFunction::formatMoney($wisata->harga ?? 0) }} / orang</p>
@@ -136,7 +136,7 @@
                                     {{ $inap->nama_penginapan ?? '' }}
                                 </p>
                                 <p class="text-sm desc my-2">
-                                    {{ $inap->deskripsi ?? '' }}
+                                    {{ Str::limit($inap->deskripsi ?? '', 50, '...') }}
                                 </p>
                             </div>
                         </div>

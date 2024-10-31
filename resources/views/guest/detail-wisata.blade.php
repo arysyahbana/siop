@@ -43,6 +43,11 @@
                                     <td class="px-3">:</td>
                                     <td>{{ $objekWisata->lokasi ?? '' }}</td>
                                 </tr>
+                                <tr class="text-sm desc text-violet-800">
+                                    <td>Kontak</td>
+                                    <td class="px-3">:</td>
+                                    <td>98890809809</td>
+                                </tr>
                                 @if ($objekWisata->medsos)
                                     <tr class="text-sm desc text-violet-800">
                                         <td>Media Sosial</td>
@@ -81,7 +86,7 @@
                                     </p>
                                 </div>
                                 <p class="text-sm desc my-2">
-                                    {{ $wisataRandom->deskripsi ?? '' }}
+                                    {{ Str::limit($wisataRandom->deskripsi ?? '', 50, '...') }}
                                 </p>
                                 <p class="text-end mt-3 text-orange-500 text-lg">Rp.
                                     {{ \App\Helpers\GlobalFunction::formatMoney($wisataRandom->harga) ?? '' }} / orang

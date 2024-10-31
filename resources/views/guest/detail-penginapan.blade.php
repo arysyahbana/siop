@@ -38,9 +38,9 @@
                             <p class="mt-2">
                             <table>
                                 <tr class="text-sm desc text-violet-800">
-                                    <td>Owner</td>
+                                    <td>Kontak</td>
                                     <td class="px-3">:</td>
-                                    <td>{{ $penginapan->rPemilik?->name ?? '' }}</td>
+                                    <td>890890890809</td>
                                 </tr>
                                 <tr class="text-sm desc text-violet-800">
                                     <td>Lokasi</td>
@@ -51,7 +51,9 @@
                                     <tr class="text-sm desc text-violet-800">
                                         <td>Media Sosial</td>
                                         <td class="px-3">:</td>
-                                        <td><a href="{{ $penginapan->medsos ?? '#' }}">{{ explode('/', parse_url($penginapan->medsos, PHP_URL_PATH))[1] ?? '' }}</a></td>
+                                        <td><a
+                                                href="{{ $penginapan->medsos ?? '#' }}">{{ explode('/', parse_url($penginapan->medsos, PHP_URL_PATH))[1] ?? '' }}</a>
+                                        </td>
                                     </tr>
                                 @endif
                             </table>
@@ -104,12 +106,13 @@
                                 </div>
                             </div>
                         </a> --}}
-                        <a href="{{ route('detail-kamar', $item->id) }}" class="w-full max-w-lg block no-underline text-inherit">
+                        <a href="{{ route('detail-kamar', $item->id) }}"
+                            class="w-full max-w-lg block no-underline text-inherit">
                             <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" data-aos="fade-up"
                                 data-aos-duration="1000">
                                 <div class="p-5 overflow-hidden rounded-xl flex-grow">
-                                    <img src="{{ asset('dist/assets/img/kamar/' . App\Helpers\GlobalFunction::pemisahKoma($item->image) ?? '') }}" alt=""
-                                        class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
+                                    <img src="{{ asset('dist/assets/img/kamar/' . App\Helpers\GlobalFunction::pemisahKoma($item->image) ?? '') }}"
+                                        alt="" class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
                                     <div class="flex justify-between">
                                         <p class="text-xl font-bold text-slate-700 my-2">
                                             {{ $item->nomor_kamar ?? '' }}

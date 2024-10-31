@@ -84,32 +84,32 @@
             <p class="text-center text-2xl font-bold text-slate-700">KAMAR LAINNYA</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-5 justify-items-center gap-5">
                 @foreach ($kamarRandom as $random)
-                @endforeach
-                <a href="{{ route('detail-kamar', $random->id) }}"
-                    class="w-full max-w-lg block no-underline text-inherit">
-                    <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" data-aos="fade-up"
-                        data-aos-duration="1000">
-                        <div class="p-5 overflow-hidden rounded-xl flex-grow">
-                            <img src="{{ asset('dist/assets/img/kamar/' . App\Helpers\GlobalFunction::pemisahKoma($random->image) ?? '') }}"
-                                alt="" class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
-                            <div class="flex justify-between">
-                                <p class="text-xl font-bold text-slate-700 my-2">
-                                    {{ $random->nomor_kamar ?? '' }}
+                    <a href="{{ route('detail-kamar', $random->id) }}"
+                        class="w-full max-w-lg block no-underline text-inherit">
+                        <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" data-aos="fade-up"
+                            data-aos-duration="1000">
+                            <div class="p-5 overflow-hidden rounded-xl flex-grow">
+                                <img src="{{ asset('dist/assets/img/kamar/' . App\Helpers\GlobalFunction::pemisahKoma($random->image) ?? '') }}"
+                                    alt="" class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
+                                <div class="flex justify-between">
+                                    <p class="text-xl font-bold text-slate-700 my-2">
+                                        {{ $random->nomor_kamar ?? '' }}
+                                    </p>
+                                    <p class="text-sm desc my-3 text-violet-800">
+                                        Kamar
+                                    </p>
+                                </div>
+                                <p class="text-sm desc my-2">
+                                    {{ $random->deskripsi ?? '' }}
                                 </p>
-                                <p class="text-sm desc my-3 text-violet-800">
-                                    Kamar
-                                </p>
-                            </div>
-                            <p class="text-sm desc my-2">
-                                {{ $random->deskripsi ?? '' }}
-                            </p>
-                            <div class="flex justify-end items-center">
-                                <p class="text-orange-500 text-lg">Rp.
-                                    {{ App\Helpers\GlobalFunction::formatMoney($random->harga) }} / Malam</p>
+                                <div class="flex justify-end items-center">
+                                    <p class="text-orange-500 text-lg">Rp.
+                                        {{ App\Helpers\GlobalFunction::formatMoney($random->harga) }} / Malam</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                @endforeach
             </div>
         </section>
     </main>
