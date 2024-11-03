@@ -15,7 +15,7 @@
                                 @csrf
                                 <p class="text-center">
                                     <img src="{{ asset('dist/assets/img/bin.gif') }}" alt=""
-                                        style="max-width: 800px">
+                                        style="max-width: 400px">
                                 </p>
                                 <x-admin.input type="text" placeholder="Nama Paket" label="Nama Paket" name="namaPaket"
                                     value="{{ $paketTour->nama_paket ?? '' }}" />

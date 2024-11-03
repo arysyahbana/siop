@@ -20,44 +20,36 @@
     </div>
 
     <main class="container mx-auto mb-20">
-        <!-- pariwisata -->
-        <section id="pariwisata" class="mt-20">
+        <!-- penginapan -->
+        <section id="penginapan" class="mt-20">
 
-            <p class="text-center text-2xl font-bold text-slate-700 mb-5">DAFTAR OBJEK PARIWISATA</p>
+            <p class="text-center text-2xl font-bold text-slate-700 mb-5">DAFTAR PENGINAPAN</p>
 
             {{-- search --}}
             @include('guest.layouts.search')
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-12 justify-items-center gap-5">
-                @foreach ($objekWisata as $wisata)
-                    <a href="{{ route('detail-wisata', $wisata->id) }}" class="w-full max-w-lg">
+                @foreach ($penginapan as $inap)
+                    <a href="{{ route('detail-penginapan', $inap->id) }}" class="w-full max-w-lg">
                         <div class="bg-white rounded-xl hover:shadow-xl h-full flex flex-col" target="blank"
                             data-aos="fade-up" data-aos-duration="1000">
                             <div class="p-5 overflow-hidden rounded-xl flex-grow">
-                                <img src="{{ asset('dist/assets/img/objek-wisata/' . $wisata->image ?? '') }}"
+                                <img src="{{ asset('dist/assets/img/penginapan/' . $inap->image ?? '') }}"
                                     alt="" class="object-cover shadow-lg rounded-xl h-[180px] w-full" />
-                                <div class="flex justify-between">
-                                    <p class="text-xl font-bold text-slate-700 my-2">
-                                        {{ $wisata->nama_wisata ?? '' }}
-                                    </p>
-                                    <p class="text-sm desc my-3 text-violet-800">
-                                        {{ $wisata->rKategori?->kategori ?? '' }}
-                                    </p>
-                                </div>
-                                <p class="text-default-500 text-small">
-                                    {{ Str::limit($wisata->deskripsi ?? '', 50, '...') }}
+                                <p class="text-xl font-bold text-slate-700 my-2">
+                                    {{ $inap->nama_penginapan ?? '' }}
                                 </p>
-                                <p class="text-end mt-3 text-orange-500 text-lg">Rp.
-                                    {{ App\Helpers\GlobalFunction::formatMoney($wisata->harga ?? 0) }} / orang</p>
+                                <p class="text-sm desc my-2">
+                                    {{ Str::limit($inap->deskripsi ?? '', 50, '...') }}
+                                </p>
                             </div>
                         </div>
                     </a>
                 @endforeach
             </div>
             <div class="text-center">
-                {{ $objekWisata->links() }}
+                {{ $penginapan->links() }}
             </div>
-
         </section>
     </main>
 

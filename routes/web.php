@@ -35,11 +35,22 @@ use Illuminate\Support\Facades\Route;
 //     return view('admin.pages.dashboard');
 // });
 Route::get('/', function () {
-    $objekWisata = ObjekWisata::paginate(8)->shuffle();
-    $penginapan = Penginapan::paginate(8)->shuffle();
-    $paketTour = PaketTour::paginate(8)->shuffle();
-    return view('guest.index', compact('objekWisata', 'penginapan', 'paketTour'));
+    $page = 'Home';
+    $objekWisata = ObjekWisata::paginate(2);
+    return view('guest.index', compact('objekWisata', 'page'));
 })->name('index');
+
+Route::get('/penginapan', function () {
+    $page = 'Penginapan';
+    $penginapan = Penginapan::paginate(2);
+    return view('guest.penginapan', compact('penginapan', 'page'));
+})->name('penginapan');
+
+Route::get('/paket-tour', function () {
+    $page = 'Paket Tour';
+    $paketTour = PaketTour::paginate(2);
+    return view('guest.paket', compact('paketTour', 'page'));
+})->name('paket');
 
 Route::get('/detail-wisata/{id}', function ($id) {
     $objekWisata = ObjekWisata::find($id);

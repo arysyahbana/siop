@@ -24,24 +24,24 @@
         <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
             <ul
                 class="flex flex-col p-4 md:p-0 mt-4 font-medium  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
-                <li>
+                {{-- <li>
                     <a href="{{ route('index') }}"
-                        class="block py-2 px-3 text-slate-900 rounded md:bg-transparent hover:text-white md:p-0"
+                        class="block py-2 px-3 text-slate-900 rounded md:bg-transparent hover:text-white md:p-0 {{ Route::currentRouteName() == 'index' ? 'text-white' : '' }}"
                         aria-current="page">Home</a>
-                </li>
+                </li> --}}
                 <li>
                     <a href="{{ route('index') }}"
-                        class="block py-2 px-3 text-slate-900 rounded md:hover:text-white md:p-0">Daftar
+                        class="block py-2 px-3 text-slate-900 rounded md:hover:text-white md:p-0 {{ Route::currentRouteName() == 'index' ? 'text-white' : '' }}">Daftar
                         Objek Pariwisata</a>
                 </li>
                 <li>
-                    <a href="{{ route('index') }}"
-                        class="block py-2 px-3 text-slate-900 rounded md:hover:text-white md:p-0">Daftar
+                    <a href="{{ route('penginapan') }}"
+                        class="block py-2 px-3 text-slate-900 rounded md:hover:text-white md:p-0 {{ Route::currentRouteName() == 'penginapan' ? 'text-white' : '' }}">Daftar
                         Penginapan</a>
                 </li>
                 <li>
-                    <a href="{{ route('index') }}"
-                        class="block py-2 px-3 text-slate-900 rounded md:hover:text-white md:p-0">Daftar
+                    <a href="{{ route('paket') }}"
+                        class="block py-2 px-3 text-slate-900 rounded md:hover:text-white md:p-0 {{ Route::currentRouteName() == 'paket-tour' ? 'text-white' : '' }}">Daftar
                         Paket Tour</a>
                 </li>
             </ul>
