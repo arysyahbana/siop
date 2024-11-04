@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Illuminate\Support\Facades\DB;
+
 class GlobalFunction
 {
     public static function formatMoney($money)
@@ -49,9 +51,22 @@ class GlobalFunction
         }
     }
 
-    public static function pemisahKoma($data){
-        foreach (explode(',', $data) as $listData){
+    public static function pemisahKoma($data)
+    {
+        foreach (explode(',', $data) as $listData) {
             return trim($listData);
         }
     }
+
+    public static function searchGlobal($table, $columns, $data)
+    {
+        return DB::table($table)
+            ->where(function ($query) use ($columns, $data) {
+                foreach ($columns as $column) {
+                    $query->orWhere($column, 'like', '%' . $data . '%');
+                }
+            })
+            ->paginate(2);
+    }
+
 }

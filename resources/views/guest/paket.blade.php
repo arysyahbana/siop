@@ -26,7 +26,7 @@
             <p class="text-center text-2xl font-bold text-slate-700 mb-5">DAFTAR PAKET TOUR WISATA</p>
 
             {{-- search --}}
-            @include('guest.layouts.search')
+            @include('guest.layouts.search',['urlSearch' => route('search-paket')])
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-12 justify-items-center gap-5">
                 @foreach ($paketTour as $tour)

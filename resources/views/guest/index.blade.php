@@ -26,7 +26,7 @@
             <p class="text-center text-2xl font-bold text-slate-700 mb-5">DAFTAR OBJEK PARIWISATA</p>
 
             {{-- search --}}
-            @include('guest.layouts.search')
+            @include('guest.layouts.search',['urlSearch' => route('search-wisata')])
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-12 justify-items-center gap-5">
                 @foreach ($objekWisata as $wisata)

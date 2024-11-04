@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\BarangController;
-use App\Http\Controllers\CustomerController;
+use App\Helpers\GlobalFunction;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KamarController;
 use App\Http\Controllers\KategoriController;
@@ -9,15 +8,13 @@ use App\Http\Controllers\ObjekWisataController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\PenginapanController;
-use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
 use App\Models\Kamar;
 use App\Models\ObjekWisata;
 use App\Models\PaketTour;
 use App\Models\Penginapan;
-use App\Models\Petugas;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,25 +33,50 @@ use Illuminate\Support\Facades\Route;
 // });
 Route::get('/', function () {
     $page = 'Home';
-    $objekWisata = ObjekWisata::paginate(2);
+    $objekWisata = ObjekWisata::inRandomOrder()->paginate(16);
     return view('guest.index', compact('objekWisata', 'page'));
 })->name('index');
 
+Route::get('/search-wisata', function (Request $request) {
+    $page = 'Home';
+    $columns = ['nama_wisata', 'deskripsi', 'lokasi'];
+    $dataSearch = $request->search;
+    $objekWisata = GlobalFunction::searchGlobal('objek_wisatas', $columns, $dataSearch);
+    return view('guest.index', compact('objekWisata', 'page'));
+})->name('search-wisata');
+
 Route::get('/penginapan', function () {
     $page = 'Penginapan';
-    $penginapan = Penginapan::paginate(2);
+    $penginapan = Penginapan::inRandomOrder()->paginate(16);
     return view('guest.penginapan', compact('penginapan', 'page'));
 })->name('penginapan');
 
+Route::get('/search-penginapan', function (Request $request) {
+    $page = 'Penginapan';
+    $columns = ['nama_penginapan', 'deskripsi', 'lokasi'];
+    $dataSearch = $request->search;
+    $penginapan = GlobalFunction::searchGlobal('penginapans', $columns, $dataSearch);
+    return view('guest.penginapan', compact('penginapan', 'page'));
+})->name('search-penginapan');
+
 Route::get('/paket-tour', function () {
     $page = 'Paket Tour';
-    $paketTour = PaketTour::paginate(2);
+    $paketTour = PaketTour::inRandomOrder()->paginate(16);
     return view('guest.paket', compact('paketTour', 'page'));
 })->name('paket');
 
+Route::get('/search-paket', function (Request $request) {
+    $page = 'Paket Tour';
+    $columns = ['nama_paket', 'deskripsi'];
+    $dataSearch = $request->search;
+    $paketTour = GlobalFunction::searchGlobal('paket_tours', $columns, $dataSearch);
+    return view('guest.paket', compact('paketTour', 'page'));
+})->name('search-paket');
+
 Route::get('/detail-wisata/{id}', function ($id) {
     $objekWisata = ObjekWisata::find($id);
-    $objekWisataRandom = ObjekWisata::paginate(4)->shuffle();
+    $objekWisataRandom = ObjekWisata::paginate(4);
+
     return view('guest.detail-wisata', compact('objekWisata', 'objekWisataRandom'));
 })->name('detail-wisata');
 
@@ -65,7 +87,7 @@ Route::get('/detail-penginapan/{id}', function ($id) {
 
 Route::get('/detail-paket/{id}', function ($id) {
     $paketTour = PaketTour::find($id);
-    $paketTourRandom = PaketTour::paginate(8)->shuffle();
+    $paketTourRandom = PaketTour::inRandomOrder()->paginate(8);
     return view('guest.detail-paket', compact('paketTour', 'paketTourRandom'));
 })->name('detail-paket');
 
