@@ -31,18 +31,22 @@
                 </li> --}}
                 <li>
                     <a href="{{ route('index') }}"
-                        class="block py-2 px-3 text-slate-900 rounded md:hover:text-white md:p-0 {{ Route::currentRouteName() == 'index' ? 'text-white' : '' }}">Daftar
+                        class="block py-2 px-3 text-slate-900 rounded md:hover:text-white md:p-0 {{ $page == 'Home' ? 'text-white' : '' }}">Daftar
                         Objek Pariwisata</a>
                 </li>
                 <li>
                     <a href="{{ route('penginapan') }}"
-                        class="block py-2 px-3 text-slate-900 rounded md:hover:text-white md:p-0 {{ Route::currentRouteName() == 'penginapan' ? 'text-white' : '' }}">Daftar
+                        class="block py-2 px-3 text-slate-900 rounded md:hover:text-white md:p-0 {{ $page == 'Penginapan' ? 'text-white' : '' }}">Daftar
                         Penginapan</a>
                 </li>
                 <li>
                     <a href="{{ route('paket') }}"
-                        class="block py-2 px-3 text-slate-900 rounded md:hover:text-white md:p-0 {{ Route::currentRouteName() == 'paket-tour' ? 'text-white' : '' }}">Daftar
+                        class="block py-2 px-3 text-slate-900 rounded md:hover:text-white md:p-0 {{ $page == 'Paket Tour' ? 'text-white' : '' }}">Daftar
                         Paket Tour</a>
+                </li>
+                <li>
+                    <a href="{{ route('rekomendasi') }}"
+                        class="block py-2 px-3 text-slate-900 rounded md:hover:text-white md:p-0 {{ $page == 'Rekomendasi' ? 'text-white' : '' }}">Rekomendasi</a>
                 </li>
             </ul>
         </div>

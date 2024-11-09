@@ -13,7 +13,7 @@
 <body>
     @include('guest.layouts.navbar')
 
-    <main class="container mx-auto mt">
+    <main class="container mx-auto">
         <!-- detail paket -->
         <section id="detail-paket" class="mt-32">
             <p class="text-center text-2xl font-bold text-slate-700">DETAIL PAKET TOUR</p>

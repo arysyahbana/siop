@@ -21,11 +21,12 @@
                                 @slot('header')
                                     <tr>
                                         <x-admin.th>No</x-admin.th>
-                                        <x-admin.th>Nomor Kamar</x-admin.th>
+                                        <x-admin.th>Nama Kamar</x-admin.th>
                                         <x-admin.th>Nama Penginapan</x-admin.th>
                                         <x-admin.th>Deskripsi</x-admin.th>
                                         <x-admin.th>Harga Kamar</x-admin.th>
                                         <x-admin.th>Foto</x-admin.th>
+                                        <x-admin.th>Kapasitas Kamar</x-admin.th>
                                         <x-admin.th>Status</x-admin.th>
                                         <x-admin.th>Action</x-admin.th>
                                     </tr>
@@ -48,6 +49,7 @@
                                                 </p>
                                             @endforeach
                                         </x-admin.td>
+                                        <x-admin.td>6 Orang</x-admin.td>
                                         <x-admin.td>{{ $item->status ?? '' }}</x-admin.td>
                                         <x-admin.td>
                                             <a href="#" class="btn bg-gradient-info" data-bs-toggle="modal"
@@ -77,8 +79,8 @@
                                                         enctype="multipart/form-data">
                                                         @csrf
                                                         <div class="modal-body">
-                                                            <x-admin.input type="text" placeholder="Nomor Kamar"
-                                                                label="Nomor Kamar" name="nomorKamar"
+                                                            <x-admin.input type="text" placeholder="Nama Kamar"
+                                                                label="Nama Kamar" name="nomorKamar"
                                                                 value="{{ $item->nomor_kamar ?? '' }}" />
 
                                                             <Label>Penginapan</Label>
@@ -125,6 +127,10 @@
                                                                 <input class="form-control" type="file" id="formFile"
                                                                     name="image[]" multiple>
                                                             </div>
+
+                                                            <x-admin.input type="number" placeholder="Kapasitas Kamar"
+                                                                label="Kapasitas Kamar" name="kapasitasKamar"
+                                                                value="6" />
 
                                                             <Label>Status</Label>
                                                             <select class="form-select mb-3"
@@ -199,7 +205,7 @@
                 <form action="{{ route('kamar.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
-                        <x-admin.input type="text" placeholder="Nomor Kamar" label="Nomor Kamar" name="nomorKamar" />
+                        <x-admin.input type="text" placeholder="Nama Kamar" label="Nama Kamar" name="nomorKamar" />
 
                         <Label>Penginapan</Label>
                         <select class="form-select mb-3" aria-label="Default select example" name="penginapan_id"
@@ -218,6 +224,9 @@
                             <label for="formFile" class="form-label">Foto</label>
                             <input class="form-control" type="file" id="formFile" name="image[]" multiple>
                         </div>
+
+                        <x-admin.input type="number" placeholder="Kapasitas Kamar" label="Kapasitas Kamar"
+                            name="kapasitasKamar" />
 
                         <Label>Status</Label>
                         <select class="form-select mb-3" aria-label="Default select example" name="status"

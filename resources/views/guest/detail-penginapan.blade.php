@@ -13,53 +13,84 @@
 <body>
     @include('guest.layouts.navbar')
 
-    <main class="container mx-auto mt">
+    <main class="container mx-auto">
         <!-- detail penginapan -->
         <section id="detail-penginapan" class="mt-32">
             <p class="text-center text-2xl font-bold text-slate-700">DETAIL PENGINAPAN</p>
 
-            <div class="grid grid-cols-1 mt-5 justify-items-center gap-5">
+            <div class="grid grid-cols-2 mt-5 justify-items-center gap-5">
                 <div class="w-full">
                     <div class="bg-white rounded-xl h-full flex flex-col" target="blank" data-aos="fade-up"
                         data-aos-duration="1000">
                         <div class="p-5 overflow-hidden rounded-xl flex-grow">
                             <img src="{{ asset('dist/assets/img/penginapan/' . $penginapan->image ?? '') }}"
                                 alt="" class="object-cover shadow-lg rounded-xl h-[400px] w-full" />
-                            <div class="flex justify-between">
-                                <p class="text-xl font-bold text-slate-700 my-2">
-                                    {{ $penginapan->nama_penginapan ?? '' }}
-                                </p>
-                                {{-- <p class="text-end my-2 text-orange-500 text-lg">Rp. 50.000 / orang</p> --}}
-                            </div>
-                            <p class="text-sm desc my-2">
-                                {{ $penginapan->deskripsi ?? '' }}
-                            </p>
-
-                            <p class="mt-2">
-                            <table>
-                                <tr class="text-sm desc text-violet-800">
-                                    <td>Kontak</td>
-                                    <td class="px-3">:</td>
-                                    <td>{{ $penginapan->rPemilik?->no_hp ?? '' }}</td>
-                                </tr>
-                                <tr class="text-sm desc text-violet-800">
-                                    <td>Lokasi</td>
-                                    <td class="px-3">:</td>
-                                    <td>{{ $penginapan->lokasi ?? '' }}</td>
-                                </tr>
-                                @if ($penginapan->medsos)
-                                    <tr class="text-sm desc text-violet-800">
-                                        <td>Media Sosial</td>
-                                        <td class="px-3">:</td>
-                                        <td><a
-                                                href="{{ $penginapan->medsos ?? '#' }}">{{ explode('/', parse_url($penginapan->medsos, PHP_URL_PATH))[1] ?? '' }}</a>
-                                        </td>
-                                    </tr>
-                                @endif
-                            </table>
-                            </p>
                         </div>
                     </div>
+                </div>
+                <div class="w-full py-5">
+                    <div class="flex justify-between">
+                        <p class="text-xl font-bold text-slate-700 my-2">
+                            {{ $penginapan->nama_penginapan ?? '' }}
+                        </p>
+                        {{-- <p class="text-end my-2 text-orange-500 text-lg">Rp. 50.000 / orang</p> --}}
+                    </div>
+                    <p class="text-sm desc my-2">
+                        {{ $penginapan->deskripsi ?? '' }}
+                    </p>
+
+                    <p class="mt-2">
+                    <table>
+                        <tr class="text-sm desc">
+                            <td>Kontak</td>
+                            <td class="px-3">:</td>
+                            <td>{{ $penginapan->rPemilik?->no_hp ?? '' }}</td>
+                        </tr>
+                        <tr class="text-sm desc">
+                            <td>Lokasi</td>
+                            <td class="px-3">:</td>
+                            <td>Diatas Bukit</td>
+                        </tr>
+                        <tr class="text-sm desc">
+                            <td>Maps</td>
+                            <td class="px-3">:</td>
+                            <td>
+                                <a href="https://maps.app.goo.gl/X6haEkpWMv226eWS7" target="_blank"
+                                    class="hover:underline hover:text-violet-500">Maps
+                                    {{ $penginapan->nama_penginapan ?? '' }}</a>
+                            </td>
+                        </tr>
+                        <tr class="text-sm desc">
+                            <td>Jenis Penginapan</td>
+                            <td class="px-3">:</td>
+                            <td>Villa</td>
+                        </tr>
+                        <tr class="text-sm desc">
+                            <td>Wahana Permainan</td>
+                            <td class="px-3">:</td>
+                            <td>Tidak Ada</td>
+                        </tr>
+                        <tr class="text-sm desc">
+                            <td>Fun Games dan Outbound</td>
+                            <td class="px-3">:</td>
+                            <td>Ada</td>
+                        </tr>
+                        <tr class="text-sm desc">
+                            <td>Kafe / Restoran </td>
+                            <td class="px-3">:</td>
+                            <td>Ada</td>
+                        </tr>
+                        @if ($penginapan->medsos)
+                            <tr class="text-sm desc">
+                                <td>Instagram</td>
+                                <td class="px-3">:</td>
+                                <td><a
+                                        href="{{ $penginapan->medsos ?? '#' }}">{{ explode('/', parse_url($penginapan->medsos, PHP_URL_PATH))[1] ?? '' }}</a>
+                                </td>
+                            </tr>
+                        @endif
+                    </table>
+                    </p>
                 </div>
             </div>
         </section>

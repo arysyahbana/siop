@@ -24,6 +24,11 @@
                                         <x-admin.th>Nama Penginapan</x-admin.th>
                                         <x-admin.th>Deskripsi</x-admin.th>
                                         <x-admin.th>Lokasi</x-admin.th>
+                                        <x-admin.th>Maps</x-admin.th>
+                                        <x-admin.th>Jenis Penginapan</x-admin.th>
+                                        <x-admin.th>Wahana Permainan</x-admin.th>
+                                        <x-admin.th>Fun Games dan Outbound</x-admin.th>
+                                        <x-admin.th>Kafe / Restoran</x-admin.th>
                                         <x-admin.th>Pemilik</x-admin.th>
                                         <x-admin.th>Kontak</x-admin.th>
                                         <x-admin.th>Foto</x-admin.th>
@@ -36,10 +41,18 @@
                                         <x-admin.td>{{ $loop->iteration }}</x-admin.td>
                                         <x-admin.td> {{ $item->nama_penginapan ?? '' }} </x-admin.td>
                                         <x-admin.td
-                                            style="word-wrap: break-word; word-break: break-word; white-space: normal;">
+                                            style="word-wrap: break-word; word-break: break-word; white-space: normal; min-width: 200px">
                                             {{ $item->deskripsi ?? '' }}
                                         </x-admin.td>
-                                        <x-admin.td>{{ $item->lokasi ?? '' }}</x-admin.td>
+                                        <x-admin.td>Diatas Bukit</x-admin.td>
+                                        <x-admin.td>
+                                            <a href="https://maps.app.goo.gl/X6haEkpWMv226eWS7" target="_blank">Maps
+                                                {{ $item->nama_penginapan ?? '' }}</a>
+                                        </x-admin.td>
+                                        <x-admin.td>Villa</x-admin.td>
+                                        <x-admin.td>Ada</x-admin.td>
+                                        <x-admin.td>Tidak Ada</x-admin.td>
+                                        <x-admin.td>Ada</x-admin.td>
                                         <x-admin.td>{{ $item->rPemilik?->name ?? '' }}</x-admin.td>
                                         <x-admin.td>{{ $item->rPemilik?->no_hp ?? '' }}</x-admin.td>
                                         <x-admin.td>
@@ -50,7 +63,8 @@
                                             </a>
                                         </x-admin.td>
                                         <x-admin.td>
-                                            <a href="{{ $item->medsos ?? '#'}}">{{explode('/', parse_url($item->medsos, PHP_URL_PATH))[1] ?? 'Belum Memasukan Link' }}</a>
+                                            <a
+                                                href="{{ $item->medsos ?? '#' }}">{{ explode('/', parse_url($item->medsos, PHP_URL_PATH))[1] ?? 'Belum Memasukan Link' }}</a>
                                         </x-admin.td>
                                         <x-admin.td>
                                             <a href="#" class="btn bg-gradient-info" data-bs-toggle="modal"
@@ -89,9 +103,87 @@
                                                                 {{ $item->deskripsi }}
                                                             </textarea>
 
-                                                            <x-admin.input type="text" placeholder="Lokasi"
-                                                                label="Lokasi" name="lokasi"
-                                                                value="{{ $item->lokasi }}" />
+                                                            <Label>Lokasi</Label>
+                                                            <select class="form-select mb-3"
+                                                                aria-label="Default select example" name="lokasi_id"
+                                                                id="lokasi_id">
+                                                                <option selected hidden value="">--- Pilih Lokasi ---
+                                                                </option>
+                                                                <option value="">Diatas Bukit</option>
+                                                                <option value="">Ditepi Danau</option>
+                                                                <option value="">Kebun Teh</option>
+                                                            </select>
+
+                                                            <x-admin.input type="link" placeholder="Maps" label="Maps"
+                                                                name="maps" />
+
+                                                            <Label>Jenis Penginapan</Label>
+                                                            <select class="form-select mb-3"
+                                                                aria-label="Default select example" name="jenis_penginapan"
+                                                                id="jenis_penginapan">
+                                                                <option selected hidden value="">--- Pilih Jenis
+                                                                    Penginapan ---
+                                                                </option>
+                                                                <option value="Villa">Villa</option>
+                                                                <option value="Homestay">Homestay</option>
+                                                                <option value="Glamping">Glamping</option>
+                                                                <option value="Camping">Camping</option>
+                                                            </select>
+
+                                                            <Label>Wahana Permainan</Label>
+                                                            <br>
+                                                            <div class="text-xs mb-3">
+                                                                <div class="form-check form-check-inline">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        name="wahanaPermainan" id="adaWahana"
+                                                                        value="Ada">
+                                                                    <label class="form-check-label"
+                                                                        for="adaWahana">Ada</label>
+                                                                </div>
+                                                                <div class="form-check form-check-inline">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        name="wahanaPermainan" id="tidakAdaWahana"
+                                                                        value="Tidak Ada">
+                                                                    <label class="form-check-label"
+                                                                        for="tidakAdaWahana">Tidak Ada</label>
+                                                                </div>
+                                                            </div>
+
+                                                            <Label>Fun Games dan Outbound</Label>
+                                                            <br>
+                                                            <div class="text-xs mb-3">
+                                                                <div class="form-check form-check-inline">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        name="fungames" id="adaFun" value="Ada">
+                                                                    <label class="form-check-label"
+                                                                        for="adaFun">Ada</label>
+                                                                </div>
+                                                                <div class="form-check form-check-inline">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        name="fungames" id="tidakAdaFun"
+                                                                        value="Tidak Ada">
+                                                                    <label class="form-check-label"
+                                                                        for="tidakAdaFun">Tidak Ada</label>
+                                                                </div>
+                                                            </div>
+
+                                                            <Label>Kafe / Restoran</Label>
+                                                            <br>
+                                                            <div class="text-xs mb-3">
+                                                                <div class="form-check form-check-inline">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        name="kafe" id="adaKafe" value="Ada">
+                                                                    <label class="form-check-label"
+                                                                        for="adaKafe">Ada</label>
+                                                                </div>
+                                                                <div class="form-check form-check-inline">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        name="kafe" id="tidakAdaKafe"
+                                                                        value="Tidak Ada">
+                                                                    <label class="form-check-label"
+                                                                        for="tidakAdaKafe">Tidak Ada</label>
+                                                                </div>
+                                                            </div>
 
                                                             @if (Auth::user()->role == 'Admin')
                                                                 <Label>Owner</Label>
@@ -129,7 +221,8 @@
                                                                     name="image">
                                                             </div>
                                                             <x-admin.input type="text" placeholder="Medsos"
-                                                                label="Medsos" name="medsos" value="{{ $item->medsos ??''}}" />
+                                                                label="Medsos (Instagram)" name="medsos"
+                                                                value="{{ $item->medsos ?? '' }}" />
 
                                                         </div>
                                                         <div class="modal-footer">
@@ -183,7 +276,7 @@
     <!-- Modal Add Penginapan -->
     <div class="modal fade" id="addPenginapan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="addPenginapanLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="addPenginapanLabel">Tambah Data Penginapan</h1>
@@ -198,7 +291,73 @@
                         <label>Deskripsi</label>
                         <textarea class="form-control mb-3" name="deskripsi" id="deskripsi" cols="20" rows="5"></textarea>
 
-                        <x-admin.input type="text" placeholder="Lokasi" label="Lokasi" name="lokasi" />
+                        {{-- <x-admin.input type="text" placeholder="Lokasi" label="Lokasi" name="lokasi" /> --}}
+
+                        <Label>Lokasi</Label>
+                        <select class="form-select mb-3" aria-label="Default select example" name="lokasi_id"
+                            id="lokasi_id">
+                            <option selected hidden value="">--- Pilih Lokasi ---</option>
+                            <option value="">Diatas Bukit</option>
+                            <option value="">Ditepi Danau</option>
+                            <option value="">Kebun Teh</option>
+                        </select>
+
+                        <x-admin.input type="link" placeholder="Maps" label="Maps" name="maps" />
+
+                        <Label>Jenis Penginapan</Label>
+                        <select class="form-select mb-3" aria-label="Default select example" name="jenis_penginapan"
+                            id="jenis_penginapan">
+                            <option selected hidden value="">--- Pilih Jenis Penginapan ---</option>
+                            <option value="Villa">Villa</option>
+                            <option value="Homestay">Homestay</option>
+                            <option value="Glamping">Glamping</option>
+                            <option value="Camping">Camping</option>
+                        </select>
+
+                        <Label>Wahana Permainan</Label>
+                        <br>
+                        <div class="text-xs mb-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="wahanaPermainan" id="adaWahana"
+                                    value="Ada">
+                                <label class="form-check-label" for="adaWahana">Ada</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="wahanaPermainan"
+                                    id="tidakAdaWahana" value="Tidak Ada">
+                                <label class="form-check-label" for="tidakAdaWahana">Tidak Ada</label>
+                            </div>
+                        </div>
+
+                        <Label>Fun Games dan Outbound</Label>
+                        <br>
+                        <div class="text-xs mb-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="fungames" id="adaFun"
+                                    value="Ada">
+                                <label class="form-check-label" for="adaFun">Ada</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="fungames" id="tidakAdaFun"
+                                    value="Tidak Ada">
+                                <label class="form-check-label" for="tidakAdaFun">Tidak Ada</label>
+                            </div>
+                        </div>
+
+                        <Label>Kafe / Restoran</Label>
+                        <br>
+                        <div class="text-xs mb-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="kafe" id="adaKafe"
+                                    value="Ada">
+                                <label class="form-check-label" for="adaKafe">Ada</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="kafe" id="tidakAdaKafe"
+                                    value="Tidak Ada">
+                                <label class="form-check-label" for="tidakAdaKafe">Tidak Ada</label>
+                            </div>
+                        </div>
 
                         @if (Auth::user()->role == 'Admin')
                             <Label>Owner</Label>
@@ -219,7 +378,7 @@
                             <label for="formFile" class="form-label">Foto</label>
                             <input class="form-control" type="file" id="formFile" name="image">
                         </div>
-                        <x-admin.input type="text" placeholder="Medsos" label="Medsos" name="medsos" />
+                        <x-admin.input type="text" placeholder="Medsos" label="Medsos (Instagram)" name="medsos" />
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-sm btn-success">Simpan</button>

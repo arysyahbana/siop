@@ -4,6 +4,7 @@ use App\Helpers\GlobalFunction;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KamarController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\ObjekWisataController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\PaketController;
@@ -31,6 +32,8 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('admin.pages.dashboard');
 // });
+
+// Guest
 Route::get('/', function () {
     $page = 'Home';
     $objekWisata = ObjekWisata::inRandomOrder()->paginate(16);
@@ -74,31 +77,46 @@ Route::get('/search-paket', function (Request $request) {
 })->name('search-paket');
 
 Route::get('/detail-wisata/{id}', function ($id) {
+    $page = 'Home';
     $objekWisata = ObjekWisata::find($id);
     $objekWisataRandom = ObjekWisata::paginate(4);
 
-    return view('guest.detail-wisata', compact('objekWisata', 'objekWisataRandom'));
+    return view('guest.detail-wisata', compact('objekWisata', 'objekWisataRandom', 'page'));
 })->name('detail-wisata');
 
 Route::get('/detail-penginapan/{id}', function ($id) {
+    $page = 'Penginapan';
     $penginapan = Penginapan::find($id);
-    return view('guest.detail-penginapan', compact('penginapan'));
+    return view('guest.detail-penginapan', compact('penginapan', 'page'));
 })->name('detail-penginapan');
 
 Route::get('/detail-paket/{id}', function ($id) {
+    $page = 'Paket Tour';
     $paketTour = PaketTour::find($id);
     $paketTourRandom = PaketTour::inRandomOrder()->paginate(8);
-    return view('guest.detail-paket', compact('paketTour', 'paketTourRandom'));
+    return view('guest.detail-paket', compact('paketTour', 'paketTourRandom', 'page'));
 })->name('detail-paket');
 
 Route::get('/detail-kamar/{id}', function ($id) {
+    $page = 'Penginapan';
     $kamar = Kamar::with('rPenginapan')->find($id);
     $kamarRandom = Kamar::where('id_penginapan', $kamar->id_penginapan)
         ->where('id', '!=', $kamar->id)
         ->get();
-    return view('guest.detail-kamar', compact('kamar', 'kamarRandom'));
+    return view('guest.detail-kamar', compact('kamar', 'kamarRandom', 'page'));
 })->name('detail-kamar');
 
+Route::get('/rekomendasi', function () {
+    $page = 'Rekomendasi';
+    return view('guest.rekomendasi.rekomendasi', compact('page'));
+})->name('rekomendasi');
+
+Route::get('/hasil-rekomendasi', function () {
+    $page = 'Rekomendasi';
+    return view('guest.rekomendasi.hasilRekomendasi', compact('page'));
+})->name('rekomendasi-hasil');
+
+// Admin & Owner
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
@@ -122,6 +140,13 @@ Route::prefix('objek-wisata')->group(function () {
     Route::post('/update/{id}', [ObjekWisataController::class, 'update'])->name('objek-wisata.update');
     Route::get('/destroy/{id}', [ObjekWisataController::class, 'destroy'])->name('objek-wisata.destroy');
     Route::get('/download/{', [ObjekWisataController::class, 'download'])->name('objek-wisata.download');
+});
+Route::prefix('lokasi')->group(function () {
+    Route::get('/show', [LokasiController::class, 'index'])->name('lokasi.show');
+    // Route::post('/store', [LokasiController::class, 'store'])->name('lokasi.store');
+    // Route::post('/update/{id}', [LokasiController::class, 'update'])->name('lokasi.update');
+    // Route::get('/destroy/{id}', [LokasiController::class, 'destroy'])->name('lokasi.destroy');
+    // Route::get('/download/{', [LokasiController::class, 'download'])->name('lokasi.download');
 });
 Route::prefix('penginapan')->group(function () {
     Route::get('/show', [PenginapanController::class, 'index'])->name('penginapan.show');

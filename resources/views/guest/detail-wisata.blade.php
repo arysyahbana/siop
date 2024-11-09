@@ -13,7 +13,7 @@
 <body>
     @include('guest.layouts.navbar')
 
-    <main class="container mx-auto mt">
+    <main class="container mx-auto">
         <!-- detail pariwisata -->
         <section id="detail-pariwisata" class="mt-32">
             <p class="text-center text-2xl font-bold text-slate-700">DETAIL OBJEK PARIWISATA</p>
@@ -50,7 +50,7 @@
                                 </tr>
                                 @if ($objekWisata->medsos)
                                     <tr class="text-sm desc text-violet-800">
-                                        <td>Media Sosial</td>
+                                        <td>Instagram</td>
                                         <td class="px-3">:</td>
                                         <td><a
                                                 href="{{ $objekWisata->medsos ?? '#' }}">{{ explode('/', parse_url($objekWisata->medsos, PHP_URL_PATH))[1] ?? '' }}</a>

@@ -13,7 +13,7 @@
 <body>
     @include('guest.layouts.navbar')
 
-    <main class="container mx-auto mt">
+    <main class="container mx-auto">
         <!-- detail paket -->
         <section id="detail-paket" class="mt-32">
             <p class="text-center text-2xl font-bold text-slate-700">DETAIL KAMAR PENGINAPAN</p>
@@ -43,7 +43,7 @@
                             </div>
                             <div class="place-self-center">
                                 <p class="text-2xl font-bold text-slate-700 my-2">
-                                    Kamar Nomor {{ $kamar->nomor_kamar ?? '' }}
+                                    {{ $kamar->nomor_kamar ?? '' }}
                                 </p>
                                 <table class="text-sm desc my-5">
                                     <tr>
@@ -60,6 +60,11 @@
                                         <td>Harga Kamar</td>
                                         <td class="px-3">:</td>
                                         <td>Rp. {{ App\Helpers\GlobalFunction::formatMoney($kamar->harga) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kapasitas Kamar</td>
+                                        <td class="px-3">:</td>
+                                        <td>6 Orang</td>
                                     </tr>
                                 </table>
                                 <p class="text-sm desc my-2">
