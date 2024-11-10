@@ -46,7 +46,8 @@
                 </li>
                 <li>
                     <a href="{{ route('rekomendasi') }}"
-                        class="block py-2 px-3 text-slate-900 rounded md:hover:text-white md:p-0 {{ $page == 'Rekomendasi' ? 'text-white' : '' }}">Rekomendasi</a>
+                        class="block py-2 px-3 text-slate-900 rounded md:hover:text-white md:p-0 {{ $page == 'Rekomendasi' ? 'text-white' : '' }}">Rekomendasi
+                        Penginapan</a>
                 </li>
             </ul>
         </div>
