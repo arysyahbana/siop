@@ -84,8 +84,8 @@
                             <tr class="text-sm desc">
                                 <td>Instagram</td>
                                 <td class="px-3">:</td>
-                                <td><a
-                                        href="{{ $penginapan->medsos ?? '#' }}">{{ explode('/', parse_url($penginapan->medsos, PHP_URL_PATH))[1] ?? '' }}</a>
+                                <td><a href="{{ $penginapan->medsos ?? '#' }}" target="_blank"
+                                        class="hover:underline hover:text-violet-500">{{ explode('/', parse_url($penginapan->medsos, PHP_URL_PATH))[1] ?? '' }}</a>
                                 </td>
                             </tr>
                         @endif
@@ -149,7 +149,7 @@
                                             {{ $item->nomor_kamar ?? '' }}
                                         </p>
                                         <p class="text-sm desc my-3 text-violet-800">
-                                           Kapasitas Kamar : {{ $item->kapasitas_kamar.' Orang' ?? '' }}
+                                            Kapasitas Kamar : {{ $item->kapasitas_kamar . ' Orang' ?? '' }}
                                         </p>
                                     </div>
                                     <p class="text-sm desc my-2">

@@ -121,7 +121,7 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="nav-link-text ms-1">Data Lokasi</span>
+                        <span class="nav-link-text ms-1">Data Lokasi Penginapan</span>
                     </a>
                 </li>
             @endif
