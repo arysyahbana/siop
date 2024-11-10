@@ -127,13 +127,15 @@
                                                                 <option selected hidden value="">--- Pilih Jenis
                                                                     Penginapan ---
                                                                 </option>
-                                                                <option @selected($item->jenis_penginapan == 'Villa') value="Villa">Villa
+                                                                <option @selected($item->jenis_penginapan == 'Camping') value="Camping">Camping
                                                                 </option>
-                                                                <option @selected($item->jenis_penginapan == 'Homestay') value="Homestay">
-                                                                    Homestay</option>
                                                                 <option @selected($item->jenis_penginapan == 'Glamping') value="Glamping">
                                                                     Glamping</option>
-                                                                <option @selected($item->jenis_penginapan == 'Camping') value="Camping">Camping
+                                                                <option @selected($item->jenis_penginapan == 'Homestay') value="Homestay">
+                                                                    Homestay</option>
+                                                                <option @selected($item->jenis_penginapan == 'Resort') value="Resort">Resort
+                                                                </option>
+                                                                <option @selected($item->jenis_penginapan == 'Villa') value="Villa">Villa
                                                                 </option>
                                                             </select>
 
@@ -142,8 +144,8 @@
                                                             <div class="text-xs mb-3">
                                                                 <div class="form-check form-check-inline">
                                                                     <input class="form-check-input" type="radio"
-                                                                        name="wahanaPermainan" id="adaWahana" value="Ada"
-                                                                        @checked($item->wahana == 'Ada')>
+                                                                        name="wahanaPermainan" id="adaWahana"
+                                                                        value="Ada" @checked($item->wahana == 'Ada')>
                                                                     <label class="form-check-label"
                                                                         for="adaWahana">Ada</label>
                                                                 </div>
@@ -314,13 +316,14 @@
                         <x-admin.input type="link" placeholder="Maps" label="Maps" name="maps" />
 
                         <Label>Jenis Penginapan</Label>
-                        <select required class="form-select mb-3" aria-label="Default select example" name="jenis_penginapan"
-                            id="jenis_penginapan">
-                            <option selected hidden value="">--- Pilih Jenis Penginapan ---</option>
-                            <option value="Villa">Villa</option>
-                            <option value="Homestay">Homestay</option>
-                            <option value="Glamping">Glamping</option>
+                        <select required class="form-select mb-3" aria-label="Default select example"
+                            name="jenis_penginapan" id="jenis_penginapan">
+                            <option value="" selected hidden>--- Pilih Jenis Penginapan ---</option>
                             <option value="Camping">Camping</option>
+                            <option value="Glamping">Glamping</option>
+                            <option value="Homestay">Homestay</option>
+                            <option value="Resort">Resort</option>
+                            <option value="Villa">Villa</option>
                         </select>
 
                         <Label>Wahana Permainan</Label>

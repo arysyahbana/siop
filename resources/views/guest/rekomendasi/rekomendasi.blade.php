@@ -22,7 +22,7 @@
                     Anda Ingin Menginap?</label>
                 <select id="lokasi"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
-                    name="lokasi_id">
+                    name="lokasi_id" required>
                     <option selected hidden value="">--- Pilih Lokasi ---</option>
                     @foreach ($lokasi as $namaLokasi)
                         <option value="{{ $namaLokasi->id }}">{{ $namaLokasi->nama_lokasi }}</option>
@@ -42,12 +42,13 @@
                     Yang Anda Cari Berupa Apa?</label>
                 <select id="jenisPenginapan"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
-                    name="jenisPenginapan">
-                    <option selected hidden>--- Pilih Jenis Penginapan ---</option>
-                    <option value="Villa">Villa</option>
-                    <option value="Homestay">Homestay</option>
-                    <option value="Glamping">Glamping</option>
+                    name="jenisPenginapan" required>
+                    <option value="" selected hidden>--- Pilih Jenis Penginapan ---</option>
                     <option value="Camping">Camping</option>
+                    <option value="Glamping">Glamping</option>
+                    <option value="Homestay">Homestay</option>
+                    <option value="Resort">Resort</option>
+                    <option value="Villa">Villa</option>
                 </select>
             </div>
             <div class="mb-8">
@@ -73,8 +74,8 @@
                     Ingin Menginap Di Tempat Yang Memiliki Wahana Permainan?</label>
                 <select id="wahana"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
-                    name="wahana">
-                    <option selected hidden>--- Pilih Jawaban ---</option>
+                    name="wahana" required>
+                    <option value="" selected hidden>--- Pilih Jawaban ---</option>
                     <option value="Ada">
                         Ya, Saya Ingin Penginapan Dengan Wahana Permainan
                     </option>
@@ -88,8 +89,8 @@
                     Mencari Penginapan Yang Memiliki Fasilitas Fun Games dan Outbound?</label>
                 <select id="funGames"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
-                    name="funGames">
-                    <option selected hidden>--- Pilih Jawaban ---</option>
+                    name="funGames" required>
+                    <option value="" selected hidden>--- Pilih Jawaban ---</option>
                     <option value="Ada">
                         Ya, Saya Mencari Penginapan Yang Memiliki Fasilitas Fun Games dan Outbound
                     </option>
@@ -103,8 +104,8 @@
                     Ingin Menginap Di Tempat Yang Memiliki Kafe Atau Restoran di Dalamnya?</label>
                 <select id="kafe"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
-                    name="kafe">
-                    <option selected hidden>--- Pilih Jawaban ---</option>
+                    name="kafe" required>
+                    <option selected hidden value="">--- Pilih Jawaban ---</option>
                     <option value="Ada">
                         Ya, Saya Membutuhkan Penginapan Dengan Kafe atau Restoran
                     </option>
@@ -126,4 +127,5 @@
 
     @include('guest.layouts.jsfoot')
 </body>
+
 </html>
