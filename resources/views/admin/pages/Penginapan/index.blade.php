@@ -44,15 +44,15 @@
                                             style="word-wrap: break-word; word-break: break-word; white-space: normal; min-width: 200px">
                                             {{ $item->deskripsi ?? '' }}
                                         </x-admin.td>
-                                        <x-admin.td>Diatas Bukit</x-admin.td>
+                                        <x-admin.td>{{ $item->rLokasi?->nama_lokasi }}</x-admin.td>
                                         <x-admin.td>
-                                            <a href="https://maps.app.goo.gl/X6haEkpWMv226eWS7" target="_blank">Maps
+                                            <a href="{{ $item->maps ?? '#' }}" target="_blank">Maps
                                                 {{ $item->nama_penginapan ?? '' }}</a>
                                         </x-admin.td>
-                                        <x-admin.td>Villa</x-admin.td>
-                                        <x-admin.td>Ada</x-admin.td>
-                                        <x-admin.td>Tidak Ada</x-admin.td>
-                                        <x-admin.td>Ada</x-admin.td>
+                                        <x-admin.td>{{ $item->jenis_penginapan ?? '' }}</x-admin.td>
+                                        <x-admin.td>{{ $item->wahana ?? '' }}</x-admin.td>
+                                        <x-admin.td>{{ $item->outbound ?? '' }}</x-admin.td>
+                                        <x-admin.td>{{ $item->kafe ?? '' }}</x-admin.td>
                                         <x-admin.td>{{ $item->rPemilik?->name ?? '' }}</x-admin.td>
                                         <x-admin.td>{{ $item->rPemilik?->no_hp ?? '' }}</x-admin.td>
                                         <x-admin.td>
@@ -104,30 +104,37 @@
                                                             </textarea>
 
                                                             <Label>Lokasi</Label>
-                                                            <select class="form-select mb-3"
+                                                            <select required class="form-select mb-3"
                                                                 aria-label="Default select example" name="lokasi_id"
                                                                 id="lokasi_id">
                                                                 <option selected hidden value="">--- Pilih Lokasi ---
                                                                 </option>
-                                                                <option value="">Diatas Bukit</option>
-                                                                <option value="">Ditepi Danau</option>
-                                                                <option value="">Kebun Teh</option>
+                                                                @foreach ($lokasi as $item4)
+                                                                    <option value="{{ $item4->id }}"
+                                                                        @selected($item->id_lokasi == $item4->id)>
+                                                                        {{ $item4->nama_lokasi }}
+                                                                    </option>
+                                                                @endforeach
                                                             </select>
 
                                                             <x-admin.input type="link" placeholder="Maps" label="Maps"
-                                                                name="maps" />
+                                                                name="maps" value="{{ $item->maps }}" />
 
                                                             <Label>Jenis Penginapan</Label>
-                                                            <select class="form-select mb-3"
+                                                            <select required class="form-select mb-3"
                                                                 aria-label="Default select example" name="jenis_penginapan"
                                                                 id="jenis_penginapan">
                                                                 <option selected hidden value="">--- Pilih Jenis
                                                                     Penginapan ---
                                                                 </option>
-                                                                <option value="Villa">Villa</option>
-                                                                <option value="Homestay">Homestay</option>
-                                                                <option value="Glamping">Glamping</option>
-                                                                <option value="Camping">Camping</option>
+                                                                <option @selected($item->jenis_penginapan == 'Villa') value="Villa">Villa
+                                                                </option>
+                                                                <option @selected($item->jenis_penginapan == 'Homestay') value="Homestay">
+                                                                    Homestay</option>
+                                                                <option @selected($item->jenis_penginapan == 'Glamping') value="Glamping">
+                                                                    Glamping</option>
+                                                                <option @selected($item->jenis_penginapan == 'Camping') value="Camping">Camping
+                                                                </option>
                                                             </select>
 
                                                             <Label>Wahana Permainan</Label>
@@ -135,15 +142,15 @@
                                                             <div class="text-xs mb-3">
                                                                 <div class="form-check form-check-inline">
                                                                     <input class="form-check-input" type="radio"
-                                                                        name="wahanaPermainan" id="adaWahana"
-                                                                        value="Ada">
+                                                                        name="wahanaPermainan" id="adaWahana" value="Ada"
+                                                                        @checked($item->wahana == 'Ada')>
                                                                     <label class="form-check-label"
                                                                         for="adaWahana">Ada</label>
                                                                 </div>
                                                                 <div class="form-check form-check-inline">
                                                                     <input class="form-check-input" type="radio"
                                                                         name="wahanaPermainan" id="tidakAdaWahana"
-                                                                        value="Tidak Ada">
+                                                                        value="Tidak Ada" @checked($item->wahana == 'Tidak Ada')>
                                                                     <label class="form-check-label"
                                                                         for="tidakAdaWahana">Tidak Ada</label>
                                                                 </div>
@@ -154,14 +161,15 @@
                                                             <div class="text-xs mb-3">
                                                                 <div class="form-check form-check-inline">
                                                                     <input class="form-check-input" type="radio"
-                                                                        name="fungames" id="adaFun" value="Ada">
+                                                                        name="fungames" id="adaFun" value="Ada"
+                                                                        @checked($item->outbound == 'Ada')>
                                                                     <label class="form-check-label"
                                                                         for="adaFun">Ada</label>
                                                                 </div>
                                                                 <div class="form-check form-check-inline">
                                                                     <input class="form-check-input" type="radio"
                                                                         name="fungames" id="tidakAdaFun"
-                                                                        value="Tidak Ada">
+                                                                        value="Tidak Ada" @checked($item->outbound == 'Tidak Ada')>
                                                                     <label class="form-check-label"
                                                                         for="tidakAdaFun">Tidak Ada</label>
                                                                 </div>
@@ -172,14 +180,15 @@
                                                             <div class="text-xs mb-3">
                                                                 <div class="form-check form-check-inline">
                                                                     <input class="form-check-input" type="radio"
-                                                                        name="kafe" id="adaKafe" value="Ada">
+                                                                        name="kafe" id="adaKafe" value="Ada"
+                                                                        @checked($item->kafe == 'Ada')>
                                                                     <label class="form-check-label"
                                                                         for="adaKafe">Ada</label>
                                                                 </div>
                                                                 <div class="form-check form-check-inline">
                                                                     <input class="form-check-input" type="radio"
                                                                         name="kafe" id="tidakAdaKafe"
-                                                                        value="Tidak Ada">
+                                                                        value="Tidak Ada" @checked($item->kafe == 'Tidak Ada')>
                                                                     <label class="form-check-label"
                                                                         for="tidakAdaKafe">Tidak Ada</label>
                                                                 </div>
@@ -187,7 +196,7 @@
 
                                                             @if (Auth::user()->role == 'Admin')
                                                                 <Label>Owner</Label>
-                                                                <select class="form-select mb-3"
+                                                                <select required class="form-select mb-3"
                                                                     aria-label="Default select example" name="owner_id"
                                                                     id="owner_id">
                                                                     <option selected hidden>--- Pilih Owner --- </option>
@@ -294,18 +303,18 @@
                         {{-- <x-admin.input type="text" placeholder="Lokasi" label="Lokasi" name="lokasi" /> --}}
 
                         <Label>Lokasi</Label>
-                        <select class="form-select mb-3" aria-label="Default select example" name="lokasi_id"
+                        <select required class="form-select mb-3" aria-label="Default select example" name="lokasi_id"
                             id="lokasi_id">
                             <option selected hidden value="">--- Pilih Lokasi ---</option>
-                            <option value="">Diatas Bukit</option>
-                            <option value="">Ditepi Danau</option>
-                            <option value="">Kebun Teh</option>
+                            @foreach ($lokasi as $namaLokasi)
+                                <option value="{{ $namaLokasi->id }}">{{ $namaLokasi->nama_lokasi }}</option>
+                            @endforeach
                         </select>
 
                         <x-admin.input type="link" placeholder="Maps" label="Maps" name="maps" />
 
                         <Label>Jenis Penginapan</Label>
-                        <select class="form-select mb-3" aria-label="Default select example" name="jenis_penginapan"
+                        <select required class="form-select mb-3" aria-label="Default select example" name="jenis_penginapan"
                             id="jenis_penginapan">
                             <option selected hidden value="">--- Pilih Jenis Penginapan ---</option>
                             <option value="Villa">Villa</option>
@@ -324,7 +333,7 @@
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="wahanaPermainan"
-                                    id="tidakAdaWahana" value="Tidak Ada">
+                                    id="tidakAdaWahana" value="Tidak Ada" checked>
                                 <label class="form-check-label" for="tidakAdaWahana">Tidak Ada</label>
                             </div>
                         </div>
@@ -339,7 +348,7 @@
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="fungames" id="tidakAdaFun"
-                                    value="Tidak Ada">
+                                    value="Tidak Ada" checked>
                                 <label class="form-check-label" for="tidakAdaFun">Tidak Ada</label>
                             </div>
                         </div>
@@ -354,14 +363,14 @@
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="kafe" id="tidakAdaKafe"
-                                    value="Tidak Ada">
+                                    value="Tidak Ada" checked>
                                 <label class="form-check-label" for="tidakAdaKafe">Tidak Ada</label>
                             </div>
                         </div>
 
                         @if (Auth::user()->role == 'Admin')
                             <Label>Owner</Label>
-                            <select class="form-select mb-3" aria-label="Default select example" name="owner_id"
+                            <select required class="form-select mb-3" aria-label="Default select example" name="owner_id"
                                 id="owner_id">
                                 <option selected hidden value="">--- Pilih Owner ---</option>
                                 @foreach ($pemilik as $item3)

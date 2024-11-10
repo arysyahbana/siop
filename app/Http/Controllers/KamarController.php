@@ -22,6 +22,7 @@ class KamarController extends Controller
         return $request->validate(
             [
                 'nomorKamar' => 'required',
+                'kapasitasKamar' => 'required',
                 'penginapan_id' => 'required',
                 'deskripsi' => 'required',
                 'status' => 'required',
@@ -31,6 +32,7 @@ class KamarController extends Controller
             ],
             [
                 'nomorKamar.required' => 'Nomor Kamar tidak boleh kosong',
+                'kapasitasKamar.required' => 'Kapasitas Kamar tidak boleh kosong',
                 'penginapan_id.required' => 'Data penginapan tidak boleh kosong',
                 'status.required' => 'Status tidak boleh kosong',
                 'deskripsi.required' => 'Deskripsi tidak boleh kosong',
@@ -82,6 +84,7 @@ class KamarController extends Controller
         $image = implode(',', $savedImages);
         $data = [
             'nomor_kamar' => $request->nomorKamar,
+            'kapasitas_kamar' => $request->kapasitasKamar,
             'id_penginapan' => $request->penginapan_id,
             'deskripsi' => $request->deskripsi,
             'harga' => $request->hargaKamar,
@@ -102,6 +105,7 @@ class KamarController extends Controller
 
         $data = [
             'nomor_kamar' => $request->nomorKamar,
+            'kapasitas_kamar' => $request->kapasitasKamar,
             'id_penginapan' => $request->penginapan_id,
             'deskripsi' => $request->deskripsi,
             'harga' => $request->hargaKamar,
@@ -139,12 +143,12 @@ class KamarController extends Controller
 
     public function download()
     {
-        $columns = ['nomor_kamar', 'harga', 'status', 'image'];
+        $columns = ['nomor_kamar', 'harga', 'status', 'image','kapasitas_kamar'];
 
         $relations = [
             'rPenginapan' => ['nama_penginapan'],
         ];
 
-        return Excel::download(new GenericExport(Kamar::class, $columns, 'F', 'kamar', $relations), 'kamar.xlsx');
+        return Excel::download(new GenericExport(Kamar::class, $columns, 'G', 'kamar', $relations), 'kamar.xlsx');
     }
 }

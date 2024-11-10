@@ -49,13 +49,13 @@
                         <tr class="text-sm desc">
                             <td>Lokasi</td>
                             <td class="px-3">:</td>
-                            <td>Diatas Bukit</td>
+                            <td>{{ $penginapan->rLokasi?->nama_lokasi ?? '' }}</td>
                         </tr>
                         <tr class="text-sm desc">
                             <td>Maps</td>
                             <td class="px-3">:</td>
                             <td>
-                                <a href="https://maps.app.goo.gl/X6haEkpWMv226eWS7" target="_blank"
+                                <a href="{{ $penginapan->maps ?? '' }}" target="_blank"
                                     class="hover:underline hover:text-violet-500">Maps
                                     {{ $penginapan->nama_penginapan ?? '' }}</a>
                             </td>
@@ -63,22 +63,22 @@
                         <tr class="text-sm desc">
                             <td>Jenis Penginapan</td>
                             <td class="px-3">:</td>
-                            <td>Villa</td>
+                            <td>{{ $penginapan->jenis_penginapan ?? '' }}</td>
                         </tr>
                         <tr class="text-sm desc">
                             <td>Wahana Permainan</td>
                             <td class="px-3">:</td>
-                            <td>Tidak Ada</td>
+                            <td>{{ $penginapan->wahana ?? '' }}</td>
                         </tr>
                         <tr class="text-sm desc">
                             <td>Fun Games dan Outbound</td>
                             <td class="px-3">:</td>
-                            <td>Ada</td>
+                            <td>{{ $penginapan->outbound ?? '' }}</td>
                         </tr>
                         <tr class="text-sm desc">
                             <td>Kafe / Restoran </td>
                             <td class="px-3">:</td>
-                            <td>Ada</td>
+                            <td>{{ $penginapan->kafe ?? '' }}</td>
                         </tr>
                         @if ($penginapan->medsos)
                             <tr class="text-sm desc">
@@ -149,7 +149,7 @@
                                             {{ $item->nomor_kamar ?? '' }}
                                         </p>
                                         <p class="text-sm desc my-3 text-violet-800">
-                                            Kamar
+                                           Kapasitas Kamar : {{ $item->kapasitas_kamar.' Orang' ?? '' }}
                                         </p>
                                     </div>
                                     <p class="text-sm desc my-2">

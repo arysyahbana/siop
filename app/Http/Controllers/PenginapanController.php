@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\GenericExport;
 use App\Helpers\GlobalFunction;
+use App\Models\Lokasi;
 use App\Models\Penginapan;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -23,14 +24,18 @@ class PenginapanController extends Controller
             [
                 'namaPenginapan' => 'required',
                 'deskripsi' => 'required',
-                'lokasi' => 'required',
+                'lokasi_id' => 'required',
+                'maps' => 'required',
+                'jenis_penginapan' => 'required',
                 'owner_id' => 'required',
                 'image' => $imageRule . '|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ],
             [
                 'namaPenginapan.required' => 'nama penginapan tidak boleh kosong',
                 'deskripsi.required' => 'deskripsi tidak boleh kosong',
-                'lokasi.required' => 'lokasi tidak boleh kosong',
+                'lokasi_id.required' => 'lokasi tidak boleh kosong',
+                'maps.required' => 'maps tidak boleh kosong',
+                'jenis_penginapan.required' => 'jenis penginapan tidak boleh kosong',
                 'owner_id.required' => 'data pemilik tidak boleh kosong',
                 'image.required' => 'image tidak boleh kosong',
                 'image.image' => 'image harus berupa gambar',
@@ -42,25 +47,32 @@ class PenginapanController extends Controller
     public function index()
     {
         $page = 'Penginapan';
-        $penginapan = Penginapan::with('rPemilik')->get();
-        if(Auth::user()->role == 'Pemilik'){
+        $penginapan = Penginapan::with('rPemilik', 'rLokasi')->get();
+        if (Auth::user()->role == 'Pemilik') {
             $penginapan = $penginapan->where('id_pemilik', Auth::user()->id);
         }
+        $lokasi = Lokasi::all();
         $pemilik = User::where('role', 'Pemilik')->get();
-        return view('admin.pages.Penginapan.index', compact('page', 'penginapan', 'pemilik'));
+        return view('admin.pages.Penginapan.index', compact('page', 'penginapan', 'pemilik', 'lokasi'));
     }
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $this->validateData($request);
         $image = GlobalFunction::saveImage($request->file('image'), $request->namaPenginapan, $this->path);
         $data = [
             'nama_penginapan' => $request->namaPenginapan,
             'deskripsi' => $request->deskripsi,
-            'lokasi' => $request->lokasi,
+            'id_lokasi' => $request->lokasi_id,
+            'maps' => $request->maps,
+            'jenis_penginapan' => $request->jenis_penginapan,
+            'wahana' => $request->wahanaPermainan,
+            'outbound' => $request->fungames,
+            'kafe' => $request->kafe,
             'id_pemilik' => $request->owner_id,
             'image' => $image,
-            'medsos' => $request->medsos
+            'medsos' => $request->medsos,
         ];
         Penginapan::create($data);
 
@@ -76,9 +88,14 @@ class PenginapanController extends Controller
         $data = [
             'nama_penginapan' => $request->namaPenginapan,
             'deskripsi' => $request->deskripsi,
-            'lokasi' => $request->lokasi,
+            'id_lokasi' => $request->lokasi_id,
+            'maps' => $request->maps,
+            'jenis_penginapan' => $request->jenis_penginapan,
+            'wahana' => $request->wahanaPermainan,
+            'outbound' => $request->fungames,
+            'kafe' => $request->kafe,
             'id_pemilik' => $request->owner_id,
-            'medsos' => $request->medsos
+            'medsos' => $request->medsos,
         ];
 
         if ($request->file('image')) {
@@ -101,12 +118,13 @@ class PenginapanController extends Controller
 
     public function download()
     {
-        $columns = ['nama_penginapan', 'deskripsi', 'lokasi', 'image'];
+        $columns = ['nama_penginapan', 'deskripsi', 'maps', 'image', 'jenis_penginapan', 'wahana', 'outbound', 'kafe', 'medsos'];
 
         $relations = [
             'rPemilik' => ['name', 'no_hp'],
+            'rLokasi' => ['nama_lokasi'],
         ];
 
-        return Excel::download(new GenericExport(Penginapan::class, $columns, 'G', 'penginapan', $relations), 'Penginapan.xlsx');
+        return Excel::download(new GenericExport(Penginapan::class, $columns, 'M', 'penginapan', $relations), 'Penginapan.xlsx');
     }
 }

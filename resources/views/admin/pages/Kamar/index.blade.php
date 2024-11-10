@@ -49,7 +49,7 @@
                                                 </p>
                                             @endforeach
                                         </x-admin.td>
-                                        <x-admin.td>6 Orang</x-admin.td>
+                                        <x-admin.td>{{ $item->kapasitas_kamar ?? '' }} Orang</x-admin.td>
                                         <x-admin.td>{{ $item->status ?? '' }}</x-admin.td>
                                         <x-admin.td>
                                             <a href="#" class="btn bg-gradient-info" data-bs-toggle="modal"
@@ -130,7 +130,7 @@
 
                                                             <x-admin.input type="number" placeholder="Kapasitas Kamar"
                                                                 label="Kapasitas Kamar" name="kapasitasKamar"
-                                                                value="6" />
+                                                                value="{{ $item->kapasitas_kamar }}" />
 
                                                             <Label>Status</Label>
                                                             <select class="form-select mb-3"

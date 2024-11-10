@@ -12,6 +12,7 @@ use App\Http\Controllers\PenginapanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\Kamar;
+use App\Models\Lokasi;
 use App\Models\ObjekWisata;
 use App\Models\PaketTour;
 use App\Models\Penginapan;
@@ -108,12 +109,43 @@ Route::get('/detail-kamar/{id}', function ($id) {
 
 Route::get('/rekomendasi', function () {
     $page = 'Rekomendasi';
-    return view('guest.rekomendasi.rekomendasi', compact('page'));
+    $lokasi = Lokasi::all();
+    return view('guest.rekomendasi.rekomendasi', compact('page', 'lokasi'));
 })->name('rekomendasi');
 
-Route::get('/hasil-rekomendasi', function () {
+Route::get('/hasil-rekomendasi', function (Request $request) {
+    $anggaran = preg_replace('/[^0-9]/', '', $request->anggaran);
+
+    $rekomendasi = Penginapan::with('rKamar')
+        ->when($request->lokasi_id, function ($query) use ($request) {
+            $query->where('id_lokasi', $request->lokasi_id);
+        })
+        ->when($request->kapasitas, function ($query) use ($request) {
+            $query->whereHas('rKamar', function ($subQuery) use ($request) {
+                $subQuery->where('kapasitas_kamar', '>=', $request->kapasitas);
+            });
+        })
+        ->when($request->jenisPenginapan, function ($query) use ($request) {
+            $query->where('jenis_penginapan', $request->jenisPenginapan);
+        })
+        ->when($request->anggaran, function ($query) use ($anggaran) {
+            $query->whereHas('rKamar', function ($subQuery) use ($anggaran) {
+                $subQuery->where('harga', '<=', $anggaran);
+            });
+        })
+        ->when($request->wahana === 'Ada', function ($query) use ($request) {
+            $query->where('wahana', 'Ada');
+        })
+        ->when($request->funGames === 'Ada', function ($query) use ($request) {
+            $query->where('outbound', 'Ada');
+        })
+        ->when($request->kafe === 'Ada', function ($query) use ($request) {
+            $query->where('kafe', 'Ada');
+        })
+        ->paginate(8);
+
     $page = 'Rekomendasi';
-    return view('guest.rekomendasi.hasilRekomendasi', compact('page'));
+    return view('guest.rekomendasi.hasilRekomendasi', compact('page', 'rekomendasi'));
 })->name('rekomendasi-hasil');
 
 // Admin & Owner
@@ -143,10 +175,10 @@ Route::prefix('objek-wisata')->group(function () {
 });
 Route::prefix('lokasi')->group(function () {
     Route::get('/show', [LokasiController::class, 'index'])->name('lokasi.show');
-    // Route::post('/store', [LokasiController::class, 'store'])->name('lokasi.store');
-    // Route::post('/update/{id}', [LokasiController::class, 'update'])->name('lokasi.update');
-    // Route::get('/destroy/{id}', [LokasiController::class, 'destroy'])->name('lokasi.destroy');
-    // Route::get('/download/{', [LokasiController::class, 'download'])->name('lokasi.download');
+    Route::post('/store', [LokasiController::class, 'store'])->name('lokasi.store');
+    Route::post('/update/{id}', [LokasiController::class, 'update'])->name('lokasi.update');
+    Route::get('/destroy/{id}', [LokasiController::class, 'destroy'])->name('lokasi.destroy');
+    Route::get('/download/{', [LokasiController::class, 'download'])->name('lokasi.download');
 });
 Route::prefix('penginapan')->group(function () {
     Route::get('/show', [PenginapanController::class, 'index'])->name('penginapan.show');

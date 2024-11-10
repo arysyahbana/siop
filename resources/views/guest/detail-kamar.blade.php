@@ -64,7 +64,7 @@
                                     <tr>
                                         <td>Kapasitas Kamar</td>
                                         <td class="px-3">:</td>
-                                        <td>6 Orang</td>
+                                        <td>{{ $kamar->kapasitas_kamar.' Orang' ?? '' }}</td>
                                     </tr>
                                 </table>
                                 <p class="text-sm desc my-2">

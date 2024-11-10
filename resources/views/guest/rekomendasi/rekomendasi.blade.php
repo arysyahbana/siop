@@ -23,17 +23,16 @@
                 <select id="lokasi"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
                     name="lokasi_id">
-                    <option selected hidden>--- Pilih Lokasi ---</option>
-                    <option>Diatas Bukit</option>
-                    <option>Di Tepi Danau</option>
-                    <option>Pusat Keramaian</option>
-                    <option>Kebun Teh</option>
+                    <option selected hidden value="">--- Pilih Lokasi ---</option>
+                    @foreach ($lokasi as $namaLokasi)
+                        <option value="{{ $namaLokasi->id }}">{{ $namaLokasi->nama_lokasi }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="mb-8">
                 <label for="kapasitas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Untuk Berapa
                     Orang Anda Memesan Penginapan?</label>
-                <input type="number" id="kapasitas"
+                <input type="number" id="kapasitas" name="kapasitas"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5""
                     required />
             </div>
@@ -45,24 +44,29 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
                     name="jenisPenginapan">
                     <option selected hidden>--- Pilih Jenis Penginapan ---</option>
-                    <option>Villa</option>
-                    <option>Homestay</option>
-                    <option>Glamping</option>
-                    <option>Camping</option>
+                    <option value="Villa">Villa</option>
+                    <option value="Homestay">Homestay</option>
+                    <option value="Glamping">Glamping</option>
+                    <option value="Camping">Camping</option>
                 </select>
             </div>
             <div class="mb-8">
-                <label for="anggaran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Berapa
+                {{-- <label for="anggaran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Berapa
                     Anggaran Anda Untuk Menginap Per Malam?</label>
                 <select id="anggaran"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
                     name="anggaran">
                     <option selected hidden>--- Pilih Anggaran ---</option>
-                    <option>
+                    <option value="500000">
                         < Rp.500.000 </option>
-                    <option>Rp. 500.000 - Rp.1.000.000</option>
-                    <option>> Rp.1.000.000</option>
-                </select>
+                    <option value="1000000">Rp. 500.000 - Rp.1.000.000</option>
+                    <option value="1000001">> Rp.1.000.000</option>
+                </select> --}}
+                <label for="anggaran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Berapa
+                    Anggaran Anda Untuk Menginap Per Malam?</label>
+                <input type="text" id="anggaran" name="anggaran"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5""
+                    required />
             </div>
             <div class="mb-8">
                 <label for="wahana" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apakah Anda
@@ -71,10 +75,10 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
                     name="wahana">
                     <option selected hidden>--- Pilih Jawaban ---</option>
-                    <option>
+                    <option value="Ada">
                         Ya, Saya Ingin Penginapan Dengan Wahana Permainan
                     </option>
-                    <option>
+                    <option value="Tidak Ada">
                         Tidak, Fasilitas Tersebut Tidak Diperlukan
                     </option>
                 </select>
@@ -86,10 +90,10 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
                     name="funGames">
                     <option selected hidden>--- Pilih Jawaban ---</option>
-                    <option>
+                    <option value="Ada">
                         Ya, Saya Mencari Penginapan Yang Memiliki Fasilitas Fun Games dan Outbound
                     </option>
-                    <option>
+                    <option value="Tidak Ada">
                         Tidak, Fasilitas Tersebut Tidak Diperlukan
                     </option>
                 </select>
@@ -101,10 +105,10 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
                     name="kafe">
                     <option selected hidden>--- Pilih Jawaban ---</option>
-                    <option>
+                    <option value="Ada">
                         Ya, Saya Membutuhkan Penginapan Dengan Kafe atau Restoran
                     </option>
-                    <option>
+                    <option value="Tidak Ada">
                         Tidak, Fasilitas Tersebut Tidak Diperlukan
                     </option>
                 </select>
@@ -116,12 +120,10 @@
                     Rekomendasi</button>
             </div>
         </form>
-
     </main>
 
     @include('guest.layouts.footer')
 
     @include('guest.layouts.jsfoot')
 </body>
-
 </html>
