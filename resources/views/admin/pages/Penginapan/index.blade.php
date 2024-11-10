@@ -133,6 +133,8 @@
                                                                     Glamping</option>
                                                                 <option @selected($item->jenis_penginapan == 'Homestay') value="Homestay">
                                                                     Homestay</option>
+                                                                <option @selected($item->jenis_penginapan == 'Hotel') value="Hotel">
+                                                                    Hotel</option>
                                                                 <option @selected($item->jenis_penginapan == 'Resort') value="Resort">Resort
                                                                 </option>
                                                                 <option @selected($item->jenis_penginapan == 'Villa') value="Villa">Villa
@@ -322,6 +324,7 @@
                             <option value="Camping">Camping</option>
                             <option value="Glamping">Glamping</option>
                             <option value="Homestay">Homestay</option>
+                            <option value="Hotel">Hotel</option>
                             <option value="Resort">Resort</option>
                             <option value="Villa">Villa</option>
                         </select>

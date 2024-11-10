@@ -47,6 +47,7 @@
                     <option value="Camping">Camping</option>
                     <option value="Glamping">Glamping</option>
                     <option value="Homestay">Homestay</option>
+                    <option value="Hotel">Hotel</option>
                     <option value="Resort">Resort</option>
                     <option value="Villa">Villa</option>
                 </select>
