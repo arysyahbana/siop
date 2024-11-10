@@ -33,15 +33,9 @@
             <div class="mb-8">
                 <label for="kapasitas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Untuk Berapa
                     Orang Anda Memesan Penginapan?</label>
-                <select id="kapasitas"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
-                    name="kapasitas_id">
-                    <option selected hidden>--- Pilih Kapasitas ---</option>
-                    <option>2 Orang</option>
-                    <option>3 Orang</option>
-                    <option>4 Orang</option>
-                    <option>5 Orang</option>
-                </select>
+                <input type="number" id="kapasitas"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5""
+                    required />
             </div>
             <div class="mb-8">
                 <label for="jenisPenginapan"
