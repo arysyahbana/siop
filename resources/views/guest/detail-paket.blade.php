@@ -44,11 +44,11 @@
                                         <td class="px-3">:</td>
                                         <td>{{ $paketTour->rPenginapan?->nama_penginapan ?? '' }}</td>
                                     </tr>
-                                    <tr>
+                                    {{-- <tr>
                                         <td>Kontak</td>
                                         <td class="px-3">:</td>
                                         <td>{{ $paketTour->rPemilik?->no_hp ?? '' }}</td>
-                                    </tr>
+                                    </tr> --}}
                                     <tr>
                                         <td>Harga Paket</td>
                                         <td class="px-3">:</td>
@@ -59,17 +59,21 @@
                                         <td>Item</td>
                                         <td class="px-3">:</td>
                                         <td>
-                                            @foreach ($paketTour->rItemTambahan as $itemTambahan)
-                                                {{ $itemTambahan->nama_item ?? '' }}
-                                            @endforeach
+                                            @if ($paketTour->rItemTambahan && $paketTour->rItemTambahan->count() > 0)
+                                                @foreach ($paketTour->rItemTambahan as $itemTambahan)
+                                                    {{ $itemTambahan->nama_item ?? '' }}
+                                                @endforeach
+                                            @else
+                                                <p>Tidak ada</p>
+                                            @endif
                                         </td>
                                     </tr>
                                     @if ($paketTour->medsos)
                                         <tr>
-                                            <td>Medsos</td>
+                                            <td>Medsos (Instagram)</td>
                                             <td class="px-3">:</td>
-                                            <td>
-                                                <a
+                                            <td class="text-sky-500 hover:underline hover:text-violet-500">
+                                                @<a
                                                     href="{{ $paketTour->medsos ?? '#' }}">{{ explode('/', parse_url($paketTour->medsos, PHP_URL_PATH))[1] ?? '' }}</a>
                                             </td>
                                         </tr>

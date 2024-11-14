@@ -12,8 +12,8 @@
                         <a href="#" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#addUsers"><i
                                 class="fa fa-plus" aria-hidden="true"></i><span
                                 class="text-capitalize ms-1">Tambah</span></a>
-                        <a href="{{route('users.download')}}" class="btn bg-gradient-success"><i class="bi bi-plus-circle"></i><span
-                                class="text-capitalize ms-1">Unduh Rekap Data</span></a>
+                        <a href="{{ route('users.download') }}" class="btn bg-gradient-success"><i
+                                class="bi bi-plus-circle"></i><span class="text-capitalize ms-1">Unduh Rekap Data</span></a>
                     </div>
                     <div class="card-body px-5 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -69,17 +69,21 @@
                                                             <x-admin.input type="text" placeholder="Nama" label="Nama"
                                                                 name="nama" value="{{ $item->name ?? '' }}" />
                                                             <x-admin.input type="number" placeholder="Nomor HP"
-                                                                label="Nomor HP" name="no_hp" value="{{ $item->no_hp ?? '' }}"/>
+                                                                label="Nomor HP" name="no_hp"
+                                                                value="{{ $item->no_hp ?? '' }}" />
                                                             <x-admin.input type="text" placeholder="Alamat"
-                                                                label="Alamat" name="alamat" value="{{ $item->alamat ?? '' }}"/>
+                                                                label="Alamat" name="alamat"
+                                                                value="{{ $item->alamat ?? '' }}" />
                                                             <x-admin.input type="email" placeholder="Email" label="Email"
                                                                 name="email" value="{{ $item->email ?? '' }}" />
                                                             <Label>Jenis Kelamin</Label>
                                                             <select class="form-select mb-3"
                                                                 aria-label="Default select example" name="gender">
-                                                                <option hidden value="">--- Pilih Jenis Kelamin ---</option>
+                                                                <option hidden value="">--- Pilih Jenis Kelamin ---
+                                                                </option>
                                                                 <option value="Pria"
-                                                                    {{ $item->jenis_kelamin == 'Pria' ? 'selected' : '' }}>Pria
+                                                                    {{ $item->jenis_kelamin == 'Pria' ? 'selected' : '' }}>
+                                                                    Pria
                                                                 </option>
                                                                 <option value="Wanita"
                                                                     {{ $item->jenis_kelamin == 'Wanita' ? 'selected' : '' }}>
@@ -149,7 +153,7 @@
     <!-- Modal Add Users -->
     <div class="modal fade" id="addUsers" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="addUsersLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="addUsersLabel">Tambah Data User</h1>

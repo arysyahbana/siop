@@ -41,11 +41,11 @@
 
                     <p class="mt-2">
                     <table>
-                        <tr class="text-sm desc">
+                        {{-- <tr class="text-sm desc">
                             <td>Kontak</td>
                             <td class="px-3">:</td>
                             <td>{{ $penginapan->rPemilik?->no_hp ?? '' }}</td>
-                        </tr>
+                        </tr> --}}
                         <tr class="text-sm desc">
                             <td>Lokasi</td>
                             <td class="px-3">:</td>
@@ -56,7 +56,7 @@
                             <td class="px-3">:</td>
                             <td>
                                 <a href="{{ $penginapan->maps ?? '' }}" target="_blank"
-                                    class="hover:underline hover:text-violet-500">Maps
+                                    class="text-sky-500 hover:underline hover:text-violet-500">Maps
                                     {{ $penginapan->nama_penginapan ?? '' }}</a>
                             </td>
                         </tr>
@@ -84,8 +84,9 @@
                             <tr class="text-sm desc">
                                 <td>Instagram</td>
                                 <td class="px-3">:</td>
-                                <td><a href="{{ $penginapan->medsos ?? '#' }}" target="_blank"
-                                        class="hover:underline hover:text-violet-500">{{ explode('/', parse_url($penginapan->medsos, PHP_URL_PATH))[1] ?? '' }}</a>
+                                <td class="text-sky-500 hover:underline hover:text-violet-500">@<a
+                                        href="{{ $penginapan->medsos ?? '#' }}"
+                                        target="_blank">{{ explode('/', parse_url($penginapan->medsos, PHP_URL_PATH))[1] ?? '' }}</a>
                                 </td>
                             </tr>
                         @endif

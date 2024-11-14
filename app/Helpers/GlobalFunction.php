@@ -42,8 +42,8 @@ class GlobalFunction
 
     public static function urlPemesanan($nomorHp, $pemesanan, $id)
     {
-        $pesanKamar = urlencode('Halo, Saya Mau Memesan Kamar ' . $pemesanan . '. Terima Kasih.' . "\n\n" . 'Kamar ini ada di link berikut: ' . url('/detail-kamar/' . $id));
-        $pesanPaket = urlencode('Halo, Saya Mau Memesan Paket Tour ' . $pemesanan . '. Terima Kasih.' . "\n\n" . 'Paket Tour ini ada di link berikut: ' . url('/detail-paket/' . $id));
+        $pesanKamar = urlencode('Halo, Saya Mau Memesan Kamar ' . $pemesanan . '. Terima Kasih.' . "\n\n" . "Nama :" . "\n\n" . "Tanggal Booking :" . "\n\n" . 'Kamar ini ada di link berikut: ' . url('/detail-kamar/' . $id));
+        $pesanPaket = urlencode('Halo, Saya Mau Memesan Paket Tour ' . $pemesanan . '. Terima Kasih.' . "\n\n" . "Nama :" . "\n\n" . 'Paket Tour ini ada di link berikut: ' . url('/detail-paket/' . $id));
         if (url()->current() == url('/detail-kamar/' . $id)) {
             return 'https://wa.me/' . $nomorHp . '?text=' . $pesanKamar;
         } elseif (url()->current() == url('/detail-paket/' . $id)) {
@@ -68,5 +68,4 @@ class GlobalFunction
             })
             ->paginate(2);
     }
-
 }

@@ -93,7 +93,7 @@ Route::get('/detail-penginapan/{id}', function ($id) {
 
 Route::get('/detail-paket/{id}', function ($id) {
     $page = 'Paket Tour';
-    $paketTour = PaketTour::find($id);
+    $paketTour = PaketTour::with('rItemTambahan')->findOrFail($id);
     $paketTourRandom = PaketTour::inRandomOrder()->paginate(8);
     return view('guest.detail-paket', compact('paketTour', 'paketTourRandom', 'page'));
 })->name('detail-paket');

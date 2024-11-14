@@ -38,21 +38,21 @@
                             </p>
                             <p class="mt-2">
                             <table>
-                                <tr class="text-sm desc text-violet-800">
+                                <tr class="text-sm desc">
                                     <td>Lokasi</td>
                                     <td class="px-3">:</td>
                                     <td>{{ $objekWisata->lokasi ?? '' }}</td>
                                 </tr>
-                                <tr class="text-sm desc text-violet-800">
+                                {{-- <tr class="text-sm desc text-violet-800">
                                     <td>Kontak</td>
                                     <td class="px-3">:</td>
                                     <td>{{ $objekWisata->no_hp ?? '' }}</td>
-                                </tr>
+                                </tr> --}}
                                 @if ($objekWisata->medsos)
-                                    <tr class="text-sm desc text-violet-800">
+                                    <tr class="text-sm desc">
                                         <td>Instagram</td>
                                         <td class="px-3">:</td>
-                                        <td><a
+                                        <td class="text-sky-500 hover:text-violet-500">@<a
                                                 href="{{ $objekWisata->medsos ?? '#' }}">{{ explode('/', parse_url($objekWisata->medsos, PHP_URL_PATH))[1] ?? '' }}</a>
                                         </td>
                                     </tr>
