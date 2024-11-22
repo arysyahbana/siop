@@ -27,6 +27,7 @@
                                         <x-admin.th>Nomor HP</x-admin.th>
                                         <x-admin.th>Alamat</x-admin.th>
                                         <x-admin.th>Jenis Kelamin</x-admin.th>
+                                        <x-admin.th>Status</x-admin.th>
                                         <x-admin.th>Action</x-admin.th>
                                     </tr>
                                 @endslot
@@ -40,7 +41,11 @@
                                         <x-admin.td>{{ $item->no_hp ?? '' }}</x-admin.td>
                                         <x-admin.td>{{ $item->alamat ?? '' }}</x-admin.td>
                                         <x-admin.td>{{ $item->jenis_kelamin ?? '' }}</x-admin.td>
+                                        <x-admin.td>Pending</x-admin.td>
                                         <x-admin.td>
+                                            <a href="#" class="btn bg-gradient-primary" data-bs-toggle="modal"
+                                                data-bs-target="#accUsers{{ $item->id }}"><i class="fa fa-pencil"
+                                                    aria-hidden="true"></i><span class="text-capitalize ms-1">Acc</span></a>
                                             <a href="#" class="btn bg-gradient-info" data-bs-toggle="modal"
                                                 data-bs-target="#editUsers{{ $item->id }}"><i class="fa fa-pencil"
                                                     aria-hidden="true"></i><span
@@ -50,6 +55,89 @@
                                                     aria-hidden="true"></i><span
                                                     class="text-capitalize ms-1">Hapus</span></a>
                                         </x-admin.td>
+
+                                        <!-- Modal Acc -->
+                                        <div class="modal fade" id="accUsers{{ $item->id }}" data-bs-backdrop="static"
+                                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="accUsersLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="accUsersLabel">Acc Data Users
+                                                        </h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <form action="#" method="post">
+                                                        @csrf
+                                                        <div class="modal-body">
+                                                            <div class="d-flex gap-2 mb-2">
+                                                                <div class="col-3">
+                                                                    Nama
+                                                                </div>
+                                                                <div class="">
+                                                                    :
+                                                                </div>
+                                                                <div class="">
+                                                                    {{ $item->name ?? '' }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex gap-2 mb-2">
+                                                                <div class="col-3">
+                                                                    Nomor HP
+                                                                </div>
+                                                                <div class="">
+                                                                    :
+                                                                </div>
+                                                                <div class="">
+                                                                    {{ $item->no_hp ?? '' }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex gap-2 mb-2">
+                                                                <div class="col-3">
+                                                                    Alamat
+                                                                </div>
+                                                                <div class="">
+                                                                    :
+                                                                </div>
+                                                                <div class="">
+                                                                    {{ $item->alamat ?? '' }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex gap-2 mb-2">
+                                                                <div class="col-3">
+                                                                    Jenis Kelamin
+                                                                </div>
+                                                                <div class="">
+                                                                    :
+                                                                </div>
+                                                                <div class="">
+                                                                    {{ $item->jenis_kelamin ?? '' }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex gap-2 mb-2">
+                                                                <div class="col-3">
+                                                                    Role
+                                                                </div>
+                                                                <div class="">
+                                                                    :
+                                                                </div>
+                                                                <div class="">
+                                                                    {{ $item->role ?? '' }}
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit"
+                                                                class="btn btn-sm btn-primary">Acc</button>
+                                                            <button type="button" class="btn btn-sm btn-danger"
+                                                                data-bs-dismiss="modal">Decline</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <!-- Modal Edit Users -->
                                         <div class="modal fade" id="editUsers{{ $item->id }}" data-bs-backdrop="static"
@@ -66,16 +154,18 @@
                                                     <form action="{{ route('users.update', $item->id) }}" method="post">
                                                         @csrf
                                                         <div class="modal-body">
-                                                            <x-admin.input type="text" placeholder="Nama" label="Nama"
-                                                                name="nama" value="{{ $item->name ?? '' }}" />
+                                                            <x-admin.input type="text" placeholder="Nama"
+                                                                label="Nama" name="nama"
+                                                                value="{{ $item->name ?? '' }}" />
                                                             <x-admin.input type="number" placeholder="Nomor HP"
                                                                 label="Nomor HP" name="no_hp"
                                                                 value="{{ $item->no_hp ?? '' }}" />
                                                             <x-admin.input type="text" placeholder="Alamat"
                                                                 label="Alamat" name="alamat"
                                                                 value="{{ $item->alamat ?? '' }}" />
-                                                            <x-admin.input type="email" placeholder="Email" label="Email"
-                                                                name="email" value="{{ $item->email ?? '' }}" />
+                                                            <x-admin.input type="email" placeholder="Email"
+                                                                label="Email" name="email"
+                                                                value="{{ $item->email ?? '' }}" />
                                                             <Label>Jenis Kelamin</Label>
                                                             <select class="form-select mb-3"
                                                                 aria-label="Default select example" name="gender">

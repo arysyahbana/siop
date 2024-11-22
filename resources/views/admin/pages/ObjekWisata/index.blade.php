@@ -38,7 +38,7 @@
                                         <x-admin.td> {{ $item->nama_wisata ?? '' }} </x-admin.td>
                                         <x-admin.td>{{ $item->rKategori?->kategori }}</x-admin.td>
                                         <x-admin.td
-                                            style="word-wrap: break-word; word-break: break-word; white-space: normal;">
+                                            style="word-wrap: break-word; word-break: break-word; white-space: normal; min-width: 300px">
                                             {{ $item->deskripsi ?? '' }}
                                         </x-admin.td>
                                         <x-admin.td>{{ $item->lokasi ?? '' }}</x-admin.td>
@@ -132,7 +132,8 @@
                                                                     name="image">
                                                             </div>
                                                             <x-admin.input type="text" placeholder="Medsos"
-                                                                label="Medsos" name="medsos" value="{{$item->medsos}}" />
+                                                                label="Medsos" name="medsos"
+                                                                value="{{ $item->medsos }}" />
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="submit"

@@ -10,6 +10,7 @@ use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\PenginapanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransportasiController;
 use App\Http\Controllers\UserController;
 use App\Models\Kamar;
 use App\Models\Lokasi;
@@ -159,6 +160,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::prefix('transportasi')->group(function () {
+    Route::get('/show', [TransportasiController::class, 'index'])->name('transportasi.show');
+});
 Route::prefix('kategori')->group(function () {
     Route::get('/show', [KategoriController::class, 'index'])->name('kategori.show');
     Route::post('/store', [KategoriController::class, 'store'])->name('kategori.store');
