@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $page = "Users";
+        $page = 'Users';
         $users = User::get();
         return view('admin.pages.User.index', compact('page', 'users'));
     }
@@ -34,6 +34,7 @@ class UserController extends Controller
         $store->no_hp = GlobalFunction::formatPhoneNumber($request->no_hp);
         $store->alamat = $request->alamat;
         $store->jenis_kelamin = $request->gender;
+        $store->status = 'Accept';
         $store->password = Hash::make($request->password);
         $store->save();
 
@@ -74,5 +75,17 @@ class UserController extends Controller
         $columns = ['name', 'email', 'role', 'no_hp', 'alamat', 'jenis_kelamin'];
 
         return Excel::download(new GenericExport(User::class, $columns, 'G', 'penginapan'), 'User.xlsx');
+    }
+
+    public function AccUser($id, $status)
+    {
+        $penginapan = User::find($id);
+        if ($status == 'Accept') {
+            $penginapan->status = 'Accept';
+        }else {
+            $penginapan->status = 'Decline';
+        }
+        $penginapan->update();
+        return back()->with('success', 'Data User Berhasil Diubah');
     }
 }

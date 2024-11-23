@@ -9,7 +9,7 @@ class Penginapan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama_penginapan', 'deskripsi', 'id_lokasi', 'maps', 'jenis_penginapan', 'wahana', 'outbound', 'kafe', 'id_pemilik', 'image', 'medsos'];
+    protected $fillable = ['nama_penginapan', 'deskripsi', 'id_lokasi', 'maps', 'jenis_penginapan', 'wahana', 'outbound', 'kafe', 'id_pemilik', 'image', 'medsos', 'status'];
 
     public function rPemilik()
     {

@@ -67,11 +67,14 @@
                                             <a
                                                 href="{{ $item->medsos ?? '#' }}">{{ explode('/', parse_url($item->medsos, PHP_URL_PATH))[1] ?? 'Belum Memasukan Link' }}</a>
                                         </x-admin.td>
-                                        <x-admin.td>Pending</x-admin.td>
+                                        <x-admin.td>{{ $item->status }}</x-admin.td>
                                         <x-admin.td>
-                                            <a href="#" class="btn bg-gradient-primary" data-bs-toggle="modal"
-                                                data-bs-target="#accPenginapan{{ $item->id }}"><i class="fa fa-pencil"
-                                                    aria-hidden="true"></i><span class="text-capitalize ms-1">Acc</span></a>
+                                            @if (Auth::user()->role == 'Admin')
+                                                <a href="#" class="btn bg-gradient-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#accPenginapan{{ $item->id }}"><i
+                                                        class="fa fa-pencil" aria-hidden="true"></i><span
+                                                        class="text-capitalize ms-1">Acc</span></a>
+                                            @endif
                                             <a href="#" class="btn bg-gradient-info" data-bs-toggle="modal"
                                                 data-bs-target="#editPenginapan{{ $item->id }}"><i class="fa fa-pencil"
                                                     aria-hidden="true"></i><span
@@ -83,143 +86,148 @@
                                         </x-admin.td>
 
                                         <!-- Modal Acc -->
-                                        <div class="modal fade" id="accPenginapan{{ $item->id }}"
-                                            data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                            aria-labelledby="accPenginapanLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg modal-dialog-scrollable">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="accPenginapanLabel">Acc Data
-                                                            Penginapan
-                                                        </h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
+                                        @if (Auth::user()->role == 'Admin')
+                                            <div class="modal fade" id="accPenginapan{{ $item->id }}"
+                                                data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                                aria-labelledby="accPenginapanLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="accPenginapanLabel">Acc Data
+                                                                Penginapan
+                                                            </h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                        </div>
+                                                        <form action="#" method="post">
+                                                            @csrf
+                                                            <div class="modal-body text-sm">
+                                                                <div class="d-flex gap-2 mb-2">
+                                                                    <div class="col-3 fw-bold">
+                                                                        Nama Penginapan
+                                                                    </div>
+                                                                    <div class="">:</div>
+                                                                    <div class="">{{ $item->nama_penginapan }}</div>
+                                                                </div>
+                                                                <div class="d-flex gap-2 mb-2">
+                                                                    <div class="col-3 fw-bold">
+                                                                        Deskripsi
+                                                                    </div>
+                                                                    <div class="">:</div>
+                                                                    <div class="">{{ $item->deskripsi }}</div>
+                                                                </div>
+                                                                <div class="d-flex gap-2 mb-2">
+                                                                    <div class="col-3 fw-bold">
+                                                                        Lokasi
+                                                                    </div>
+                                                                    <div class="">:</div>
+                                                                    <div class="">
+                                                                        {{ $item->rLokasi?->nama_lokasi }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex gap-2 mb-2">
+                                                                    <div class="col-3 fw-bold">
+                                                                        Maps
+                                                                    </div>
+                                                                    <div class="">:</div>
+                                                                    <div class="">
+                                                                        <a href="{{ $item->maps ?? '#' }}"
+                                                                            target="_blank">Maps
+                                                                            {{ $item->nama_penginapan ?? '' }}</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex gap-2 mb-2">
+                                                                    <div class="col-3 fw-bold">
+                                                                        Jenis Penginapan
+                                                                    </div>
+                                                                    <div class="">:</div>
+                                                                    <div class="">
+                                                                        {{ $item->jenis_penginapan ?? '' }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex gap-2 mb-2">
+                                                                    <div class="col-3 fw-bold">
+                                                                        Wahana Permainan
+                                                                    </div>
+                                                                    <div class="">:</div>
+                                                                    <div class="">
+                                                                        {{ $item->wahana ?? '' }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex gap-2 mb-2">
+                                                                    <div class="col-3 fw-bold">
+                                                                        Fun Games dan Outbound
+                                                                    </div>
+                                                                    <div class="">:</div>
+                                                                    <div class="">
+                                                                        {{ $item->outbound ?? '' }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex gap-2 mb-2">
+                                                                    <div class="col-3 fw-bold">
+                                                                        Kafe / Restoran
+                                                                    </div>
+                                                                    <div class="">:</div>
+                                                                    <div class="">
+                                                                        {{ $item->kafe ?? '' }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex gap-2 mb-2">
+                                                                    <div class="col-3 fw-bold">
+                                                                        Owner
+                                                                    </div>
+                                                                    <div class="">:</div>
+                                                                    <div class="">
+                                                                        {{ $item->rPemilik?->name ?? '' }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex gap-2 mb-2">
+                                                                    <div class="col-3 fw-bold">
+                                                                        Kontak
+                                                                    </div>
+                                                                    <div class="">:</div>
+                                                                    <div class="">
+                                                                        {{ $item->rPemilik?->no_hp ?? '' }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex gap-2 mb-2">
+                                                                    <div class="col-3 fw-bold">
+                                                                        Foto
+                                                                    </div>
+                                                                    <div class="">:</div>
+                                                                    <div class="">
+                                                                        <a href="{{ asset('dist/assets/img/penginapan/' . $item->image ?? '') }}"
+                                                                            target="_blank">
+                                                                            <img src="{{ asset('dist/assets/img/penginapan/' . $item->image ?? '') }}"
+                                                                                alt="" style="max-width: 300px"
+                                                                                class="img-fluid img-thumbnail">
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex gap-2 mb-2">
+                                                                    <div class="col-3 fw-bold">
+                                                                        Medsos (Instagram)
+                                                                    </div>
+                                                                    <div class="">:</div>
+                                                                    <div class="">
+                                                                        <a
+                                                                            href="{{ $item->medsos ?? '#' }}">{{ explode('/', parse_url($item->medsos, PHP_URL_PATH))[1] ?? 'Belum Memasukan Link' }}</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <a href="{{ route('penginapan.AccPenginapan', ['id' => $item->id, 'action' => 'Accept']) }}"
+                                                                    class="btn btn-sm btn-primary">Acc</a>
+                                                                <a href="{{ route('penginapan.AccPenginapan', ['id' => $item->id, 'action' => 'Decline']) }}"
+                                                                    class="btn btn-sm btn-danger">Decline</a>
+                                                                <a href="#" class="btn btn-sm btn-secondary"
+                                                                    data-bs-dismiss="modal">Batal</a>
+                                                            </div>
+                                                        </form>
                                                     </div>
-                                                    <form action="#" method="post">
-                                                        @csrf
-                                                        <div class="modal-body text-sm">
-                                                            <div class="d-flex gap-2 mb-2">
-                                                                <div class="col-3 fw-bold">
-                                                                    Nama Penginapan
-                                                                </div>
-                                                                <div class="">:</div>
-                                                                <div class="">{{ $item->nama_penginapan }}</div>
-                                                            </div>
-                                                            <div class="d-flex gap-2 mb-2">
-                                                                <div class="col-3 fw-bold">
-                                                                    Deskripsi
-                                                                </div>
-                                                                <div class="">:</div>
-                                                                <div class="">{{ $item->deskripsi }}</div>
-                                                            </div>
-                                                            <div class="d-flex gap-2 mb-2">
-                                                                <div class="col-3 fw-bold">
-                                                                    Lokasi
-                                                                </div>
-                                                                <div class="">:</div>
-                                                                <div class="">
-                                                                    {{ $item->rLokasi?->nama_lokasi }}
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex gap-2 mb-2">
-                                                                <div class="col-3 fw-bold">
-                                                                    Maps
-                                                                </div>
-                                                                <div class="">:</div>
-                                                                <div class="">
-                                                                    <a href="{{ $item->maps ?? '#' }}" target="_blank">Maps
-                                                                        {{ $item->nama_penginapan ?? '' }}</a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex gap-2 mb-2">
-                                                                <div class="col-3 fw-bold">
-                                                                    Jenis Penginapan
-                                                                </div>
-                                                                <div class="">:</div>
-                                                                <div class="">
-                                                                    {{ $item->jenis_penginapan ?? '' }}
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex gap-2 mb-2">
-                                                                <div class="col-3 fw-bold">
-                                                                    Wahana Permainan
-                                                                </div>
-                                                                <div class="">:</div>
-                                                                <div class="">
-                                                                    {{ $item->wahana ?? '' }}
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex gap-2 mb-2">
-                                                                <div class="col-3 fw-bold">
-                                                                    Fun Games dan Outbound
-                                                                </div>
-                                                                <div class="">:</div>
-                                                                <div class="">
-                                                                    {{ $item->outbound ?? '' }}
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex gap-2 mb-2">
-                                                                <div class="col-3 fw-bold">
-                                                                    Kafe / Restoran
-                                                                </div>
-                                                                <div class="">:</div>
-                                                                <div class="">
-                                                                    {{ $item->kafe ?? '' }}
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex gap-2 mb-2">
-                                                                <div class="col-3 fw-bold">
-                                                                    Owner
-                                                                </div>
-                                                                <div class="">:</div>
-                                                                <div class="">
-                                                                    {{ $item->rPemilik?->name ?? '' }}
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex gap-2 mb-2">
-                                                                <div class="col-3 fw-bold">
-                                                                    Kontak
-                                                                </div>
-                                                                <div class="">:</div>
-                                                                <div class="">
-                                                                    {{ $item->rPemilik?->no_hp ?? '' }}
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex gap-2 mb-2">
-                                                                <div class="col-3 fw-bold">
-                                                                    Foto
-                                                                </div>
-                                                                <div class="">:</div>
-                                                                <div class="">
-                                                                    <a href="{{ asset('dist/assets/img/penginapan/' . $item->image ?? '') }}"
-                                                                        target="_blank">
-                                                                        <img src="{{ asset('dist/assets/img/penginapan/' . $item->image ?? '') }}"
-                                                                            alt="" style="max-width: 300px"
-                                                                            class="img-fluid img-thumbnail">
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex gap-2 mb-2">
-                                                                <div class="col-3 fw-bold">
-                                                                    Medsos (Instagram)
-                                                                </div>
-                                                                <div class="">:</div>
-                                                                <div class="">
-                                                                    <a
-                                                                        href="{{ $item->medsos ?? '#' }}">{{ explode('/', parse_url($item->medsos, PHP_URL_PATH))[1] ?? 'Belum Memasukan Link' }}</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="submit"
-                                                                class="btn btn-sm btn-primary">Acc</button>
-                                                            <button type="button" class="btn btn-sm btn-danger"
-                                                                data-bs-dismiss="modal">Decline</button>
-                                                        </div>
-                                                    </form>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @endif
 
                                         <!-- Modal Edit Penginapan -->
                                         <div class="modal fade" id="editPenginapan{{ $item->id }}"

@@ -52,7 +52,7 @@ Route::get('/search-wisata', function (Request $request) {
 
 Route::get('/penginapan', function () {
     $page = 'Penginapan';
-    $penginapan = Penginapan::inRandomOrder()->paginate(16);
+    $penginapan = Penginapan::where('status', 'Accept')->inRandomOrder()->paginate(16);
     return view('guest.penginapan', compact('penginapan', 'page'));
 })->name('penginapan');
 
@@ -162,6 +162,10 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('transportasi')->group(function () {
     Route::get('/show', [TransportasiController::class, 'index'])->name('transportasi.show');
+    Route::post('/store', [TransportasiController::class, 'store'])->name('transportasi.store');
+    Route::post('/update/{id}', [TransportasiController::class, 'update'])->name('transportasi.update');
+    Route::get('/destroy/{id}', [TransportasiController::class, 'destroy'])->name('transportasi.destroy');
+    Route::get('/download', [TransportasiController::class, 'download'])->name('transportasi.download');
 });
 Route::prefix('kategori')->group(function () {
     Route::get('/show', [KategoriController::class, 'index'])->name('kategori.show');
@@ -190,6 +194,7 @@ Route::prefix('penginapan')->group(function () {
     Route::post('/update/{id}', [PenginapanController::class, 'update'])->name('penginapan.update');
     Route::get('/destroy/{id}', [PenginapanController::class, 'destroy'])->name('penginapan.destroy');
     Route::get('/download', [PenginapanController::class, 'download'])->name('penginapan.download');
+    Route::get('/acc-penginapan/{id}/{action}', [PenginapanController::class, 'AccPenginapan'])->name('penginapan.AccPenginapan');
 });
 Route::prefix('kamar')->group(function () {
     Route::get('/show', [KamarController::class, 'index'])->name('kamar.show');
@@ -218,6 +223,8 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
         Route::post('/update/{id}', [UserController::class, 'update'])->name('users.update');
         Route::get('/destroy/{id}', [UserController::class, 'destroy'])->name('users.destroy');
         Route::get('/download', [UserController::class, 'download'])->name('users.download');
+        Route::get('/acc-user/{id}/{action}', [UserController::class, 'accUser'])->name('users.accUser');
+
     });
 });
 

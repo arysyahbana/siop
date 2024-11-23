@@ -74,6 +74,12 @@ class PenginapanController extends Controller
             'image' => $image,
             'medsos' => $request->medsos,
         ];
+        if (Auth::user()->role == 'Pemilik') {
+            $data['status'] = 'Pending';
+        } else {
+            $data['status'] = 'Accept';
+        }
+
         Penginapan::create($data);
 
         return back()->with('success', 'Data Penginapan Berhasil Ditambahkan');
@@ -118,13 +124,25 @@ class PenginapanController extends Controller
 
     public function download()
     {
-        $columns = ['nama_penginapan', 'deskripsi', 'maps', 'image', 'jenis_penginapan', 'wahana', 'outbound', 'kafe', 'medsos'];
+        $columns = ['nama_penginapan', 'deskripsi', 'maps', 'image', 'jenis_penginapan', 'wahana', 'outbound', 'kafe', 'medsos','status'];
 
         $relations = [
             'rPemilik' => ['name', 'no_hp'],
             'rLokasi' => ['nama_lokasi'],
         ];
 
-        return Excel::download(new GenericExport(Penginapan::class, $columns, 'M', 'penginapan', $relations), 'Penginapan.xlsx');
+        return Excel::download(new GenericExport(Penginapan::class, $columns, 'N', 'penginapan', $relations), 'Penginapan.xlsx');
+    }
+
+    public function AccPenginapan($id, $status)
+    {
+        $penginapan = Penginapan::find($id);
+        if ($status == 'Accept') {
+            $penginapan->status = 'Accept';
+        }else {
+            $penginapan->status = 'Decline';
+        }
+        $penginapan->update();
+        return back()->with('success', 'Data Penginapan Berhasil Diubah');
     }
 }

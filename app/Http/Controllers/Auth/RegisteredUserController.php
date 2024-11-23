@@ -47,6 +47,7 @@ class RegisteredUserController extends Controller
             'jenis_kelamin' => $request->gender,
             'no_hp' => $request->noHp,
             'alamat' => $request->alamat,
+            'status' => 'Pending',
         ]);
         event(new Registered($user));
 

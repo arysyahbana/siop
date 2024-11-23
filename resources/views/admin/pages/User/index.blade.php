@@ -41,7 +41,7 @@
                                         <x-admin.td>{{ $item->no_hp ?? '' }}</x-admin.td>
                                         <x-admin.td>{{ $item->alamat ?? '' }}</x-admin.td>
                                         <x-admin.td>{{ $item->jenis_kelamin ?? '' }}</x-admin.td>
-                                        <x-admin.td>Pending</x-admin.td>
+                                        <x-admin.td>{{ $item->status ?? '' }}</x-admin.td>
                                         <x-admin.td>
                                             <a href="#" class="btn bg-gradient-primary" data-bs-toggle="modal"
                                                 data-bs-target="#accUsers{{ $item->id }}"><i class="fa fa-pencil"
@@ -129,10 +129,12 @@
 
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="submit"
-                                                                class="btn btn-sm btn-primary">Acc</button>
-                                                            <button type="button" class="btn btn-sm btn-danger"
-                                                                data-bs-dismiss="modal">Decline</button>
+                                                            <a href="{{ route('users.accUser', ['id' => $item->id, 'action' => 'Accept']) }}"
+                                                                class="btn btn-sm btn-primary">Acc</a>
+                                                            <a href="{{ route('users.accUser', ['id' => $item->id, 'action' => 'Decline']) }}"
+                                                                class="btn btn-sm btn-danger">Decline</a>
+                                                            <a href="#" class="btn btn-sm btn-secondary"
+                                                                data-bs-dismiss="modal">Batal</a>
                                                         </div>
                                                     </form>
                                                 </div>
