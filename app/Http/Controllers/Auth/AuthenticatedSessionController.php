@@ -30,7 +30,13 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         // return redirect()->intended(RouteServiceProvider::HOME);
-        return redirect()->intended('/dashboard')->with('success', 'Selamat datang ' . Auth::user()->name);
+        if (Auth::user()->role == 'Admin') {
+            return redirect()->intended('/transportasi/show')->with('success', 'Selamat datang ' . Auth::user()->name);
+        } elseif (Auth::user()->role == 'Pemilik') {
+            return redirect()->intended('/penginapan/show')->with('success', 'Selamat datang ' . Auth::user()->name);
+        } else {
+            return redirect()->back()->with('error', 'Akun anda tidak memiliki akses');
+        }
     }
 
     /**

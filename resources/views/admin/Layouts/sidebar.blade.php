@@ -11,7 +11,7 @@
     <hr class="horizontal dark mt-0">
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100 h-100" id="sidenav-collapse-main">
         <ul class="navbar-nav">
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link  {{ $page == 'Dashboard' ? 'active' : '' }}" href="{{ route('dashboard') }}">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -36,7 +36,7 @@
                     </div>
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
-            </li>
+            </li> --}}
 
             @if (Auth::guard()->user()->role == 'Admin')
                 {{-- Transportasi --}}
