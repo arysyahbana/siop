@@ -190,7 +190,7 @@
                             $penginapanPending = DB::table('penginapans')->where('status', 'Pending')->count();
                             $userPending = DB::table('users')->where('status', 'Pending')->count();
                         @endphp
-                        @if ($penginapanPending)
+                        @if ($penginapanPending && Auth::user()->role == 'Admin')
                             <span
                                 class="card bg-danger px-2 py-1 text-xs text-white rounded-pill">{{ $penginapanPending }}</span>
                         @endif
@@ -319,7 +319,7 @@
                                 </svg>
                             </div>
                             <span class="nav-link-text mx-1">Users</span>
-                            @if ($userPending)
+                            @if ($userPending && Auth::user()->role == 'Admin')
                                 <span
                                     class="card bg-danger px-2 py-1 text-xs text-white rounded-pill">{{ $userPending }}</span>
                             @endif

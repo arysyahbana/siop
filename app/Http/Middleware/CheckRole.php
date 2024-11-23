@@ -16,15 +16,29 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, $role)
     {
-        if (Auth::check() && Auth::user()->role == $role) {
-            return $next($request);
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            // Cek jika status user 'Pending'
+            if ($user->status == 'Pending') {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return redirect('/login')->with('error', 'Akun anda belum di acc oleh admin');
+            }
+
+            // Cek role
+            if ($user->role == $role) {
+                return $next($request);
+            }
         }
 
-        // Perform logout
+        // Logout jika tidak memiliki akses
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('error', 'Akun anda tidak memiliki akses');
+        return redirect('/login')->with('error', 'Akun anda tidak memiliki akses');
     }
 }

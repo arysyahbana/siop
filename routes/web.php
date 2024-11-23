@@ -224,7 +224,6 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
         Route::get('/destroy/{id}', [UserController::class, 'destroy'])->name('users.destroy');
         Route::get('/download', [UserController::class, 'download'])->name('users.download');
         Route::get('/acc-user/{id}/{action}', [UserController::class, 'accUser'])->name('users.accUser');
-
     });
 });
 

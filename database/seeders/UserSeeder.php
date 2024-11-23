@@ -23,6 +23,7 @@ class UserSeeder extends Seeder
                 'no_hp' => '',
                 'alamat' => '',
                 'jenis_kelamin' => 'Pria',
+                'status' => 'Accept',
                 'remember_token' => null,
             ],
             [
@@ -33,6 +34,7 @@ class UserSeeder extends Seeder
                 'no_hp' => '08123456789',
                 'alamat' => 'Jl. Jalan',
                 'jenis_kelamin' => 'Pria',
+                'status' => 'Accept',
                 'remember_token' => null,
             ],
         ]);

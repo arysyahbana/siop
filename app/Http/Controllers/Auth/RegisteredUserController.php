@@ -56,10 +56,13 @@ class RegisteredUserController extends Controller
         // return redirect(RouteServiceProvider::HOME);
         if (Auth::user()->role == 'Admin') {
             return redirect()->intended('/transportasi/show')->with('success', 'Selamat datang ' . Auth::user()->name);
-        } elseif (Auth::user()->role == 'Pemilik') {
+        } elseif (Auth::user()->role == 'Pemilik' && Auth::user()->status == 'Accept') {
             return redirect()->intended('/penginapan/show')->with('success', 'Selamat datang ' . Auth::user()->name);
+        } elseif (Auth::user()->role == 'Pemilik' && Auth::user()->status == 'Pending') {
+            Auth::logout();
+            return redirect()->route('login')->with('success', 'Akun anda akan di acc oleh admin');
         } else {
-            return redirect()->back()->with('error', 'Akun anda tidak memiliki akses');
+            return redirect()->route('login')->with('error', 'Akun anda tidak memiliki akses');
         }
     }
 }

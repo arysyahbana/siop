@@ -30,13 +30,23 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         // return redirect()->intended(RouteServiceProvider::HOME);
-        if (Auth::user()->role == 'Admin') {
-            return redirect()->intended('/transportasi/show')->with('success', 'Selamat datang ' . Auth::user()->name);
-        } elseif (Auth::user()->role == 'Pemilik') {
-            return redirect()->intended('/penginapan/show')->with('success', 'Selamat datang ' . Auth::user()->name);
-        } else {
-            return redirect()->back()->with('error', 'Akun anda tidak memiliki akses');
+        $user = Auth::user();
+
+        if ($user->role == 'Admin') {
+            return redirect()->intended('/transportasi/show')->with('success', 'Selamat datang ' . $user->name);
         }
+
+        if ($user->role == 'Pemilik' && $user->status == 'Pending') {
+            Auth::logout();
+            return redirect()->intended('/login')->with('error', 'Akun anda belum di acc oleh admin');
+        }
+
+        if ($user->role == 'Pemilik' && $user->status == 'Accept') {
+            return redirect()->intended('/penginapan/show')->with('success', 'Selamat datang ' . $user->name);
+        }
+
+        // Kondisi default jika tidak memenuhi kriteria
+        return redirect()->intended('/login')->with('error', 'Akun anda tidak memiliki akses');
     }
 
     /**

@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/png" href="{{ asset('dist/assets/img/logo-yana.png') }}">
+    <link rel="stylesheet" href="{{ asset('dist/assets/scss/iziToast.min.css') }}">
+    <script src="{{ asset('dist/assets/js/iziToast.min.js') }}"></script>
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -33,5 +35,37 @@
         </div>
     </div>
 </body>
+
+@if ($errors->any())
+    @foreach ($errors->all() as $error)
+        <script>
+            iziToast.error({
+                title: '',
+                position: 'topRight',
+                message: '{{ $error }}',
+            });
+        </script>
+    @endforeach
+
+@endif
+@if (session()->get('success'))
+    <script>
+        iziToast.success({
+            title: '',
+            position: 'topRight',
+            message: '{{ session()->get('success') }}',
+        });
+    </script>
+@endif
+
+@if (session()->get('error'))
+    <script>
+        iziToast.error({
+            title: '',
+            position: 'topRight',
+            message: '{{ session()->get('error') }}',
+        });
+    </script>
+@endif
 
 </html>
