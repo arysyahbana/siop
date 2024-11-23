@@ -35,7 +35,7 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'gender' => ['required'],
-            'noHp' => ['required','numeric','digits_between:9,13'],
+            'noHp' => ['required', 'numeric', 'digits_between:9,13'],
             'alamat' => ['required'],
         ]);
 
@@ -53,8 +53,12 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         // return redirect(RouteServiceProvider::HOME);
-        return redirect()
-            ->intended('/dashboard')
-            ->with('success', 'Selamat datang ' . Auth::user()->name);
+        if (Auth::user()->role == 'Admin') {
+            return redirect()->intended('/transportasi/show')->with('success', 'Selamat datang ' . Auth::user()->name);
+        } elseif (Auth::user()->role == 'Pemilik') {
+            return redirect()->intended('/penginapan/show')->with('success', 'Selamat datang ' . Auth::user()->name);
+        } else {
+            return redirect()->back()->with('error', 'Akun anda tidak memiliki akses');
+        }
     }
 }
