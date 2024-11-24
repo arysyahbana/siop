@@ -52,11 +52,12 @@ class PaketController extends Controller
         $page = 'Paket';
         $objekWisata = ObjekWisata::all();
         $penginapan = Penginapan::all();
+        $paketTour = PaketTour::with('rObjekWisata', 'rPenginapan', 'rPemilik', 'rItemTambahan')->get();
         if (Auth::user()->role == 'Pemilik') {
             $penginapan = $penginapan->where('id_pemilik', Auth::user()->id);
+            $paketTour = $paketTour->where('id_pemilik', Auth::user()->id);
         }
         $pemilik = User::where('role', 'Pemilik')->get();
-        $paketTour = PaketTour::with('rObjekWisata', 'rPenginapan', 'rPemilik', 'rItemTambahan')->get();
         return view('admin.pages.Paket.index', compact('page', 'objekWisata', 'penginapan', 'pemilik', 'paketTour'));
     }
 
